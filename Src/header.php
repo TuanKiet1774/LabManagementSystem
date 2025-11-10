@@ -121,6 +121,12 @@
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
                                     <a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-window-restore"></i>
+                                        Phòng mượn
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
                                         <i class="fa-solid fa-address-card"></i>
                                         Thông tin cá nhân
                                     </a>
