@@ -1,0 +1,2 @@
+Link sử dụng icon: <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.2.0/css/all.css" />
+Link lấy icon: https://fontawesome.com/icons
