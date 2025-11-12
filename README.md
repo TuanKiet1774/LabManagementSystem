@@ -1,1 +1,1 @@
-# Hệ thống quản lý phòng thực hành 
+# Hệ thống quản lý phòng thực hành - Lab Management System
