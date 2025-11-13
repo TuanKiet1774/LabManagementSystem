@@ -2,4 +2,4 @@
 
 ## 📄Database
 
-![LMS_Diagram](https://github.com/user-attachments/assets/b0b7f758-dc1d-4da4-9626-619cff4b04e3)
+![LMS_DB](https://github.com/user-attachments/assets/7b489b65-0c98-4c3f-b1c0-e103e9c9b8a0)
