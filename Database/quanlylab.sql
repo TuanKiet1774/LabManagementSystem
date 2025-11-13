@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 13, 2025 at 04:57 AM
+-- Generation Time: Nov 13, 2025 at 05:05 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -210,6 +210,15 @@ CREATE TABLE `vaitro` (
   `MaVT` varchar(50) NOT NULL,
   `TenVT` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `vaitro`
+--
+
+INSERT INTO `vaitro` (`MaVT`, `TenVT`) VALUES
+('VT01', 'Quản trị viên'),
+('VT02', 'Giảng viên'),
+('VT03', 'Sinh viên');
 
 --
 -- Indexes for dumped tables
