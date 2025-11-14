@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 14, 2025 at 04:07 AM
+-- Generation Time: Nov 14, 2025 at 12:50 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -206,18 +206,18 @@ CREATE TABLE `nguoidung` (
 --
 
 INSERT INTO `nguoidung` (`MaND`, `MaVT`, `Ho`, `Ten`, `Email`, `MatKhau`, `Anh`, `Sdt`, `NgaySinh`, `GioiTinh`, `DiaChi`, `MaKhoa`, `Lop`, `NgayTao`) VALUES
-('ND001', 'QTV', 'Nguyễn', 'Hiếu', 'hieu@ntu.edu.vn', 'nguyenhieu123', 'hieu.jpg', '0985904921', '1990-05-10', 1, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
-('ND002', 'QTV', 'Phạm ', 'Thị Thu Thuý', 'thuthuypt@ntu.edu.vn', 'thuthuy123', 'thuy.jpg', '0997256141', '1981-11-12', 0, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
-('ND003', 'QTV', 'Bùi', 'Chí Thành', 'thanhbuic@ntu.edu.vn', 'chithanh123', 'thanh.jpg', '0836825785', '1983-08-22', 1, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
-('ND004', 'GV', 'Nguyễn', 'Hải Triều', 'trieu.jpg', 'haitrieu123', 'trieu.jpg', '0992682518', '1995-03-09', 1, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
-('ND005', 'GV', 'Nguyễn', 'Đình Hưng', 'ndhung@ntu.edu.vn', 'dinhhung123', 'hung.jpg', '0987656787', '1980-10-10', 1, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
-('ND006', 'GV', 'Nguyễn', 'Thị Hương Lý', 'lyngth@ntu.edu.vn', 'huongly123', 'ly.jpg', '0987789789', '1987-12-01', 0, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
-('ND007', 'GV', 'Phạm', 'Thị Kim Ngoan', 'ptkngoan@ntu.edu.vn', 'kimngoan123', 'ngoan.jpg', '0898531219', '1985-09-04', 0, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
-('ND008', 'SV', 'Phạm', 'Tuấn Kiệt', 'kiet.pt.64cntt@ntu.edu.vn', 'tuankiet1774', 'kiet.jpg', '0987654671', '2004-07-17', 1, 'Diên Khánh', 'CNTT', '64.CNTT-1', '2025-11-14 08:03:10'),
-('ND009', 'SV', 'Cao', 'Linh Hà', 'ha.cl.64cntt@ntu.edu.vn', 'linhha124', 'ha.jpg', '0828635809', '2004-12-17', 0, 'Ninh Hoà', 'CNTT', '64.CNTT-2', '2025-11-14 08:03:10'),
-('ND010', 'SV', 'Huỳnh', 'Minh Bảo', 'bao.hm.64nna@ntu.edu.vn', 'minhbao123', 'bao.jpg', '0987654653', '2000-06-30', 1, 'DienKhanh', 'NN', '64.NNA-1', '2025-11-14 08:03:10'),
-('ND011', 'SV', 'Nguyễn ', 'Hồ Thanh Bình', 'binh.nht.64NTTS@ntu.edu.vn', 'thanhbinh123', 'binh.jpg', '0987654453', '2004-04-02', 0, 'Ninh Hoà', 'NTTS', '64.NTTS-2', '2025-11-14 08:03:10'),
-('ND012', 'SV', 'Nguyễn ', 'Hiểu Quyên', 'quyen.nh.64cntp@ntu.edu.vn', 'hieuquyen124', 'quyen.jpg', '0828635784', '2004-10-17', 0, 'Diên Sơn', 'CNTP', '64.CNTP-3', '2025-11-14 08:03:10');
+('ND001', 'QTV', 'Nguyễn', 'Hiếu', 'hieu@ntu.edu.vn', '$2y$10$MR6CABE7IZ.O9eWIcfE4CuQfVdXx0TpBy9o/zyHAl8H5wW2E/3Fhq', 'hieu.jpg', '0985904921', '1990-05-10', 1, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
+('ND002', 'QTV', 'Phạm ', 'Thị Thu Thuý', 'thuthuypt@ntu.edu.vn', '$2y$10$P9QqlwHjNtiBWUMY0QGEIOfeQtSk6r2OcCt8b00K/3QZ9g3VjUVuq', 'thuy.jpg', '0997256141', '1981-11-12', 0, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
+('ND003', 'QTV', 'Bùi', 'Chí Thành', 'thanhbuic@ntu.edu.vn', '$2y$10$TH5tHCkus8Bwb5W6efXUUOyicU.0zN5XbCPpzw8chG4UJf78mPOgm', 'thanh.jpg', '0836825785', '1983-08-22', 1, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
+('ND004', 'GV', 'Nguyễn', 'Hải Triều', 'trieu.jpg', '$2y$10$CBFlipyDSHLsEnMm4PCCxe2jEaV.3HK8DsiftGGtuoz1xFjoRXoqm', 'trieu.jpg', '0992682518', '1995-03-09', 1, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
+('ND005', 'GV', 'Nguyễn', 'Đình Hưng', 'ndhung@ntu.edu.vn', '$2y$10$NfjaZXyxxb.UQkX45q7oVOi48EKEwiOvypONcbyKkRNMa1fjHT/Se', 'hung.jpg', '0987656787', '1980-10-10', 1, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
+('ND006', 'GV', 'Nguyễn', 'Thị Hương Lý', 'lyngth@ntu.edu.vn', '$2y$10$au.04JDfwkrAWLBryaDGJusR4AnKJL06j7lTekVUsoRSMYJ9cDdx2', 'ly.jpg', '0987789789', '1987-12-01', 0, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
+('ND007', 'GV', 'Phạm', 'Thị Kim Ngoan', 'ptkngoan@ntu.edu.vn', '$2y$10$Pb6oQqEWXcQaTTjRnypvpu2Qnu29W9j8/2cjUUUeMpw4vVrhQqXmC', 'ngoan.jpg', '0898531219', '1985-09-04', 0, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
+('ND008', 'SV', 'Phạm', 'Tuấn Kiệt', 'kiet.pt.64cntt@ntu.edu.vn', '$2y$10$hcUR9f0ARPBC1gGlINwekuHjVNTy7WjgRw2fjRmhqV89CI8JHNXqG', 'kiet.jpg', '0987654671', '2004-07-17', 1, 'Diên Khánh', 'CNTT', '64.CNTT-1', '2025-11-14 08:03:10'),
+('ND009', 'SV', 'Cao', 'Linh Hà', 'ha.cl.64cntt@ntu.edu.vn', '$2y$10$HANCTWaf9XLH5mTSSAnkCe5YVHfEQRF21itAfULOcMjSAeXMZVSdO', 'ha.jpg', '0828635809', '2004-12-17', 0, 'Ninh Hoà', 'CNTT', '64.CNTT-2', '2025-11-14 08:03:10'),
+('ND010', 'SV', 'Huỳnh', 'Minh Bảo', 'bao.hm.64nna@ntu.edu.vn', '$2y$10$Wf7K9D0WfQF5hJuJyp3hkuVcB2lrHCW2NyaaAjiSK27fGfQcdUtoC', 'bao.jpg', '0987654653', '2000-06-30', 1, 'DienKhanh', 'NN', '64.NNA-1', '2025-11-14 08:03:10'),
+('ND011', 'SV', 'Nguyễn ', 'Hồ Thanh Bình', 'binh.nht.64NTTS@ntu.edu.vn', '$2y$10$qzT5WWBcn5xCgILMkyGLA.1dSF233IpYsJpOWruNOlNIsny8D.pJe', 'binh.jpg', '0987654453', '2004-04-02', 0, 'Ninh Hoà', 'NTTS', '64.NTTS-2', '2025-11-14 08:03:10'),
+('ND012', 'SV', 'Nguyễn ', 'Hiểu Quyên', 'quyen.nh.64cntp@ntu.edu.vn', '$2y$10$FwNYMIOibKKTGVPAJS1EiOCl/Lu0OTBEfy3MvR/rjU11DtNViriCu', 'quyen.jpg', '0828635784', '2004-10-17', 0, 'Diên Sơn', 'CNTP', '64.CNTP-3', '2025-11-14 08:03:10');
 
 -- --------------------------------------------------------
 
