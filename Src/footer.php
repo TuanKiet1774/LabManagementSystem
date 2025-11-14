@@ -44,6 +44,11 @@
     li {
         padding: 10px;
     }
+
+    iframe {
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
 </style>
 
 <body>
@@ -56,7 +61,7 @@
                         Lab Management System
                     </span>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <ul>
                         <li>
                             <b>
@@ -82,7 +87,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-3">
                     <ul>
                         <li>
                             <i class="fa-solid fa-school-flag"></i>
@@ -102,6 +107,12 @@
                             <i>Website: <a href="http://ntu.edu.vn" class="text-decoration-none text-light">http://ntu.edu.vn</a></i>
                         </li>
                     </ul>
+                </div>
+                <div class="col-md-3 d-md-block d-none">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1073.641962748613!2d109.19945962858982!3d12.267173677710973!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31706704a7a0e575%3A0x56736037aa0143e0!2zR2nhuqNuZyDEkcaw4budbmcgRzc!5e1!3m2!1svi!2s!4v1763123757824!5m2!1svi!2s"
+                        width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </div>

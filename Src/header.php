@@ -48,7 +48,7 @@
         <nav class="navbar navbar-expand-lg navbar-dark w-100">
             <div class="container-fluid">
                 <!-- Logo -->
-                <a class="navbar-brand fs-6 mt-1" href="#">
+                <a class="navbar-brand fs-6 mt-1" href="./index.php">
                     <img src="./Image/Logo.png" class="logo-header" alt="Logo LAB MANAGEMENT">
                     HỆ THỐNG QUẢN LÝ PHÒNG THỰC HÀNH
                 </a>
@@ -103,7 +103,7 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="./statistic.php">
                                 <i class="fa-solid fa-square-poll-vertical"></i>
                                 Thống kê
                             </a>

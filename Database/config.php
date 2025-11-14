@@ -2,7 +2,7 @@
 $host = 'localhost';
 $user = 'root';
 $pass = '';
-$db = 'ql_ban_sua';
+$db = 'quanlylab';
 $port = 3306;
 
 $con = mysqli_connect($host, $user, $pass, $db, $port);
