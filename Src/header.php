@@ -83,7 +83,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="phongmay.php">
                                         <i class="fa-solid fa-house-laptop"></i>
                                         Phòng máy
                                     </a>
