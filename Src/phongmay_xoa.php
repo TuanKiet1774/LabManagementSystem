@@ -35,10 +35,11 @@
             font-size: 16px;
             margin-bottom: 15px;
             color: #1e293b;
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            background: #eff6ffff;
             padding: 15px 20px;
             border-radius: 12px;
             border-left: 4px solid #667eea;
+            border-right: 4px solid #667eea;
             text-align: left;
         }
 
