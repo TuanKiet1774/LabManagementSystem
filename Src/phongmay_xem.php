@@ -6,82 +6,93 @@
     <title>Thông tin phòng máy</title>
     <style>
         body {
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: #f7f5ff; /* tím pastel nhẹ */
-    padding-top: 20px;
-}
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f7f5ff; 
+            padding-top: 20px;
+        }
 
-h2, th {
-    font-family: "Segoe UI", Arial, sans-serif;
-}
+        h2, th {
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
 
-table {
-    width: 55%;
-    margin: 0 auto;
-    border-collapse: collapse;
-    background: white;
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 4px 18px rgba(0,0,0,0.1);
-}
+        table {
+            width: 55%;
+            margin: 10px auto;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.1);
+        }
 
-/* Header của bảng */
-th {
-    background: #c7d2fe; /* indigo pastel */
-    color: #3f3d56;
-    padding: 12px;
-    font-size: 18px;
-    text-align: center;
-}
+        th {
+            background: #c7d2fe; 
+            color: #3f3d56;
+            padding: 12px;
+            font-size: 18px;
+            text-align: center;
+        }
 
-/* Ô nội dung */
-td {
-    padding: 15px;
-    border: 1px solid #eee;
-    vertical-align: top;
-    font-size: 16px;
-    color: #333;
-}
+        td {
+            padding: 15px;
+            border: 1px solid #eee;
+            vertical-align: top;
+            font-size: 16px;
+            color: #333;
+        }
 
-/* Cột ảnh */
-.img-cell {
-    width: 45%;
-    text-align: center;
-    background: #f0f5ff;
-}
+        .img-cell {
+            width: 45%;
+            text-align: center;
+            background: #f0f5ff;
+        }
 
-/* Ảnh bo góc + bóng nhẹ */
-.img-cell img {
-    width: 280px;
-    border-radius: 10px;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
-}
+        .img-cell img {
+            width: 280px;
+            border-radius: 10px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+        }
 
-/* Cột thông tin */
-.info-cell {
-    background: #fafaff;
-    padding-left: 20px;
-}
+        .info-cell {
+            background: #fafaff;
+            padding-left: 20px;
+        }
 
-/* Label */
-i {
-    font-style: normal;
-    font-weight: bold;
-    color: #6a5acd;
-    display: inline-block;
-    margin-top: 6px;
-}
+        i {
+            font-style: normal;
+            font-weight: bold;
+            color: #6a5acd;
+            display: inline-block;
+            margin-top: 6px;
+        }
 
-/* Giá trị */
-span {
-    color: #333;
-    font-size: 17px;
-    margin-left: 5px;
-}
+        span {
+            color: #333;
+            font-size: 17px;
+            margin-left: 5px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin: 20px auto;
+            padding: 10px 18px;
+            text-decoration: none;
+            background: #a5b4fc; 
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .back-btn:hover {
+            background: #818cf8;
+        }
+
 
     </style>
 </head>
 <body>
+    <?php include("../Src/header.php"); ?>
     <?php
         include("../Database/config.php");
 
@@ -124,10 +135,12 @@ span {
             }
 
         echo "</table>";
-        } else {
-            echo "<p>Thiếu mã sữa!</p>";
         }
-    ?>
+        echo "<div style='text-align:center;'>
+        <a class='back-btn' href='phongmay.php'>Quay lại</a>
+        </div>";
 
+    ?>
+    <?php include("../Src/footer.php"); ?>
 </body>
 </html>
