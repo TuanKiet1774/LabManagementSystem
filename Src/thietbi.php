@@ -176,6 +176,7 @@
         JOIN chitiettttb cttttb ON tb.MaThietBi = cttttb.MaThietBi
         JOIN trangthaithietbi tttb ON cttttb.MaTTTB = tttb.MaTTTB
         WHERE 1=1 $search
+        Order by tb.MaThietBi asc
         LIMIT $offset, $rowPerPage";
         $result = mysqli_query($con, $sql);
         $n = mysqli_num_rows($result);
@@ -185,7 +186,7 @@
             echo "
             <div style='width:80%; margin:0 auto; display:flex; justify-content: space-between; align-items:center; margin-bottom:10px;'>
                 <form method='GET' style='display:flex; gap:10px;'>
-                    <input type='text' name='keyword' placeholder='Tìm theo tên phòng / nhóm / trạng thái' 
+                    <input type='text' name='keyword' placeholder='Tìm theo tên thiết bị / loại / trạng thái' 
                         value='".($_GET['keyword'] ?? '')."'
                         style='padding:8px; width:260px; border-radius:6px; border:1px solid #aaa;'>
                     <button type='submit' style='padding:8px 15px; background:#6a5acd; color:white; border:none; border-radius:6px;'>Tìm</button>
@@ -200,6 +201,7 @@
             echo"<table>";
                 echo"<tr>
                     <th>Số thứ tự</th>
+                    <th>Mã thiết bị</th>
                     <th>Tên thiết bị</th>
                     <th>Tên loại</th>
                     <th>Số lượng</th>
@@ -210,6 +212,7 @@
                     echo"<tr>";
                     $row = mysqli_fetch_array($result);
                     echo"<td>".$index."</td>";
+                    echo"<td>".$row['MaThietBi']."</td>";
                     echo"<td>".$row['TenThietBi']."</td>";
                     echo"<td>".$row['TenLoai']."</td>";  
                     echo"<td style='text-align: center;'>".$row['SoLuong']."</td>";
