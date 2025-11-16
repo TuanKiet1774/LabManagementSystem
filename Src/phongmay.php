@@ -7,8 +7,7 @@
     <style>
         body {
             font-family: "Segoe UI", Arial, sans-serif;
-            background: #f7f5ff; /* tím pastel rất nhẹ */
-            padding-top: 20px;
+            background: #f7f5ff;
         }
 
         h2 {
@@ -177,6 +176,7 @@
         JOIN chitietttp ct ON ct.MaPhong = p.MaPhong
         JOIN trangthaiphong tt ON ct.MaTTP = tt.MaTTP
         WHERE 1=1 $search
+        Order by p.MaPhong asc
         LIMIT $offset, $rowPerPage";
         $result = mysqli_query($con, $sql);
         $n = mysqli_num_rows($result);
@@ -201,6 +201,7 @@
             echo"<table>";
                 echo"<tr>
                     <th>Số thứ tự</th>
+                    <th>Mã phòng</th>
                     <th>Tên phòng</th>
                     <th>Tên nhóm</th>
                     <th>Sức chứa</th>
@@ -211,6 +212,7 @@
                     echo"<tr>";
                     $row = mysqli_fetch_array($result);
                     echo"<td>".$index."</td>";
+                    echo"<td>".$row['MaPhong']."</td>";
                     echo"<td>".$row['TenPhong']."</td>";
                     echo"<td>".$row['TenNhom']."</td>";  
                     echo"<td style='text-align: center;'>".$row['SucChua']."</td>";
