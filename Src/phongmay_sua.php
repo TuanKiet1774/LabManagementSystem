@@ -133,6 +133,7 @@
 
                 $ok = mysqli_query($con, $sql1)
                     && mysqli_query($con, $sql2);
+                    
 
                 if ($ok) {
                     echo "<p style='text-align:center; color:green;'>Cập nhật thành công!</p>";
@@ -141,23 +142,30 @@
                 }
 
                 // Lấy lại dữ liệu sau khi cập nhật
-                $sql = "SELECT p.*, ct.MaTTP
+               $sql = "SELECT p.*, np.*, tt.*, ct.*
                 FROM phong p
+                JOIN nhomphong np ON np.MaNhom = p.MaNhom
                 JOIN chitietttp ct ON ct.MaPhong = p.MaPhong
-                WHERE p.MaPhong = '$maPhong'";
+                JOIN trangthaiphong tt ON ct.MaTTP = tt.MaTTP
+                WHERE p.MaPhong = '$ma_phong'";
                 $result = mysqli_query($con, $sql);
                 $row = mysqli_fetch_assoc($result);
+
+                
 
             } 
             else if (isset($maPhong)) {
 
                 // Lần đầu mở form
-                $sql = "SELECT p.*, ct.MaTTP
+                $sql = "SELECT p.*, np.*, tt.*, ct.*
                 FROM phong p
+                JOIN nhomphong np ON np.MaNhom = p.MaNhom
                 JOIN chitietttp ct ON ct.MaPhong = p.MaPhong
+                JOIN trangthaiphong tt ON ct.MaTTP = tt.MaTTP
                 WHERE p.MaPhong = '$maPhong'";
                 $result = mysqli_query($con, $sql);
                 $row = mysqli_fetch_assoc($result);
+                
             }
 
             if (!empty($row)) {
@@ -183,7 +191,7 @@
                     <select name="maNhom" required
                     style="width:75%; padding:10px; border-radius:8px; border:1px solid #c7d2fe; background:#f0f5ff;">
                         <?php while ($nhom = mysqli_fetch_assoc($dsNhom)) { ?>
-                            <option value="<?= $l['MaLoai'] ?>"
+                            <option value="<?= $nhom['MaNhom'] ?>"
                                 <?= $nhom['MaNhom'] == $row['MaNhom'] ? 'selected' : '' ?>>
                                 <?= $nhom['TenNhom'] ?>
                             </option>
@@ -191,6 +199,7 @@
                     </select>
                 </td>
             </tr>
+
 
 
             <tr>
