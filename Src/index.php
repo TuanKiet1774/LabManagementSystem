@@ -10,15 +10,9 @@
 
 <body>
     <?php
-    session_start();
-
-    if (!isset($_SESSION['user'])) {
-        header("Location: login.php");
-        exit();
-    }
-
-    echo "Xin chào " . $_SESSION['user']['username'];
-
+    include_once('../Database/config.php');
+    include './Controller/loginController.php';
+    $user = checkLogin();
     ?>
     <?php include './header.php'; ?>
     <main>Trang chủ</main>

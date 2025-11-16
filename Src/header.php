@@ -95,7 +95,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="./history.php">
                                         <i class="fa-solid fa-clock-rotate-left"></i>
                                         Lịch sử
                                     </a>
@@ -115,8 +115,15 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="./Image/male.jpg" class="user" alt="">
-                                <span>User</span>
+                                <?php 
+                                $path = './Image/'.$_SESSION['Anh']; 
+                                echo "<img src = '$path' class='user' alt=''>"; 
+                                ?>
+                                <span>
+                                    <?php
+                                    echo isset($_SESSION['HoTen']) ? $_SESSION['HoTen'] : "Người dùng";
+                                    ?>
+                                </span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
@@ -132,7 +139,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="./logout.php">
                                         <i class="fa-solid fa-right-from-bracket"></i>
                                         Đăng xuất
                                     </a>

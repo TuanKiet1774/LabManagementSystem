@@ -112,6 +112,18 @@
         color: white !important;
         font-weight: bold;
     }
+
+    .pass-box {
+        position: relative;
+    }
+
+    #togglePass {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
 </style>
 
 <body>
@@ -127,13 +139,19 @@
         </nav>
     </header>
     <main>
+        <?php
+        session_start();
+        include_once('../Database/config.php');
+        include './Controller/loginController.php';
+        logIn($con);
+        ?>
         <div class="login container-fluid">
             <div class="login-right d-none d-md-block">
                 <img src="./Image/ntu.jpg" class="ntu-img" alt="ntu" title="Trường đại học Nha Trang">
             </div>
             <div class="login-left mx-md-5 mx-0">
                 <form action="" method="post">
-                    <h3 class="welcome text-center mb-3"><b>WELCOME TO<br><i>LAB MANAGEMENT SYSTEM</i> </b></h3>
+                    <h4 class="welcome text-center mb-3"><b>CHÀO MỪNG ĐẾN VỚI HỆ THỐNG<br><i>QUẢN LÝ PHÒNG THỰC HÀNH</i> </b></h4>
                     <table>
                         <tr>
                             <td>
@@ -149,14 +167,15 @@
                                 <i class="fa-solid fa-unlock-keyhole"></i>
                                 Mật khẩu:
                             </td>
-                            <td>
-                                <input type="password" name="pass" value="<?php echo isset($_POST['pass']) ? $_POST['pass'] : "" ?>" required>
+                            <td class="pass-box">
+                                <input type="password" id="pass" name="pass" value="<?php echo isset($_POST['pass']) ? $_POST['pass'] : "" ?>" required>
+                                <i class="fa-solid fa-eye-slash" id="togglePass"></i>
                             </td>
                         </tr>
                         <tr>
                             <td class="m-4" colspan="2" align="center">
                                 <input type="submit" name="btnDN" class="btnDN me-3" value="Đăng nhập">
-                                <a href="#" class="btnDK ms-3">Đăng ký</a>
+                                <a href="./signup.php" class="btnDK ms-3">Đăng ký</a>
                             </td>
                         </tr>
                     </table>
@@ -165,6 +184,22 @@
         </div>
     </main>
     <?php include './footer.php'; ?>
+    <script>
+        const togglePass = document.getElementById('togglePass');
+        const passInput = document.getElementById('pass');
+
+        togglePass.addEventListener('click', function() {
+            if (passInput.type === "password") {
+                passInput.type = "text";
+                togglePass.classList.remove('fa-eye-slash');
+                togglePass.classList.add('fa-eye');
+            } else {
+                passInput.type = "password";
+                togglePass.classList.remove('fa-eye');
+                togglePass.classList.add('fa-eye-slash');
+            }
+        });
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
