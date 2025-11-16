@@ -84,6 +84,30 @@
             background: #f59e0b;
         }
 
+        /*btn add  */
+        .table-header {
+            width: 80%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
+        }
+
+        .btn-add {
+            padding: 10px 20px;
+            background: #1096fd;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: 0.25s;
+            float: right;
+        }
+
+        .btn-add:hover {
+            background: #60a5fa;
+        }
+
         /* page */
         .pagination {
             margin: 20px 0;
@@ -113,8 +137,6 @@
             background: #6366f1;
             color: white;
         }
-
-
     </style>
 </head>
 <body>
@@ -143,6 +165,10 @@
          if($n > 0) {
             echo"<h2 style='text-align: center;'>Danh sách phòng máy</h2>";
             $index = $offset + 1;
+            echo "<div class='table-header'>
+                <a href='phongmay_them.php' class='btn-add'>+ Thêm phòng</a>
+            </div>";
+
             echo"<table>";
                 echo"<tr>
                     <th>Số thứ tự</th>
@@ -191,6 +217,6 @@
 
          }
     ?>
-    <?php include("../Src/footer.php"); ?>
+     
 </body>
 </html>
