@@ -8,7 +8,6 @@
     body {
         font-family: "Segoe UI", Arial, sans-serif;
         background: #f7f5ff;
-        padding-top: 30px;
     }
 
     h2 {

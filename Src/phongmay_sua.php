@@ -8,7 +8,6 @@
             body {
                 font-family: "Segoe UI", Arial, sans-serif;
                 background: #f7f5ff;
-                padding-top: 20px;
             }
 
             h2 {
@@ -105,6 +104,9 @@
                 $maPhong = $_GET['maPhong'];
             }
 
+            $dsNhom = mysqli_query($con, "SELECT * FROM nhomphong");
+            $dsTrangThai = mysqli_query($con, "SELECT * FROM trangthaiphong");
+
             // Xử lý cập nhật
             if (isset($_POST['submit'])) {
 
@@ -112,12 +114,10 @@
                 $tenPhong = $_POST['tenPhong'];
 
                 $maNhom = $_POST['maNhom'];
-                $tenNhom = $_POST['tenNhom'];
 
                 $sucChua = $_POST['sucChua'];
 
                 $maTTP = $_POST['maTTP'];
-                $tenTTP = $_POST['tenTTP'];
 
                 // Cập nhật bảng phong
                 $sql1 = "UPDATE phong SET 
@@ -126,25 +126,13 @@
                             MaNhom='$maNhom'
                         WHERE MaPhong='$maPhong'";
 
-                // Cập nhật tên nhóm phòng
-                $sql2 = "UPDATE nhomphong SET 
-                            TenNhom='$tenNhom'
-                        WHERE MaNhom='$maNhom'";
-
-                // Cập nhật tên trạng thái phòng
-                $sql3 = "UPDATE trangthaiphong SET 
-                            TenTTP='$tenTTP'
-                        WHERE MaTTP='$maTTP'";
-
                 // Gán trạng thái cho phòng
-                $sql4 = "UPDATE chitietttp SET
+                $sql2 = "UPDATE chitietttp SET
                             MaTTP='$maTTP'
                         WHERE MaPhong='$maPhong'";
 
                 $ok = mysqli_query($con, $sql1)
-                    && mysqli_query($con, $sql2)
-                    && mysqli_query($con, $sql3)
-                    && mysqli_query($con, $sql4);
+                    && mysqli_query($con, $sql2);
 
                 if ($ok) {
                     echo "<p style='text-align:center; color:green;'>Cập nhật thành công!</p>";
@@ -153,12 +141,10 @@
                 }
 
                 // Lấy lại dữ liệu sau khi cập nhật
-                $sql = "SELECT p.*, np.TenNhom, tt.TenTTP, np.MaNhom, tt.MaTTP
-                        FROM phong p
-                        JOIN nhomphong np ON np.MaNhom = p.MaNhom
-                        JOIN chitietttp ct ON ct.MaPhong = p.MaPhong
-                        JOIN trangthaiphong tt ON tt.MaTTP = ct.MaTTP
-                        WHERE p.MaPhong = '$maPhong'";
+                $sql = "SELECT p.*, ct.MaTTP
+                FROM phong p
+                JOIN chitietttp ct ON ct.MaPhong = p.MaPhong
+                WHERE p.MaPhong = '$maPhong'";
                 $result = mysqli_query($con, $sql);
                 $row = mysqli_fetch_assoc($result);
 
@@ -166,12 +152,10 @@
             else if (isset($maPhong)) {
 
                 // Lần đầu mở form
-                $sql = "SELECT p.*, np.TenNhom, tt.TenTTP, np.MaNhom, tt.MaTTP
-                        FROM phong p
-                        JOIN nhomphong np ON np.MaNhom = p.MaNhom
-                        JOIN chitietttp ct ON ct.MaPhong = p.MaPhong
-                        JOIN trangthaiphong tt ON tt.MaTTP = ct.MaTTP
-                        WHERE p.MaPhong = '$maPhong'";
+                $sql = "SELECT p.*, ct.MaTTP
+                FROM phong p
+                JOIN chitietttp ct ON ct.MaPhong = p.MaPhong
+                WHERE p.MaPhong = '$maPhong'";
                 $result = mysqli_query($con, $sql);
                 $row = mysqli_fetch_assoc($result);
             }
@@ -196,10 +180,18 @@
             <tr>
                 <td>Tên nhóm:</td>
                 <td>
-                    <input type="text" name="tenNhom" value="<?= $row['TenNhom'] ?>">
-                    <input type="hidden" name="maNhom" value="<?= $row['MaNhom'] ?>">
+                    <select name="maNhom" required
+                    style="width:75%; padding:10px; border-radius:8px; border:1px solid #c7d2fe; background:#f0f5ff;">
+                        <?php while ($nhom = mysqli_fetch_assoc($dsNhom)) { ?>
+                            <option value="<?= $l['MaLoai'] ?>"
+                                <?= $nhom['MaNhom'] == $row['MaNhom'] ? 'selected' : '' ?>>
+                                <?= $nhom['TenNhom'] ?>
+                            </option>
+                        <?php } ?>
+                    </select>
                 </td>
             </tr>
+
 
             <tr>
                 <td>Sức chứa:</td>
@@ -209,8 +201,15 @@
             <tr>
                 <td>Trạng thái:</td>
                 <td>
-                    <input type="text" name="tenTTP" value="<?= $row['TenTTP'] ?>">
-                    <input type="hidden" name="maTTP" value="<?= $row['MaTTP'] ?>">
+                    <select name="maTTP" required style="width:75%; padding:10px; border-radius:8px; border:1px solid #c7d2fe; background:#f0f5ff;">
+                        <?php
+                        mysqli_data_seek($dsTrangThai, 0); // reset pointer
+                        while ($tt = mysqli_fetch_assoc($dsTrangThai)) { ?>
+                            <option value="<?= $tt['MaTTP'] ?>" <?= $tt['MaTTP']==$row['MaTTP']?'selected':'' ?>>
+                                <?= $tt['TenTTP'] ?>
+                            </option>
+                        <?php } ?>
+                    </select>
                 </td>
             </tr>
 
