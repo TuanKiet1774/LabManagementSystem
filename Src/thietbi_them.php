@@ -174,7 +174,7 @@
     </table>
     </form>
 
-    <a class="back-btn" href="phongmay.php">Quay lại</a>
+    <a class="back-btn" href="thietbi.php">Quay lại</a>
 
     <?php include("../Src/footer.php"); ?>
 
