@@ -148,6 +148,14 @@
         }
         $keyword = $_GET['keyword'] ?? '';
         $search = "";
+        if (!empty($keyword)) {
+            $keyword = mysqli_real_escape_string($con, $keyword);
+            $search = "AND (
+                p.TenPhong LIKE '%$keyword%' OR 
+                np.TenNhom LIKE '%$keyword%' OR 
+                tt.TenTTP LIKE '%$keyword%'
+            )";
+        }
         $rowPerPage = 10;
         $offset=($_GET['page'] - 1) * $rowPerPage;
         // $sqlCount = "SELECT COUNT(*) as total from phong";
@@ -161,14 +169,7 @@
         $rowCount = mysqli_fetch_assoc($resultCount);
         $totalRow = $rowCount['total'];
         $maxPage = ceil($totalRow/$rowPerPage);
-        if (!empty($keyword)) {
-            $keyword = mysqli_real_escape_string($con, $keyword);
-            $search = "AND (
-                p.TenPhong LIKE '%$keyword%' OR 
-                np.TenNhom LIKE '%$keyword%' OR 
-                tt.TenTTP LIKE '%$keyword%'
-            )";
-        }
+        
 
         $sql = "SELECT p.MaPhong, p.TenPhong, p.SucChua, np.TenNhom, tt.TenTTP
         FROM phong p
@@ -225,23 +226,28 @@
                 }
             echo"</table>";
             echo '<div class="pagination">';
-            if($_GET['page'] > 1) {
-                echo "<a href='?page=".($_GET['page'] - 1)."'>«</a>";
-            }
 
-            for ($i = 1; $i <= $maxPage; $i++) {
-                if ($i == $_GET['page']) {
-                    echo "<span class='current'>$i</span>";
-                } else {
-                    echo "<a href='?page=$i'>$i</a>";
+                // nut prev
+                if($_GET['page'] > 1) {
+                    echo "<a href='?page=".($_GET['page'] - 1)."&keyword=$keyword'>«</a>";
                 }
-            }
 
-            if ($_GET['page'] < $maxPage) {
-                echo "<a href='?page=".($_GET['page'] + 1)."'>»</a>";
-            }
+                // số trang
+                for ($i = 1; $i <= $maxPage; $i++) {
+                    if ($i == $_GET['page']) {
+                        echo "<span class='current'>$i</span>";
+                    } else {
+                        echo "<a href='?page=$i&keyword=$keyword'>$i</a>";
+                    }
+                }
 
-            echo '</div>';
+                // next
+                if ($_GET['page'] < $maxPage) {
+                    echo "<a href='?page=".($_GET['page'] + 1)."&keyword=$keyword'>»</a>";
+                }
+
+                echo '</div>';
+
 
          }
     ?>
