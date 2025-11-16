@@ -204,7 +204,6 @@
                     <th>Mã thiết bị</th>
                     <th>Tên thiết bị</th>
                     <th>Tên loại</th>
-                    <th>Số lượng</th>
                     <th>Trạng thái thiết bị</th>
                     <th>Chức năng</th>
                 </tr>";
@@ -215,7 +214,7 @@
                     echo"<td>".$row['MaThietBi']."</td>";
                     echo"<td>".$row['TenThietBi']."</td>";
                     echo"<td>".$row['TenLoai']."</td>";  
-                    echo"<td style='text-align: center;'>".$row['SoLuong']."</td>";
+                    // echo"<td style='text-align: center;'>".$row['SoLuong']."</td>";
                     echo"<td>".$row['TenTTTB']."</td>";
                     echo"<td>
                     <a href='thietbi_xem.php?maThietBi=".$row['MaThietBi']."'>Xem</a>

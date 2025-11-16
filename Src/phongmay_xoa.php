@@ -180,7 +180,7 @@
         if ($ok) {
             echo "<p style='text-align:center; color:green;'>Xóa phòng thành công!</p>";
             echo "<div style='text-align:center; margin-top:20px;'>
-                    <a class='btn btn-cancel' href='phongmay.php'>Quay lại danh sách</a>
+                    <a class='btn btn-cancel' href='phongmay.php' style='color: white;'>Quay lại danh sách</a>
                 </div>";
             exit;
         } else {
