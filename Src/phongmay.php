@@ -146,28 +146,57 @@
         if(!isset($_GET['page'])) {
             $_GET['page'] = 1;
         }
+        $keyword = $_GET['keyword'] ?? '';
+        $search = "";
+        if (!empty($keyword)) {
+            $keyword = mysqli_real_escape_string($con, $keyword);
+            $search = "AND (
+                p.TenPhong LIKE '%$keyword%' OR 
+                np.TenNhom LIKE '%$keyword%' OR 
+                tt.TenTTP LIKE '%$keyword%'
+            )";
+        }
         $rowPerPage = 10;
         $offset=($_GET['page'] - 1) * $rowPerPage;
-        $sqlCount = "SELECT COUNT(*) as total from phong";
+        // $sqlCount = "SELECT COUNT(*) as total from phong";
+        $sqlCount = "SELECT COUNT(*) as total
+             FROM phong p
+             JOIN nhomphong np ON np.MaNhom = p.MaNhom
+             JOIN chitietttp ct ON ct.MaPhong = p.MaPhong
+             JOIN trangthaiphong tt ON ct.MaTTP = tt.MaTTP
+             WHERE 1=1 $search";
         $resultCount = mysqli_query($con, $sqlCount); 
         $rowCount = mysqli_fetch_assoc($resultCount);
         $totalRow = $rowCount['total'];
         $maxPage = ceil($totalRow/$rowPerPage);
+        
 
         $sql = "SELECT p.MaPhong, p.TenPhong, p.SucChua, np.TenNhom, tt.TenTTP
         FROM phong p
         JOIN nhomphong np ON np.MaNhom = p.MaNhom
         JOIN chitietttp ct ON ct.MaPhong = p.MaPhong
         JOIN trangthaiphong tt ON ct.MaTTP = tt.MaTTP
+        WHERE 1=1 $search
         LIMIT $offset, $rowPerPage";
         $result = mysqli_query($con, $sql);
         $n = mysqli_num_rows($result);
          if($n > 0) {
             echo"<h2 style='text-align: center;'>Danh sách phòng máy</h2>";
             $index = $offset + 1;
-            echo "<div class='table-header'>
+            echo "
+            <div style='width:80%; margin:0 auto; display:flex; justify-content: space-between; align-items:center; margin-bottom:10px;'>
+                <form method='GET' style='display:flex; gap:10px;'>
+                    <input type='text' name='keyword' placeholder='Tìm theo tên phòng / nhóm / trạng thái' 
+                        value='".($_GET['keyword'] ?? '')."'
+                        style='padding:8px; width:260px; border-radius:6px; border:1px solid #aaa;'>
+                    <button type='submit' style='padding:8px 15px; background:#6a5acd; color:white; border:none; border-radius:6px;'>Tìm</button>
+                </form>
                 <a href='phongmay_them.php' class='btn-add'>+ Thêm phòng</a>
             </div>";
+
+            // echo "<div class='table-header'>
+                
+            // </div>";
 
             echo"<table>";
                 echo"<tr>
@@ -197,23 +226,28 @@
                 }
             echo"</table>";
             echo '<div class="pagination">';
-            if($_GET['page'] > 1) {
-                echo "<a href='?page=".($_GET['page'] - 1)."'>«</a>";
-            }
 
-            for ($i = 1; $i <= $maxPage; $i++) {
-                if ($i == $_GET['page']) {
-                    echo "<span class='current'>$i</span>";
-                } else {
-                    echo "<a href='?page=$i'>$i</a>";
+                // nut prev
+                if($_GET['page'] > 1) {
+                    echo "<a href='?page=".($_GET['page'] - 1)."&keyword=$keyword'>«</a>";
                 }
-            }
 
-            if ($_GET['page'] < $maxPage) {
-                echo "<a href='?page=".($_GET['page'] + 1)."'>»</a>";
-            }
+                // số trang
+                for ($i = 1; $i <= $maxPage; $i++) {
+                    if ($i == $_GET['page']) {
+                        echo "<span class='current'>$i</span>";
+                    } else {
+                        echo "<a href='?page=$i&keyword=$keyword'>$i</a>";
+                    }
+                }
 
-            echo '</div>';
+                // next
+                if ($_GET['page'] < $maxPage) {
+                    echo "<a href='?page=".($_GET['page'] + 1)."&keyword=$keyword'>»</a>";
+                }
+
+                echo '</div>';
+
 
          }
     ?>
