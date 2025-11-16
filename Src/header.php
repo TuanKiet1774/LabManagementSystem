@@ -89,7 +89,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="thietbi.php">
                                         <i class="fa-solid fa-computer"></i>
                                         Thiết bị
                                     </a>
