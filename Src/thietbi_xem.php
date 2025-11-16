@@ -7,8 +7,7 @@
     <style>
         body {
             font-family: "Segoe UI", Arial, sans-serif;
-            background: #f7f5ff; 
-            padding-top: 20px;
+            background: #f7f5ff;
         }
 
         h2, th {
