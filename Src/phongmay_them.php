@@ -58,20 +58,20 @@
         outline: none;
     }
 
-    .btn {
-        padding: 12px 26px;
+    .btn-add {
+        display: inline-block;
+        width: 20%;
+        padding: 8px;
         font-size: 16px;
-        border-radius: 8px;
+        background-color: #1096fdff;
+        color: white;
         border: none;
+        border-radius: 8px;
         cursor: pointer;
         transition: 0.25s;
-        color: white;
     }
 
-    .btn-submit {
-        background: #1096fd;
-    }
-    .btn-submit:hover {
+    .btn-add:hover {
         background: #60a5fa;
     }
 
@@ -170,7 +170,7 @@
 
         <tr>
             <td colspan="2" align="center" style="background:#fcfec7ff;">
-                <button type="submit" name="submit" class="btn btn-submit">Thêm phòng</button>
+                <button type="submit" name="submit" class="btn-add">Thêm phòng</button>
             </td>
         </tr>
     </table>
