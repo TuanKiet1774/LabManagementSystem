@@ -176,8 +176,8 @@
         </tr>
 
         <tr>
-            <td colspan="2" align="center" style="background:#fcfec7ff;">
-                <button type="submit" name="submit" class="btn-add">Thêm phòng</button>
+            <td colspan="2" align="center" style="background:#feffddff;">
+                    <input type="submit" name="submit" value="Thêm phòng" class='btn-add'>
             </td>
         </tr>
     </table>
