@@ -145,6 +145,22 @@
             background: #6366f1;
             color: white;
         }
+
+        td a.disabled {
+            background: #d1d5db !important;
+            color: #9ca3af !important;
+            cursor: not-allowed !important;
+            pointer-events: none;
+            opacity: 0.6;
+
+            td a:nth-child(4) {
+            background: #34d399;
+        }
+
+        td a:nth-child(4):hover {
+            background: #10b981;
+        }
+}
     </style>
 </head>
 <body>
@@ -216,6 +232,11 @@
                 for($i=0; $i<$n; $i++) {
                     echo"<tr>";
                     $row = mysqli_fetch_array($result);
+                    $trangThai = $row['TenTTP'];
+                    $disabledClass = ($trangThai != 'Hoạt động') ? 'disabled' : '';
+                    $muonPhongLink = ($trangThai == 'Hoạt động') 
+                    ? "phongmay_muon.php?maPhong=".$row['MaPhong'] 
+                    : "#";
                     echo"<td>".$index."</td>";
                     echo"<td>".$row['MaPhong']."</td>";
                     echo"<td>".$row['TenPhong']."</td>";
@@ -226,7 +247,7 @@
                     <a href='phongmay_xem.php?maPhong=".$row['MaPhong']."'>Xem</a>
                     <a href='phongmay_sua.php?maPhong=".$row['MaPhong']."'>Sửa</a>
                     <a href='phongmay_xoa.php?maPhong=".$row['MaPhong']."'>Xóa</a>
-                    <a href='phongmay_muon.php?maPhong=".$row['MaPhong']."'>Mượn phòng</a>
+                    <a href='$muonPhongLink' class='$disabledClass'>Mượn phòng</a>
                     </td>";
                     echo"</tr>";
                     $index++;
