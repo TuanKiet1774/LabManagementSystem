@@ -108,6 +108,9 @@
 
         // Lấy mã phòng từ URL
         $maPhong = $_GET['maPhong'];
+        $sqlPhong = mysqli_query($con, "SELECT TenPhong FROM phong WHERE MaPhong = '$maPhong'");
+        $tenPhong = mysqli_fetch_assoc($sqlPhong)['TenPhong'];
+
 
         // Lấy danh sách tiết học
         $listTiet = mysqli_query($con, "SELECT * FROM tiethoc");
@@ -120,34 +123,34 @@
         // Khi submit
         if (isset($_POST['submit'])) {
             $maPhong = $_POST['maPhong'];
-            $maND = $_SESSION['MaND']; // Người dùng đang đăng nhập
+            $maND = 'ND001'; // Người dùng đang đăng nhập
             $mucDich = $_POST['mucDich'];
             $ngayBD = $_POST['ngayBD'];
             $ngayKT = $_POST['ngayKT'];
             $maNgay = $_POST['maNgay'];
-            $maTiet = $_POST['maTiet'];
+            // $maTiet = $_POST['maTiet'];
+            $maTietArr = isset($_POST['maTiet']) ? $_POST['maTiet'] : [];
             $maTTT = $_POST['maTTT'];
 
             // ---------- 1. Tạo phiếu mượn ----------
-            $sql1 = "INSERT INTO phieumuon(MaPhong, MaND, MucDich, NgayBD, NgayKT, NgayTao)
-                    VALUES ('$maPhong', '$maND', '$mucDich', '$ngayBD', '$ngayKT', NOW())";
+            $maPhieu = "PM" . time();
+            $sql1 = "INSERT INTO phieumuon(MaPhieu, MaPhong, MaND, MucDich, NgayBD, NgayKT, NgayTao)
+                    VALUES ('$maPhieu', '$maPhong', '$maND', '$mucDich', '$ngayBD', '$ngayKT', NOW())";
 
             if (mysqli_query($con, $sql1)) {
-                $maPhieu = mysqli_insert_id($con);
 
                 // ---------- 2. Gắn trạng thái phiếu ban đầu ----------
                 // Giả sử 1 = "Chờ duyệt"
-                $sql2 = "INSERT INTO chitietttom(MaPhieu, MaTTPM)
-                        VALUES ('$maPhieu', '1')";
-
+                $sql2 = "INSERT INTO chitietttpm(MaPhieu, MaTTPM)
+                        VALUES ('$maPhieu', 'TTPM001')";
                 mysqli_query($con, $sql2);
 
                 // ---------- 3. Lưu thời gian mượn ----------
-                $sql3 = "INSERT INTO thoigianmuon(MaPhieu, MaTiet, MaTTT, MaNgay)
-                        VALUES ('$maPhieu', '$maTiet', '1', '$maNgay')"; 
-                        // MaTTT = 1 (trạng thái tuần mặc định)
-
-                mysqli_query($con, $sql3);
+                foreach ($maTietArr as $maTiet) {
+                    $sql3 = "INSERT INTO thoigianmuon(MaPhieu, MaTiet, MaTTT, MaNgay)
+                            VALUES ('$maPhieu', '$maTiet', '$maTTT', '$maNgay')";
+                    mysqli_query($con, $sql3);
+                }
 
                 echo "<p style='text-align:center; color:green;'>Tạo phiếu mượn thành công!</p>";
             } else {
@@ -160,9 +163,13 @@
         <h2 style="text-align:center;">Tạo phiếu mượn phòng</h2>
         <table>
             <tr>
-                <td>Mã phòng:</td>
-                <td><input type="text" name="maPhong" value="<?= $maPhong ?>" readonly></td>
+                <td>Phòng:</td>
+                <td>
+                    <input type="text" value="<?= $tenPhong ?>" readonly>
+                    <input type="hidden" name="maPhong" value="<?= $maPhong ?>">
+                </td>
             </tr>
+
 
             <tr>
                 <td>Mục đích:</td>
@@ -194,14 +201,12 @@
             <tr>
                 <td>Tiết học:</td>
                 <td>
-                    <select name="maTiet" required>
-                        <option value="">-- Chọn tiết --</option>
-                        <?php while($t = mysqli_fetch_assoc($listTiet)) { ?>
-                            <option value="<?= $t['MaTiet'] ?>">
-                                <?= $t['TenTiet'] ?> (<?= $t['GioBG'] ?> - <?= $t['GioKT'] ?>)
-                            </option>
-                        <?php } ?>
-                    </select>
+                    <?php while($t = mysqli_fetch_assoc($listTiet)) { ?>
+                        <label style="display:block;">
+                            <input type="checkbox" name="maTiet[]" value="<?= $t['MaTiet'] ?>">
+                            <?= $t['TenTiet'] ?> (<?= $t['GioBG'] ?> - <?= $t['GioKT'] ?>)
+                        </label>
+                    <?php } ?>
                 </td>
             </tr>
 
