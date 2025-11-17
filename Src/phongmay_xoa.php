@@ -152,7 +152,6 @@
         echo "<p style='text-align:center; color:red;'>Không xác định được phòng!</p>";
         exit;
     }
-
     $maPhong = $_GET['maPhong'];
 
     // Lấy thông tin phòng để hiển thị

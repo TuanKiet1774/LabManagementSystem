@@ -169,7 +169,6 @@
         $totalRow = $rowCount['total'];
         $maxPage = ceil($totalRow/$rowPerPage);
         
-
         $sql = "SELECT tb.*, tttb.TenTTTB, loai.*
         FROM thietbi tb
         JOIN loai ON loai.MaLoai = tb.MaLoai

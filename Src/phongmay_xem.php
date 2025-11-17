@@ -123,10 +123,8 @@
                     echo "</td>";
 
                     echo "<td class='info-cell'>";
-                        
                         echo "<i>Sức chứa:</i>";                           
                         echo "<span>" . $row['SucChua'] . "</span><br>";
-
                         echo "<i>Trạng thái phòng: </i>";
                         echo "<span>" . $row['TenTTP'] . "</span>";
                     echo "</td>";

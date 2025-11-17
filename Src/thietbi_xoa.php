@@ -154,7 +154,6 @@
     }
 
     $maThietBi = $_GET['maThietBi'];
-
     // Lấy thông tin phòng để hiển thị
     $sql = "SELECT tb.*, tttb.TenTTTB, loai.*
                 FROM thietbi tb

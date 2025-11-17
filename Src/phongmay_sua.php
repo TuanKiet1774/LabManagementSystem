@@ -95,7 +95,6 @@
     </head>
     <body>
         <?php include("../Src/header.php"); ?>
-
         <?php
             include("../Database/config.php");
 

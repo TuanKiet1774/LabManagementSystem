@@ -176,7 +176,6 @@
                 <td>Tên thiết bị:</td>
                 <td><input type="text" name="tenThietBi" value="<?= $row['TenThietBi'] ?>"></td>
             </tr>
-
             <tr>
                 <td>Tên loại:</td>
                 <td>

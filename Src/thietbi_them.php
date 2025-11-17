@@ -95,7 +95,6 @@
 
     <?php include("../Src/header.php"); ?>
     <?php include("../Database/config.php"); ?>
-
     <h2>Thêm thiết bị</h2>
 
     <?php

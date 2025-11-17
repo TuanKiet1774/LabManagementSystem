@@ -194,10 +194,6 @@
                 <a href='phongmay_them.php' class='btn-add'>+ Thêm phòng</a>
             </div>";
 
-            // echo "<div class='table-header'>
-                
-            // </div>";
-
             echo"<table>";
                 echo"<tr>
                     <th>Số thứ tự</th>

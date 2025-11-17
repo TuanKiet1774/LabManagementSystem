@@ -134,7 +134,6 @@
         echo "<div style='text-align:center;'>
         <a class='back-btn' href='thietbi.php'>Quay lại</a>
         </div>";
-
     ?>
     <?php include("../Src/footer.php"); ?>
 </body>
