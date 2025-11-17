@@ -235,7 +235,7 @@
                     $trangThai = $row['TenTTP'];
                     $disabledClass = ($trangThai != 'Hoạt động') ? 'disabled' : '';
                     $muonPhongLink = ($trangThai == 'Hoạt động') 
-                    ? "phongmay_muon.php?maPhong=".$row['MaPhong'] 
+                    ? "phieumuon_them.php?maPhong=".$row['MaPhong'] 
                     : "#";
                     echo"<td>".$index."</td>";
                     echo"<td>".$row['MaPhong']."</td>";

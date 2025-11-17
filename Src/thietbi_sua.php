@@ -64,7 +64,7 @@
                 width: 15%;
                 padding: 12px;
                 font-size: 16px;
-                background-color: #1096fdff;
+                background-color: #60a5fa;
                 color: white;
                 border: none;
                 border-radius: 8px;
@@ -73,7 +73,7 @@
             }
 
             .btn-submit:hover {
-                background: #60a5fa;
+                background: #048ff9ff;
             }
 
             .back-btn {
