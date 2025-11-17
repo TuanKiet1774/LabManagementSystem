@@ -115,6 +115,8 @@
         // Lấy danh sách ngày trong tuần
         $listNgay = mysqli_query($con, "SELECT * FROM ngaytuan");
 
+        $listTTT = mysqli_query($con, "SELECT * FROM trangthaituan");
+
         // Khi submit
         if (isset($_POST['submit'])) {
             $maPhong = $_POST['maPhong'];
@@ -124,6 +126,7 @@
             $ngayKT = $_POST['ngayKT'];
             $maNgay = $_POST['maNgay'];
             $maTiet = $_POST['maTiet'];
+            $maTTT = $_POST['maTTT'];
 
             // ---------- 1. Tạo phiếu mượn ----------
             $sql1 = "INSERT INTO phieumuon(MaPhong, MaND, MucDich, NgayBD, NgayKT, NgayTao)
@@ -201,6 +204,21 @@
                     </select>
                 </td>
             </tr>
+
+            <tr>
+                <td>Trạng thái tuần:</td>
+                <td>
+                    <select name="maTTT" required>
+                        <option value="">-- Chọn trạng thái --</option>
+                        <?php while($ttt = mysqli_fetch_assoc($listTTT)) { ?>
+                            <option value="<?= $ttt['MaTTT'] ?>">
+                                <?= $ttt['TenTTT'] ?>
+                            </option>
+                        <?php } ?>
+                    </select>
+                </td>
+            </tr>
+
 
             <tr>
                 <td colspan="2" align="center" style="background:#feffddff;">
