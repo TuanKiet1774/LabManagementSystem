@@ -146,7 +146,7 @@
                 JOIN nhomphong np ON np.MaNhom = p.MaNhom
                 JOIN chitietttp ct ON ct.MaPhong = p.MaPhong
                 JOIN trangthaiphong tt ON ct.MaTTP = tt.MaTTP
-                WHERE p.MaPhong = '$ma_phong'";
+                WHERE p.MaPhong = '$maPhong'";
                 $result = mysqli_query($con, $sql);
                 $row = mysqli_fetch_assoc($result);
 
@@ -211,7 +211,6 @@
                 <td>
                     <select name="maTTP" required style="width:75%; padding:10px; border-radius:8px; border:1px solid #c7d2fe; background:#f0f5ff;">
                         <?php
-                        mysqli_data_seek($dsTrangThai, 0); // reset pointer
                         while ($tt = mysqli_fetch_assoc($dsTrangThai)) { ?>
                             <option value="<?= $tt['MaTTP'] ?>" <?= $tt['MaTTP']==$row['MaTTP']?'selected':'' ?>>
                                 <?= $tt['TenTTP'] ?>
