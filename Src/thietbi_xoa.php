@@ -17,6 +17,15 @@
             margin-bottom: 30px;
             font-weight: 700;
             text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 32px;
+            font-weight: 700;
+            margin: 30px 0;
+            letter-spacing: 1px;
         }
 
         .card {

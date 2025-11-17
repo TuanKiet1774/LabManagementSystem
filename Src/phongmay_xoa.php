@@ -17,6 +17,15 @@
             margin-bottom: 30px;
             font-weight: 700;
             text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 32px;
+            font-weight: 700;
+            margin: 30px 0;
+            letter-spacing: 1px;
         }
 
         .card {
@@ -155,7 +164,7 @@
     $maPhong = $_GET['maPhong'];
 
     // Lấy thông tin phòng để hiển thị
-    $sql = "SELECT p.TenPhong, np.TenNhom, tt.TenTTP
+    $sql = "SELECT p.TenPhong, p.MaPhong, np.TenNhom, tt.TenTTP
             FROM phong p
             JOIN nhomphong np ON np.MaNhom = p.MaNhom
             JOIN chitietttp ct ON ct.MaPhong = p.MaPhong
@@ -190,6 +199,7 @@
 
     <h2>Xóa phòng máy</h2>
     <div class="card" style='background-color: #f2f4fcff;'>
+        <p class="info"><strong>Mã phòng:</strong> <?= $row['MaPhong'] ?></p>
         <p class="info"><strong>Tên phòng:</strong> <?= $row['TenPhong'] ?></p>
         <p class="info"><strong>Tên nhóm:</strong> <?= $row['TenNhom'] ?></p>
         <p class="info"><strong>Trạng thái:</strong> <?= $row['TenTTP'] ?></p>
