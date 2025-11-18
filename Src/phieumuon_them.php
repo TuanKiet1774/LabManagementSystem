@@ -201,7 +201,7 @@
             <tr>
                 <td>Trạng thái tuần:</td>
                 <td>
-                    <select name="maTTT" required>
+                    <select name="maTTT">
                         <option value="">-- Chọn trạng thái --</option>
                         <?php while($ttt = mysqli_fetch_assoc($listTTT)) { ?>
                             <option value="<?= $ttt['MaTTT'] ?>">
