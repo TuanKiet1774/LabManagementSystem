@@ -134,30 +134,32 @@
 
     if (isset($_GET['search']) && $_GET['search'] !== "") {
         $search = $_GET['search'];
-        $sql = "SELECT pm.MaPhieu, pm.MucDich, pm.NgayBD, pm.NgayKT, pm.NgayTao, ttpm.TenTTPM
+        $sql = "SELECT pm.MaPhieu, pm.MucDich, pm.NgayBD, pm.NgayKT, pm.NgayTao, ttpm.TenTTPM, nd.Ho, nd.Ten
                 FROM phieumuon pm
                 INNER JOIN chitietttpm ctpm 
                 ON pm.MaPhieu = ctpm.MaPhieu
                 INNER JOIN trangthaiphieumuon ttpm
                 ON ctpm.MaTTPM = ttpm.MaTTPM
+                INNER JOIN nguoidung nd
+                ON pm.MaND = nd.MaND
                 WHERE pm.MucDich LIKE '%$search%' 
                 OR ttpm.TenTTPM LIKE '%$search%'
+                OR CONCAT(nd.Ho, ' ', nd.Ten) LIKE '%$search%'
                 ORDER BY MaPhieu DESC";
-        $pagination = pagination($con, 3, $sql, $page);
-        $db = $pagination['data'];
-        $maxPage = $pagination['maxPage'];
     } else {
-        $sql = "SELECT pm.MaPhieu, pm.MucDich, pm.NgayBD, pm.NgayKT, pm.NgayTao, ttpm.TenTTPM
+        $sql = "SELECT pm.MaPhieu, pm.MucDich, pm.NgayBD, pm.NgayKT, pm.NgayTao, ttpm.TenTTPM, nd.Ho, nd.Ten
                 FROM phieumuon pm
                 INNER JOIN chitietttpm ctpm 
                 ON pm.MaPhieu = ctpm.MaPhieu
                 INNER JOIN trangthaiphieumuon ttpm
                 ON ctpm.MaTTPM = ttpm.MaTTPM
+                INNER JOIN nguoidung nd
+                ON pm.MaND = nd.MaND
                 ORDER BY MaPhieu DESC";
-        $pagination = pagination($con, 3, $sql, $page);
-        $db = $pagination['data'];
-        $maxPage = $pagination['maxPage'];
     }
+    $pagination = pagination($con, 3, $sql, $page);
+    $db = $pagination['data'];
+    $maxPage = $pagination['maxPage'];
     ?>
 
     <?php include './header.php'; ?>
@@ -168,7 +170,7 @@
                     <b>Lịch sử tìm kiếm</b>
                 </h3>
                 <div class="d-flex justify-content-between">
-                    <input type="text" name="search" value="<?= isset($_GET['search']) ? $_GET['search'] : '' ?>">
+                    <input type="text" name="search" placeholder="Mục đích, trạng thái, tên..." value="<?= isset($_GET['search']) ? $_GET['search'] : '' ?>">
                     <button type="submit" class="btnSearch ms-3">
                         Tìm kiếm
                         <i class="fa-solid fa-magnifying-glass"></i>
@@ -179,6 +181,7 @@
             <table>
                 <tr align="center">
                     <th>Mã phiếu</th>
+                    <th>Người dùng</th>
                     <th>Mục đích</th>
                     <th class="d-none d-md-table-cell">Bắt đầu</th>
                     <th class="d-none d-md-table-cell">Kết thúc</th>
@@ -190,6 +193,7 @@
                 while ($col = mysqli_fetch_assoc($db)) {
                     echo "<tr>";
                     echo "<td align='center'>" . $col['MaPhieu'] . "</td>";
+                    echo "<td align='center'>" . $col['Ho'] . " " . $col['Ten'] . "</td>";
                     echo "<td>" . $col['MucDich'] . "</td>";
                     echo "<td class='d-none d-md-table-cell' align='center'>" . date("d/m/Y", strtotime($col['NgayBD'])) . "</td>";
                     echo "<td class='d-none d-md-table-cell' align='center'>" . date("d/m/Y", strtotime($col['NgayKT'])) . "</td>";

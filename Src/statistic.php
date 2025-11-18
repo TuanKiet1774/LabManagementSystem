@@ -60,6 +60,11 @@
 </style>
 
 <body>
+    <?php
+    include_once('../Database/config.php');
+    include './Controller/loginController.php';
+    $user = checkLogin();
+    ?>
     <?php include './header.php'; ?>
     <main>
         <div class="container-fluid">

@@ -93,55 +93,99 @@
             WHERE tgm.MaPhieu = '$maphieu'
             ORDER BY th.GioBG;";
     $db2 = mysqli_query($con, $sql2);
+    $db3 = mysqli_query($con, $sql2);
+
+    // Lấy dữ liệu cho các phần tử chính
+    $col1 = mysqli_fetch_assoc($db1);
+    // Lưu ý: $col2 chỉ lấy dòng đầu tiên, nhưng ta sẽ không dùng nó để hiển thị chi tiết (sẽ dùng $db3)
+    $col2 = mysqli_fetch_assoc($db2);
     ?>
     <?php include './header.php'; ?>
     <main>
         <div class="container-fluid">
-            <div class="detail-box">
+            <div class="detail-box p-4">
                 <center>
-                    <h2><b>Chi tiết phiếu mượn</b></h2>
+                    <h2 class="mb-4"><b>Chi tiết phiếu mượn phòng</b></h2>
                 </center>
-                <table>
-                    <?php
-                    $col1 = mysqli_fetch_assoc($db1);
-                    $col2 = mysqli_fetch_assoc($db2);
-                    echo "<tr>";
-                    echo "<td><b><i class='fa-solid fa-user-tie'></i> Tài khoản: </b>" . $col1['Ho'] . " " . $col1['Ten'] . "</td>";
-                    echo "<td><b><i class='fa-solid fa-envelope-open-text'></i> Email: </b>" . $col1['Email'] . "</td>";
-                    echo "</tr>";
-                    echo "<tr>";
-                    echo "<td><b><i class='fa-solid fa-people-roof'></i> Phòng mượn: </b>" . $col1['TenPhong'] . "</td>";
-                    echo "<td><b><i class='fa-solid fa-location-dot'></i> Vị trí phòng: </b>" . $col1['TenNhom'] . "</td>";
-                    echo "</tr>";
-                    echo "<tr>";
-                    echo "<td colspan='2'><b><i class='fa-solid fa-receipt'></i> Mục đích: </b>" . $col1['MucDich'] . "</td>";
-                    echo "</tr>";
-                    echo "<tr>";
-                    echo "<td><b><i class='fa-solid fa-hourglass-start'></i> Bắt đầu từ: </b>" . date("d/m/Y", strtotime($col1['NgayBD'])) . "</td>";
-                    echo "<td><b><i class='fa-solid fa-hourglass-end'></i> Kết thúc vào: </b>" . date("d/m/Y", strtotime($col1['NgayKT'])) . "</td>";
-                    echo "</tr>";
-                    echo "<tr>";
-                    echo "<td colspan='2'><b><i class='fa-solid fa-clock'></i> Thời gian mượn chi tiết:</b></td>";
-                    echo "</tr>";
-                    echo "<tr>";
-                    echo "<tr>";
-                    echo "<td colspan='2'><b>- Tuần học: </b>" . (!empty($col2['TrangThaiTuan']) ? $col2['TrangThaiTuan'] : "Chưa xếp") . "</td>";
-                    echo "</tr>";
-                    echo "<tr>";
-                    echo "<td colspan='2'><b>- Ngày học: </b>" . (!empty($col2['NgayTrongTuan']) ? $col2['NgayTrongTuan'] : "Chưa xếp") . "</td>";
-                    echo "</tr>";
-                    echo "<tr>";
-                    echo "<td colspan='2'><i>Phiếu mượn được tạo lúc " . date("d/m/Y", strtotime($col1['NgayTao'])) . "</i></td>";
-                    echo "</tr>";
 
-                    ?>
-                    <tr>
-                        <td class="m-4" colspan="2" align="center">
-                            <a href="javascript:window.history.back(); window.location.href='./signup.php';" class="btnBack ms-3">Quay lại</a>
-                            <a href="./history_delete.php" class="btnEdit ms-3">Xoá</a>
-                        </td>
-                    </tr>
-                </table>
+                <div class="container-fluid bg-white p-3 rounded-3 shadow-sm">
+                    <div class="row mb-2 pb-2 border-bottom">
+                        <div class="col-md-6">
+                            <b><i class="fa-solid fa-user-tie"></i> Tài khoản: </b><?php echo $col1['Ho'] . " " . $col1['Ten']; ?>
+                        </div>
+                        <div class="col-md-6">
+                            <b><i class="fa-solid fa-envelope-open-text"></i> Email: </b><?php echo $col1['Email']; ?>
+                        </div>
+                    </div>
+
+                    <div class="row mb-2 pb-2 border-bottom">
+                        <div class="col-md-6">
+                            <b><i class="fa-solid fa-people-roof"></i> Phòng mượn: </b><?php echo $col1['TenPhong']; ?>
+                        </div>
+                        <div class="col-md-6">
+                            <b><i class="fa-solid fa-location-dot"></i> Vị trí phòng: </b><?php echo $col1['TenNhom']; ?>
+                        </div>
+                    </div>
+
+                    <div class="row mb-2 pb-2 border-bottom">
+                        <div class="col-12">
+                            <b><i class="fa-solid fa-receipt"></i> Mục đích: </b><?php echo $col1['MucDich']; ?>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 pb-2 border-bottom">
+                        <div class="col-md-6">
+                            <b><i class="fa-solid fa-hourglass-start"></i> Bắt đầu từ: </b><?php echo date("d/m/Y", strtotime($col1['NgayBD'])); ?>
+                        </div>
+                        <div class="col-md-6">
+                            <b><i class="fa-solid fa-hourglass-end"></i> Kết thúc vào: </b><?php echo date("d/m/Y", strtotime($col1['NgayKT'])); ?>
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-12">
+                            <b><i class="fa-solid fa-clock"></i> Thời gian mượn chi tiết:</b>
+                        </div>
+                    </div>
+
+                    <div class="row mb-2 pb-2">
+                        <div class="col-12">
+                            <b>- Tuần học: </b><?php echo (!empty($col2['TrangThaiTuan']) ? $col2['TrangThaiTuan'] : "Chưa xếp"); ?>
+                        </div>
+                    </div>
+
+                    <div class="row mb-2 pb-2">
+                        <div class="col-12">
+                            <b>- Ngày học: </b><?php echo (!empty($col2['NgayTrongTuan']) ? $col2['NgayTrongTuan'] : "Chưa xếp"); ?>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-12 ps-4">
+                            <?php
+                            while ($col3 = mysqli_fetch_assoc($db3)) {
+                                echo '<div class="mb-1">';
+                                echo $col3['TenTiet'] . " (" . date("H:i", strtotime($col3['GioBG'])) . " - " . date("H:i", strtotime($col3['GioKT'])) . ")";
+                                echo '</div>';
+                            }
+                            ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 text-end">
+                            <i class="text-muted">Phiếu mượn được tạo lúc <?php echo date("d/m/Y H:i", strtotime($col1['NgayTao'])); ?></i>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4 pt-3 border-top">
+                        <div class="col-12 text-center">
+                            <a href="javascript:window.history.back();" class="btnBack btn ms-2 me-2">Quay lại</a>
+                            <a href="./history_delete.php?maphieu=<?php echo $col1['MaPhieu']; ?>" class="btnEdit btn ms-2 me-2">Xoá</a>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </main>
