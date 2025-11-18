@@ -145,6 +145,23 @@
             background: #6366f1;
             color: white;
         }
+
+        .action-links a.muon-phong {
+            background-color: #4aa8ffff;
+            color: white;
+            pointer-events: auto;
+            transition: 0.3s;
+        }
+        .action-links a.muon-phong:hover {
+            background-color: #259dffff;
+        }
+
+        .action-links a.muon-phong.disabled {
+            background-color: #d1d5db;
+            color: #6b7280;
+            pointer-events: none;
+            opacity: 0.6;
+        }
     </style>
 </head>
 <body>
@@ -209,16 +226,23 @@
                 if($n > 0) {
                     echo"<h2 style='text-align: center;'>Danh sách phòng máy</h2>";
                     $index = $offset + 1;
-                    echo "
-                    <div class='d-flex flex-column flex-md-row gap-2 align-items-center align-md-items-center w-80 mx-auto mb-3 justify-content-center'>
-                        <form method='GET' style='display:flex; gap:10px;'>
-                            <input type='text' name='keyword' placeholder='Tìm theo tên phòng / nhóm / trạng thái' 
-                                value='".($_GET['keyword'] ?? '')."'
-                                style='padding:8px; width:260px; border-radius:6px; border:1px solid #aaa;'>
-                            <button type='submit' style='padding:8px 15px; background:#6a5acd; color:white; border:none; border-radius:6px;'>Tìm</button>
-                        </form>
-                        <a href='phongmay_them.php' class='btn-add'>+ Thêm phòng</a>
-                    </div>";
+                    echo '
+                    <div class="row mb-3 align-items-center">
+                        <div class="">
+                            <div class="col-lg-8 col-md-7 mb-2 mb-md-0">
+                                <form method="GET" class="d-flex flex-column flex-md-row gap-2 search-form">
+                                    <input type="text" class="form-control w-auto" name="keyword"
+                                        placeholder="Tìm theo tên phòng / nhóm / trạng thái"
+                                        value="'.($_GET['keyword'] ?? '').'">
+                                    <button class="btn btn-search px-3 py-1 px-md-4 py-md-2 text-sm text-md-base">Tìm</button>
+                                </form>
+                            </div>
+
+                            <div class="col-lg-4 col-md-5 mt-2">
+                                <a href="phongmay_them.php" class="btn-add w-10 px-3 py-1 px-md-4 py-md-2 text-sm text-md-base">+ Thêm</a>
+                            </div>
+                        </div>
+                    </div>';
 
                     echo '<div class="table-responsive">';
                         echo '<table class="table table-hover align-middle text-center">';
@@ -242,6 +266,11 @@
 
                         for($i=0; $i<$n; $i++) {
                             $row = mysqli_fetch_assoc($result);
+                            $trangThai = $row['TenTTP'];
+                            $disabledClass = ($trangThai != 'Hoạt động') ? 'disabled' : '';
+                            $muonPhongLink = ($trangThai == 'Hoạt động') 
+                            ? "phieumuon_them.php?maPhong=".$row['MaPhong'] 
+                            : "#";
                             echo "<tr>
                                     <td>$index</td>
                                     <td>{$row['MaPhong']}</td>
@@ -250,9 +279,10 @@
                                     <td class='d-none d-md-table-cell'>{$row['SucChua']}</td>
                                     <td class='d-none d-md-table-cell'>{$row['TenTTP']}</td>
                                     <td class='action-links flex-column flex-md-row'>
-                                        <a href='phongmay_xem.php?maThietBi={$row['MaPhong']}'>Xem</a>
-                                        <a href='phongmay_sua.php?maThietBi={$row['MaPhong']}'>Sửa</a>
-                                        <a href='phongmay_xoa.php?maThietBi={$row['MaPhong']}'>Xóa</a>
+                                        <a href='phongmay_xem.php?maPhong={$row['MaPhong']}'>Xem</a>
+                                        <a href='phongmay_sua.php?maPhong={$row['MaPhong']}'>Sửa</a>
+                                        <a href='phongmay_xoa.php?maPhong={$row['MaPhong']}'>Xóa</a>
+                                        <a href='$muonPhongLink' class='$disabledClass muon-phong'>Mượn phòng</a>
                                     </td>
                                 </tr>";
                             $index++;
@@ -261,7 +291,6 @@
                         echo "</tbody></table>";
                     echo "</div>"; // table-responsive
                     echo '<div class="pagination">';
-
                         // nut prev
                         if($_GET['page'] > 1) {
                             echo "<a href='?page=".($_GET['page'] - 1)."&keyword=$keyword'>«</a>";

@@ -190,7 +190,6 @@
             echo "<div style='text-align:center; margin-top:20px;'>
                     <a class='btn btn-cancel' href='phongmay.php' style='color: white;'>Quay lại danh sách</a>
                 </div>";
-            exit;
         } else {
             echo "<p style='text-align:center; color:red;'>Lỗi khi xóa: " . mysqli_error($con) . "</p>";
         }

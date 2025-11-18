@@ -166,7 +166,6 @@
             $n = mysqli_num_rows($result);
             if ($n == 0) {
                 echo "<h2>Danh sách thiết bị</h2>";
-
                 echo '
                 <div class="alert alert-danger text-center mt-4" style="font-size:18px; border-radius:10px;">
                     <strong>Không tìm thấy kết quả.</strong><br>
@@ -182,8 +181,6 @@
             else {
                 if($n > 0) {
                     echo "<h2>Danh sách thiết bị</h2>";
-
-                    
                     echo '
                     <div class="row mb-3 align-items-center">
                         <div class="">

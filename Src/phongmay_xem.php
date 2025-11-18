@@ -57,7 +57,7 @@
             padding-left: 20px;
         }
 
-        i {
+        .info-cell i {
             font-style: normal;
             font-weight: bold;
             color: #6a5acd;
@@ -92,52 +92,56 @@
 </head>
 <body>
     <?php include("./header.php"); ?>
-    <?php
-        include("../Database/config.php");
+    <div class="container my-4">
+        <?php
+            include("../Database/config.php");
 
-        if (isset($_GET['maPhong'])) {
-            $ma_phong = $_GET['maPhong'];
+            if (isset($_GET['maPhong'])) {
+                $ma_phong = $_GET['maPhong'];
 
-            $sql = "SELECT p.MaPhong, p.TenPhong, p.SucChua, np.*, tt.TenTTP
-            FROM phong p
-            JOIN nhomphong np ON np.MaNhom = p.MaNhom
-            JOIN chitietttp ct ON ct.MaPhong = p.MaPhong
-            JOIN trangthaiphong tt ON ct.MaTTP = tt.MaTTP
-            WHERE p.MaPhong = '$ma_phong'
-            ";
-            $result = mysqli_query($con, $sql);
-            $row = mysqli_fetch_array($result);
+                $sql = "SELECT p.MaPhong, p.TenPhong, p.SucChua, np.*, tt.TenTTP
+                FROM phong p
+                JOIN nhomphong np ON np.MaNhom = p.MaNhom
+                JOIN chitietttp ct ON ct.MaPhong = p.MaPhong
+                JOIN trangthaiphong tt ON ct.MaTTP = tt.MaTTP
+                WHERE p.MaPhong = '$ma_phong'
+                ";
+                $result = mysqli_query($con, $sql);
+                $row = mysqli_fetch_array($result);
 
-            echo "<table>";
-            $imagePath = "Image/" . $row['MaNhom'] . ".jpg";
-            if(!file_exists($imagePath)) {
-                $imagePath = "Image/noimage.png"; 
+                echo "<table>";
+                $imagePath = "Image/" . $row['MaNhom'] . ".jpg";
+                if(!file_exists($imagePath)) {
+                    $imagePath = "Image/noimage.png"; 
+                }
+                if($row) {
+                    echo"<tr>";
+                        echo "<th colspan='2';>" . $row['TenPhong'] . " - " . $row['TenNhom'] . "</th>";
+                    echo"</tr>";
+                    echo "<tr>";
+                        echo "<td class='img-cell'>";
+                            echo"<img src='" . $imagePath . "' alt='" . $row['TenPhong'] . "' width='300'>";
+                        echo "</td>";
+
+                        echo"<div class='col-12 col-md-5 bg-light rounded p-3'>";
+                            echo "<td class='info-cell'>";
+                                echo "<i>Sức chứa:</i>";                           
+                                echo "<span>" . $row['SucChua'] . "</span><br>";
+                                echo "<i>Trạng thái phòng: </i>";
+                                echo "<span>" . $row['TenTTP'] . "</span>";
+                            echo "</td>";
+                        echo"</div>";
+                    echo "</tr>";
+                }
+
+            echo "</table>";
             }
-            if($row) {
-                echo"<tr>";
-                    echo "<th colspan='2';>" . $row['TenPhong'] . " - " . $row['TenNhom'] . "</th>";
-                echo"</tr>";
-                echo "<tr>";
-                    echo "<td class='img-cell'>";
-                        echo"<img src='" . $imagePath . "' alt='" . $row['TenPhong'] . "' width='300'>";
-                    echo "</td>";
+            echo "<div style='text-align:center; class='text-center mt-4'>
+                <a class='back-btn' href='phongmay.php'>Quay lại</a>
+            </div>";
 
-                    echo "<td class='info-cell'>";
-                        echo "<i>Sức chứa:</i>";                           
-                        echo "<span>" . $row['SucChua'] . "</span><br>";
-                        echo "<i>Trạng thái phòng: </i>";
-                        echo "<span>" . $row['TenTTP'] . "</span>";
-                    echo "</td>";
-                echo "</tr>";
-            }
-
-        echo "</table>";
-        }
-        echo "<div style='text-align:center;'>
-        <a class='back-btn' href='phongmay.php'>Quay lại</a>
-        </div>";
-
-    ?>
+        ?>
+    </div>
     <?php include("./footer.php"); ?>
 
     <script
