@@ -69,11 +69,38 @@
                                 Trang chủ
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" href="./lab_sched.php">
                                 <i class="fa-solid fa-calendar"></i>
                                 Lịch phòng
                             </a>
+                        </li> -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="fa-solid fa-calendar"></i>
+                                Mượn phòng
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="./lab_sched.php">
+                                        <i class="fa-solid fa-calendar-minus"></i>
+                                        Lịch phòng
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="./lab_week_sched.php">
+                                        <i class="fa-solid fa-calendar-days"></i>
+                                        Lịch tuần
+                                    </a>
+                                </li> 
+                                <li class="nav-item">
+                                    <a class="dropdown-item" href="./lab_booking_user.php">
+                                        <i class="fa-solid fa-calendar-check"></i>
+                                        Đăng ký
+                                    </a>
+                                </li>                               
+                            </ul>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -107,7 +134,7 @@
                                 <i class="fa-solid fa-square-poll-vertical"></i>
                                 Thống kê
                             </a>
-                        </li>
+                        </li>                       
                     </ul>
 
                     <!-- Right items (User) -->
