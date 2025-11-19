@@ -22,6 +22,30 @@
             margin: 20px 0;
         }
 
+        table {
+            width: 55%;
+            margin: 10px auto;
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        thead th {
+            background: #c7d2fe; 
+            color: #3f3d56;
+            padding: 12px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        td {
+            padding: 15px;
+            border: 1px solid #eee;
+            vertical-align: top;
+            font-size: 16px;
+            color: #333;
+        }
+
         /* Responsive table actions */
         .action-links {
             display: flex;
@@ -29,6 +53,7 @@
             gap: 5px;
             justify-content: center;
         }
+
 
         .action-links a {
             display: inline-block;
@@ -184,9 +209,9 @@
                     echo '
                     <div class="row mb-3 align-items-center">
                         <div class="">
-                            <div class="col-lg-8 col-md-7 mb-2 mb-md-0">
+                            <div class="col-lg-4 col-md-7 mb-2 mb-md-0">
                                 <form method="GET" class="d-flex flex-column flex-md-row gap-2 search-form">
-                                    <input type="text" class="form-control w-auto" name="keyword"
+                                    <input type="text" class="form-control flex-grow-1" name="keyword"
                                         placeholder="Tìm theo tên thiết bị / loại / trạng thái"
                                         value="'.($_GET['keyword'] ?? '').'">
                                     <button class="btn btn-search px-3 py-1 px-md-4 py-md-2 text-sm text-md-base">Tìm</button>
@@ -194,7 +219,7 @@
                             </div>
 
                             <div class="col-lg-4 col-md-5 mt-2">
-                                <a href="thietbi_them.php" class="btn-add w-10 px-3 py-1 px-md-4 py-md-2 text-sm text-md-base">+ Thêm</a>
+                                <a href="thietbi_them.php" class="btn-add w-auto px-3 py-1 px-md-4 py-md-2 text-sm text-md-base">+ Thêm</a>
                             </div>
                         </div>
                     </div>';

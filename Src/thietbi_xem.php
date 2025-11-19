@@ -57,7 +57,7 @@
             padding-left: 20px;
         }
 
-        i {
+        .info-cell i {
             font-style: normal;
             font-weight: bold;
             color: #6a5acd;
@@ -92,49 +92,55 @@
 </head>
 <body>
     <?php include("./header.php"); ?>
-    <?php
-        include("../Database/config.php");
+    <div class="container my-4">
+        <?php
+            include("../Database/config.php");
 
-        if (isset($_GET['maThietBi'])) {
-            $ma_thietbi = $_GET['maThietBi'];
+            if (isset($_GET['maThietBi'])) {
+                $ma_thietbi = $_GET['maThietBi'];
 
-            $sql = "SELECT tb.*, tttb.TenTTTB, loai.*
-            FROM thietbi tb
-            JOIN loai ON loai.MaLoai = tb.MaLoai
-            JOIN chitiettttb cttttb ON tb.MaThietBi = cttttb.MaThietBi
-            JOIN trangthaithietbi tttb ON cttttb.MaTTTB = tttb.MaTTTB
-            WHERE tb.MaThietBi = '$ma_thietbi'
-            ";
-            $result = mysqli_query($con, $sql);
-            $row = mysqli_fetch_array($result);
+                $sql = "SELECT tb.*, tttb.TenTTTB, loai.*
+                FROM thietbi tb
+                JOIN loai ON loai.MaLoai = tb.MaLoai
+                JOIN chitiettttb cttttb ON tb.MaThietBi = cttttb.MaThietBi
+                JOIN trangthaithietbi tttb ON cttttb.MaTTTB = tttb.MaTTTB
+                WHERE tb.MaThietBi = '$ma_thietbi'
+                ";
+                $result = mysqli_query($con, $sql);
+                $row = mysqli_fetch_array($result);
 
-            echo "<table>";
-            $imagePath = "Image/" . $row['MaThietBi'] . ".jpg";
-            if(!file_exists($imagePath)) {
-                $imagePath = "Image/noimage.png"; 
+                echo "<table class='table mx-auto' style='max-width: 700px;'>";
+                $imagePath = "Image/" . $row['MaThietBi'] . ".jpg";
+                if(!file_exists($imagePath)) {
+                    $imagePath = "Image/noimage.png"; 
+                }
+                if($row) {
+                    echo"<thead>";
+                        echo"<tr>";
+                            echo "<th colspan='2;' style='background: #c7d2fe; color: #3f3d56';>" . $row['TenThietBi']. "</th>";
+                        echo"</tr>";
+                    echo"</thead>";
+                    echo"<tbody>";
+                        echo "<tr class='d-block d-md-table-row'>";
+                            echo "<td class='img-cell d-block d-md-table-cell text-center mb-3 mb-md-0'>";
+                                echo"<img src='" . $imagePath . "' alt='" . $row['TenThietBi'] . "' width='300'>";
+                            echo "</td>";
+
+                            echo "<td class='info-cell d-block d-md-table-cell'>";
+                                echo "<i>Trạng thái thiết bị: </i>";
+                                echo "<span>" . $row['TenTTTB'] . "</span>";
+                            echo "</td>";
+                        echo "</tr>";
+                    echo"</tbody>";
+                }
+
+            echo "</table>";
             }
-            if($row) {
-                echo"<tr>";
-                    echo "<th colspan='2';>" . $row['TenThietBi']. "</th>";
-                echo"</tr>";
-                echo "<tr>";
-                    echo "<td class='img-cell'>";
-                        echo"<img src='" . $imagePath . "' alt='" . $row['TenThietBi'] . "' width='300'>";
-                    echo "</td>";
-
-                    echo "<td class='info-cell'>";
-                        echo "<i>Trạng thái thiết bị: </i>";
-                        echo "<span>" . $row['TenTTTB'] . "</span>";
-                    echo "</td>";
-                echo "</tr>";
-            }
-
-        echo "</table>";
-        }
-        echo "<div style='text-align:center;'>
-        <a class='back-btn' href='thietbi.php'>Quay lại</a>
-        </div>";
-    ?>
+            echo "<div style='text-align:center; class='text-center mt-4'>
+                <a class='back-btn' href='thietbi.php'>Quay lại</a>
+            </div>";
+        ?>
+    </div>
     <?php include("./footer.php"); ?>
 
     <script

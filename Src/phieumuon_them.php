@@ -65,7 +65,7 @@
             outline: none;
         }
 
-        .btn-submit {
+        .btn-add {
             display: inline-block;
             width: 15%;
             padding: 8px;
@@ -78,7 +78,7 @@
             transition: 0.25s;
         }
 
-        .btn-submit:hover {
+        .btn-add:hover {
             background: #048ff9ff;
         }
         
@@ -227,7 +227,7 @@
 
             <tr>
                 <td colspan="2" align="center" style="background:#feffddff;">
-                    <input type="submit" name="submit" value="Tạo phiếu" class="btn-submit">
+                        <input type="submit" name="submit" value="Tạo phiếu" class='btn-add w-md-auto'>
                 </td>
             </tr>
         </table>

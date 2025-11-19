@@ -24,7 +24,7 @@
             box-shadow: 0 4px 18px rgba(0,0,0,0.1);
         }
 
-        th {
+        thead th {
             background: #c7d2fe; 
             color: #3f3d56;
             padding: 12px;
@@ -109,32 +109,34 @@
                 $result = mysqli_query($con, $sql);
                 $row = mysqli_fetch_array($result);
 
-                echo "<table>";
-                $imagePath = "Image/" . $row['MaNhom'] . ".jpg";
-                if(!file_exists($imagePath)) {
-                    $imagePath = "Image/noimage.png"; 
-                }
-                if($row) {
-                    echo"<tr>";
-                        echo "<th colspan='2';>" . $row['TenPhong'] . " - " . $row['TenNhom'] . "</th>";
-                    echo"</tr>";
-                    echo "<tr>";
-                        echo "<td class='img-cell'>";
-                            echo"<img src='" . $imagePath . "' alt='" . $row['TenPhong'] . "' width='300'>";
-                        echo "</td>";
+                echo "<table class='table mx-auto' style='max-width: 700px;'>";
+                    $imagePath = "Image/" . $row['MaNhom'] . ".jpg";
+                    if(!file_exists($imagePath)) {
+                        $imagePath = "Image/noimage.png"; 
+                    }
+                    if($row) {
+                        echo"<thead>";
+                            echo"<tr>";
+                                echo "<th colspan='2' style='background: #c7d2fe; color: #3f3d56';>" . $row['TenPhong'] . " - " . $row['TenNhom'] . "</th>";
+                            echo"</tr>";
+                        echo"</thead>";
+                        echo"<tbody>";
+                            echo "<tr class='d-block d-md-table-row'>";
+                                echo "<td class='img-cell d-block d-md-table-cell text-center mb-3 mb-md-0'>";
+                                    echo"<img src='" . $imagePath . "' alt='" . $row['TenPhong'] . "' width='300'>";
+                                echo "</td>";
 
-                        echo"<div class='col-12 col-md-5 bg-light rounded p-3'>";
-                            echo "<td class='info-cell'>";
-                                echo "<i>Sức chứa:</i>";                           
-                                echo "<span>" . $row['SucChua'] . "</span><br>";
-                                echo "<i>Trạng thái phòng: </i>";
-                                echo "<span>" . $row['TenTTP'] . "</span>";
-                            echo "</td>";
-                        echo"</div>";
-                    echo "</tr>";
-                }
+                                echo "<td class='info-cell d-block d-md-table-cell'>";
+                                    echo "<i>Sức chứa:</i>";                           
+                                    echo "<span>" . $row['SucChua'] . "</span><br>";
+                                    echo "<i>Trạng thái phòng: </i>";
+                                    echo "<span>" . $row['TenTTP'] . "</span>";
+                                echo "</td>";
+                            echo "</tr>";
+                        echo"</tbody>";
+                    }
 
-            echo "</table>";
+                echo "</table>";
             }
             echo "<div style='text-align:center; class='text-center mt-4'>
                 <a class='back-btn' href='phongmay.php'>Quay lại</a>

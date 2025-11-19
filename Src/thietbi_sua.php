@@ -61,7 +61,6 @@
 
             .btn-submit {
                 display: inline-block;
-                width: 15%;
                 padding: 12px;
                 font-size: 16px;
                 background-color: #60a5fa;
@@ -99,7 +98,7 @@
         <?php
             include("../Database/config.php");
 
-            // Lấy mã phòng
+            // Lấy mã tb
             if (isset($_GET['maThietBi'])) {
                 $maThietBi = $_GET['maThietBi'];
             }
@@ -164,54 +163,56 @@
         ?>
 
         <form method="POST">
-        <table>
-            <tr><th colspan="2">CẬP NHẬT THÔNG TIN THIẾT BỊ</th></tr>
+            <div class="table-responsive">
+                <table>
+                    <tr><th colspan="2">CẬP NHẬT THÔNG TIN THIẾT BỊ</th></tr>
 
-            <tr>
-                <td>Mã thiết bị:</td>
-                <td><input type="text" name="maThietBi" value="<?= $row['MaThietBi'] ?>" readonly></td>
-            </tr>
+                    <tr>
+                        <td>Mã thiết bị:</td>
+                        <td><input type="text" class="form-control" name="maThietBi" value="<?= $row['MaThietBi'] ?>" readonly></td>
+                    </tr>
 
-            <tr>
-                <td>Tên thiết bị:</td>
-                <td><input type="text" name="tenThietBi" value="<?= $row['TenThietBi'] ?>"></td>
-            </tr>
-            <tr>
-                <td>Tên loại:</td>
-                <td>
-                    <select name="maLoai" required
-                    style="width:75%; padding:10px; border-radius:8px; border:1px solid #c7d2fe; background:#f0f5ff;">
-                        <?php while ($l = mysqli_fetch_assoc($dsLoai)) { ?>
-                            <option value="<?= $l['MaLoai'] ?>"
-                                <?= $l['MaLoai'] == $row['MaLoai'] ? 'selected' : '' ?>>
-                                <?= $l['TenLoai'] ?>
-                            </option>
-                        <?php } ?>
-                    </select>
-                </td>
-            </tr>
+                    <tr>
+                        <td>Tên thiết bị:</td>
+                        <td><input type="text" class="form-control" name="tenThietBi" value="<?= $row['TenThietBi'] ?>"></td>
+                    </tr>
+                    <tr>
+                        <td>Tên loại:</td>
+                        <td>
+                            <select class="form-control" name="maLoai" required
+                            style="width:75%; padding:10px; border-radius:8px; border:1px solid #c7d2fe; background:#f0f5ff;">
+                                <?php while ($l = mysqli_fetch_assoc($dsLoai)) { ?>
+                                    <option value="<?= $l['MaLoai'] ?>"
+                                        <?= $l['MaLoai'] == $row['MaLoai'] ? 'selected' : '' ?>>
+                                        <?= $l['TenLoai'] ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                        </td>
+                    </tr>
 
-            <tr>
-                <td>Trạng thái:</td>
-                <td>
-                    <select name="maTTTB" required
-                    style="width:75%; padding:10px; border-radius:8px; border:1px solid #c7d2fe; background:#f0f5ff;">
-                        <?php while ($t = mysqli_fetch_assoc($dsTTTB)) { ?>
-                            <option value="<?= $t['MaTTTB'] ?>"
-                                <?= $t['MaTTTB'] == $row['MaTTTB'] ? 'selected' : '' ?>>
-                                <?= $t['TenTTTB'] ?>
-                            </option>
-                        <?php } ?>
-                    </select>
-                </td>
-            </tr>
+                    <tr>
+                        <td>Trạng thái:</td>
+                        <td>
+                            <select class="form-control" name="maTTTB" required
+                            style="width:75%; padding:10px; border-radius:8px; border:1px solid #c7d2fe; background:#f0f5ff;">
+                                <?php while ($t = mysqli_fetch_assoc($dsTTTB)) { ?>
+                                    <option value="<?= $t['MaTTTB'] ?>"
+                                        <?= $t['MaTTTB'] == $row['MaTTTB'] ? 'selected' : '' ?>>
+                                        <?= $t['TenTTTB'] ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                        </td>
+                    </tr>
 
-            <tr>
-                <td colspan="2" align="center" style="background:#feffddff;">
-                    <input type="submit" name="submit" value="Cập nhật" class='btn-submit'>
-                </td>
-            </tr>
-        </table>
+                    <tr>
+                        <td colspan="2" align="center" style="background:#feffddff;">
+                            <input type="submit" name="submit" value="Cập nhật" class='btn-submit w-md-auto'>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </form>
 
         <?php
@@ -219,7 +220,7 @@
             echo "<p style='text-align:center; color:red;'>Không tìm thấy phòng!</p>";
         }
         echo "<div style='text-align:center;'>
-            <a class='back-btn' href='thietbi.php'>Quay lại</a>
+            <a class='back-btn w-md-auto d-inline-block' href='thietbi.php'>Quay lại</a>
             </div>";
         ?>
         <?php include("./footer.php"); ?>

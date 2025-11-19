@@ -28,18 +28,6 @@
             letter-spacing: 1px;
         }
 
-        .card {
-            width: 50%;
-            max-width: 600px;
-            margin: 10px auto;
-            background: #ffffff;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.09);
-            text-align: center;
-        }
-
-
         .info {
             font-size: 16px;
             margin-bottom: 15px;
@@ -51,7 +39,6 @@
             border-right: 4px solid #667eea;
             text-align: left;
         }
-
 
         .btn {
             display: inline-block;
@@ -98,56 +85,12 @@
             box-shadow: 0 4px 12px rgba(100, 116, 139, 0.4);
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .card {
-                width: 90%;
-                padding: 30px 20px;
-            }
-
-            h2 {
-                font-size: 26px;
-            }
-
-            .btn {
-                display: block;
-                width: 100%;
-                margin: 8px 0;
-            }
-
-            .info strong {
-                display: block;
-                margin-bottom: 5px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                padding-top: 20px;
-            }
-
-            .card {
-                padding: 25px 15px;
-            }
-
-            h2 {
-                font-size: 22px;
-                margin-bottom: 20px;
-            }
-
-            .card::before {
-                font-size: 50px;
-            }
-
-            .info {
-                font-size: 14px;
-                padding: 12px 15px;
-            }
-
-            .btn {
-                padding: 12px 20px;
-                font-size: 15px;
-            }
+        .info-box {
+            background: #eff6ff;
+            padding: 15px 20px;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+            border-right: 4px solid #667eea;
         }
     </style>
 </head>
@@ -174,8 +117,17 @@
     $row = mysqli_fetch_assoc($result);
 
     if (!$row) {
-        echo "<p style='text-align:center; color:red;'>Phòng không tồn tại!</p>";
-        exit;
+        echo "
+            <div class='container d-flex justify-content-center' 
+                style='min-height: calc(100vh - 200px);'>
+                <div class='text-center'>
+                    <p class='text-danger fw-bold mt-1'>Thiết bị không tồn tại!</p>
+                    <a href='thietbi.php' class='btn btn-secondary mt-2'>Quay lại</a>
+                </div>
+            </div>
+            ";
+            include("./footer.php");
+            exit;
     }
 
     // Xử lý xóa khi submit
@@ -190,27 +142,32 @@
             echo "<div style='text-align:center; margin-top:20px;'>
                     <a class='btn btn-cancel' href='thietbi.php' style='color: white;'>Quay lại danh sách</a>
                 </div>";
-            exit;
         } else {
             echo "<p style='text-align:center; color:red;'>Lỗi khi xóa: " . mysqli_error($con) . "</p>";
         }
     }
     ?>
 
-    <h2>Xóa thiết bị</h2>
-    <div class="card" style='background-color: #f2f4fcff;'>
-        <p class="info"><strong>Mã thiết bị:</strong> <?= $row['MaThietBi'] ?></p>
-        <p class="info"><strong>Tên thiết bị:</strong> <?= $row['TenThietBi'] ?></p>
-        <p class="info"><strong>Tên loại:</strong> <?= $row['TenLoai'] ?></p>
-        <p class="info"><strong>Trạng thái:</strong> <?= $row['TenTTTB'] ?></p>
+    <div class="container my-4">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <h2>Xóa thiết bị</h2>
+                <div class="bg-white p-4 p-md-5 shadow rounded-4" style='background-color: #f2f4fcff;'>
+                    <div class="info-box mb-3"><strong>Mã thiết bị:</strong> <?= $row['MaThietBi'] ?></div>
+                    <div class="info-box mb-3"><strong>Tên thiết bị:</strong> <?= $row['TenThietBi'] ?></div>
+                    <div class="info-box mb-3"><strong>Tên loại:</strong> <?= $row['TenLoai'] ?></div>
+                    <div class="info-box mb-3"><strong>Trạng thái:</strong> <?= $row['TenTTTB'] ?></div>
 
-        <p style="color:#b91c1c; font-weight:bold;">Bạn có chắc chắn muốn xóa thiết bị này?</p>
+                    <p style="color:#b91c1c; font-weight:bold;">Bạn có chắc chắn muốn xóa thiết bị này?</p>
 
-        <form method="POST">
-            <button type="submit" name="confirm_delete" class="btn btn-delete" style='color: white;'>Xóa thiết bị</button>
-            <a href="thietbi.php" class="btn btn-cancel" style='color: white;'>Hủy</a>
-        </form>
-    </div>
+                    <form method="POST" class="text-center">
+                        <button type="submit" name="confirm_delete" class="btn btn-delete" style='color: white;'>Xóa thiết bị</button>
+                        <a href="thietbi.php" class="btn btn-cancel" style='color: white;'>Hủy</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>  
     <?php include("./footer.php"); ?>
 
     <script

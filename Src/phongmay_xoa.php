@@ -28,18 +28,6 @@
             letter-spacing: 1px;
         }
 
-        .card {
-            width: 50%;
-            max-width: 600px;
-            margin: 10px auto;
-            background: #ffffff;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.09);
-            text-align: center;
-        }
-
-
         .info {
             font-size: 16px;
             margin-bottom: 15px;
@@ -51,7 +39,6 @@
             border-right: 4px solid #667eea;
             text-align: left;
         }
-
 
         .btn {
             display: inline-block;
@@ -98,56 +85,12 @@
             box-shadow: 0 4px 12px rgba(100, 116, 139, 0.4);
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .card {
-                width: 90%;
-                padding: 30px 20px;
-            }
-
-            h2 {
-                font-size: 26px;
-            }
-
-            .btn {
-                display: block;
-                width: 100%;
-                margin: 8px 0;
-            }
-
-            .info strong {
-                display: block;
-                margin-bottom: 5px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                padding-top: 20px;
-            }
-
-            .card {
-                padding: 25px 15px;
-            }
-
-            h2 {
-                font-size: 22px;
-                margin-bottom: 20px;
-            }
-
-            .card::before {
-                font-size: 50px;
-            }
-
-            .info {
-                font-size: 14px;
-                padding: 12px 15px;
-            }
-
-            .btn {
-                padding: 12px 20px;
-                font-size: 15px;
-            }
+        .info-box {
+            background: #eff6ff;
+            padding: 15px 20px;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+            border-right: 4px solid #667eea;
         }
     </style>
 </head>
@@ -155,60 +98,77 @@
     <?php include("./header.php"); ?>
 
     <?php
-    include("../Database/config.php");
+        include("../Database/config.php");
 
-    if (!isset($_GET['maPhong'])) {
-        echo "<p style='text-align:center; color:red;'>Không xác định được phòng!</p>";
-        exit;
-    }
-    $maPhong = $_GET['maPhong'];
-
-    // Lấy thông tin phòng để hiển thị
-    $sql = "SELECT p.TenPhong, p.MaPhong, np.TenNhom, tt.TenTTP
-            FROM phong p
-            JOIN nhomphong np ON np.MaNhom = p.MaNhom
-            JOIN chitietttp ct ON ct.MaPhong = p.MaPhong
-            JOIN trangthaiphong tt ON tt.MaTTP = ct.MaTTP
-            WHERE p.MaPhong='$maPhong'";
-    $result = mysqli_query($con, $sql);
-    $row = mysqli_fetch_assoc($result);
-
-    if (!$row) {
-        echo "<p style='text-align:center; color:red;'>Phòng không tồn tại!</p>";
-        exit;
-    }
-
-    // Xử lý xóa khi submit
-    if (isset($_POST['confirm_delete'])) {
-        $sql1 = "DELETE FROM chitietttp WHERE MaPhong='$maPhong'";
-        $sql2 = "DELETE FROM phong WHERE MaPhong='$maPhong'";
-        
-        $ok = mysqli_query($con, $sql1) && mysqli_query($con, $sql2);
-        
-        if ($ok) {
-            echo "<p style='text-align:center; color:green;'>Xóa phòng thành công!</p>";
-            echo "<div style='text-align:center; margin-top:20px;'>
-                    <a class='btn btn-cancel' href='phongmay.php' style='color: white;'>Quay lại danh sách</a>
-                </div>";
-        } else {
-            echo "<p style='text-align:center; color:red;'>Lỗi khi xóa: " . mysqli_error($con) . "</p>";
+        if (!isset($_GET['maPhong'])) {
+            echo "<p style='text-align:center; color:red;'>Không xác định được phòng!</p>";
+            exit;
         }
-    }
+        $maPhong = $_GET['maPhong'];
+
+        // Lấy thông tin phòng để hiển thị
+        $sql = "SELECT p.TenPhong, p.MaPhong, np.TenNhom, tt.TenTTP
+                FROM phong p
+                JOIN nhomphong np ON np.MaNhom = p.MaNhom
+                JOIN chitietttp ct ON ct.MaPhong = p.MaPhong
+                JOIN trangthaiphong tt ON tt.MaTTP = ct.MaTTP
+                WHERE p.MaPhong='$maPhong'";
+        $result = mysqli_query($con, $sql);
+        $row = mysqli_fetch_assoc($result);
+
+        if (!$row) {
+            echo "
+            <div class='container d-flex justify-content-center' 
+                style='min-height: calc(100vh - 200px);'>
+                <div class='text-center'>
+                    <p class='text-danger fw-bold mt-1'>Phòng không tồn tại!</p>
+                    <a href='phongmay.php' class='btn btn-secondary mt-2'>Quay lại</a>
+                </div>
+            </div>
+            ";
+            include("./footer.php");
+            exit;
+        }
+
+
+
+        // Xử lý xóa khi submit
+        if (isset($_POST['confirm_delete'])) {
+            $sql1 = "DELETE FROM chitietttp WHERE MaPhong='$maPhong'";
+            $sql2 = "DELETE FROM phong WHERE MaPhong='$maPhong'";
+            
+            $ok = mysqli_query($con, $sql1) && mysqli_query($con, $sql2);
+            
+            if ($ok) {
+                echo "<p style='text-align:center; color:green;'>Xóa phòng thành công!</p>";
+                echo "<div style='text-align:center; margin-top:20px;'>
+                        <a class='btn btn-cancel' href='phongmay.php' style='color: white;'>Quay lại danh sách</a>
+                    </div>";
+            } else {
+                echo "<p style='text-align:center; color:red;'>Lỗi khi xóa: " . mysqli_error($con) . "</p>";
+            }
+        }
     ?>
 
-    <h2>Xóa phòng máy</h2>
-    <div class="card" style='background-color: #f2f4fcff;'>
-        <p class="info"><strong>Mã phòng:</strong> <?= $row['MaPhong'] ?></p>
-        <p class="info"><strong>Tên phòng:</strong> <?= $row['TenPhong'] ?></p>
-        <p class="info"><strong>Tên nhóm:</strong> <?= $row['TenNhom'] ?></p>
-        <p class="info"><strong>Trạng thái:</strong> <?= $row['TenTTP'] ?></p>
+    <div class="container my-4">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <h2>Xóa phòng máy</h2>
+               <div class="bg-white p-4 p-md-5 shadow rounded-4">
+                    <div class="info-box mb-3"><strong>Mã phòng:</strong> <?= $row['MaPhong'] ?></div>
+                    <div class="info-box mb-3"><strong>Tên phòng:</strong> <?= $row['TenPhong'] ?></div>
+                    <div class="info-box mb-3"><strong>Tên nhóm:</strong> <?= $row['TenNhom'] ?></div>
+                    <div class="info-box mb-3"><strong>Trạng thái:</strong> <?= $row['TenTTP'] ?></div>
 
-        <p style="color:#b91c1c; font-weight:bold;">Bạn có chắc chắn muốn xóa phòng này?</p>
+                    <p style="color:#b91c1c; font-weight:bold;">Bạn có chắc chắn muốn xóa phòng này?</p>
 
-        <form method="POST">
-            <button type="submit" name="confirm_delete" class="btn btn-delete" style='color: white;'>Xóa phòng</button>
-            <a href="phongmay.php" class="btn btn-cancel" style='color: white;'>Hủy</a>
-        </form>
+                    <form method="POST" class="text-center">
+                        <button type="submit" name="confirm_delete" class="btn btn-delete" style='color: white;'>Xóa phòng</button>
+                        <a href="phongmay.php" class="btn btn-cancel" style='color: white;'>Hủy</a>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
     <?php include("./footer.php"); ?>
 

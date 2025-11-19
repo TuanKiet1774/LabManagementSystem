@@ -68,7 +68,6 @@
 
     .btn-add {
         display: inline-block;
-        width: 20%;
         padding: 8px;
         font-size: 16px;
         background-color: #60a5fa;
@@ -136,52 +135,56 @@
     ?>
 
     <form method="POST">
-    <table>
-        <tr><th colspan="2">THÔNG TIN THIẾT BỊ MỚI</th></tr>   
-        <tr>
-            <td>Mã thiết bị:</td>
-            <td><input type="text" name="maThietBi" required></td>
-        </tr>
-        <tr>
-            <td>Tên thiết bị:</td>
-            <td><input type="text" name="tenThietBi" required></td>
-        </tr>
+        <div class="table-responsive">
+            <table>
+                <tr><th colspan="2">THÔNG TIN THIẾT BỊ MỚI</th></tr>   
+                <tr>
+                    <td>Mã thiết bị:</td>
+                    <td><input type="text" class="form-control"  name="maThietBi" required></td>
+                </tr>
+                <tr>
+                    <td>Tên thiết bị:</td>
+                    <td><input type="text" class="form-control"  name="tenThietBi" required></td>
+                </tr>
 
 
-        <tr>
-            <td>Tên loại:</td>
-            <td>
-                <select name="maLoai" required>
-                    <option value="">-- Chọn loại thiết bị --</option>
-                    <?php while ($r = mysqli_fetch_assoc($loai)) { ?>
-                        <option value="<?= $r['MaLoai'] ?>"><?= $r['TenLoai'] ?></option>
-                    <?php } ?>
-                </select>
-            </td>
-        </tr>
+                <tr>
+                    <td>Tên loại:</td>
+                    <td>
+                        <select class="form-control"  name="maLoai" required>
+                            <option value="">-- Chọn loại thiết bị --</option>
+                            <?php while ($r = mysqli_fetch_assoc($loai)) { ?>
+                                <option value="<?= $r['MaLoai'] ?>"><?= $r['TenLoai'] ?></option>
+                            <?php } ?>
+                        </select>
+                    </td>
+                </tr>
 
 
-        <tr>
-            <td>Trạng thái:</td>
-            <td>
-                <select name="maTTTB" required>
-                    <option value="">-- Chọn trạng thái --</option>
-                    <?php while ($t = mysqli_fetch_assoc($tttb)) { ?>
-                        <option value="<?= $t['MaTTTB'] ?>"><?= $t['TenTTTB'] ?></option>
-                    <?php } ?>
-                </select>
-            </td>
-        </tr>
+                <tr>
+                    <td>Trạng thái:</td>
+                    <td>
+                        <select class="form-control"  name="maTTTB" required>
+                            <option value="">-- Chọn trạng thái --</option>
+                            <?php while ($t = mysqli_fetch_assoc($tttb)) { ?>
+                                <option value="<?= $t['MaTTTB'] ?>"><?= $t['TenTTTB'] ?></option>
+                            <?php } ?>
+                        </select>
+                    </td>
+                </tr>
 
-        <tr>
-            <td colspan="2" align="center" style="background:#fcfec7ff;">
-                <button type="submit" name="submit" class="btn-add">Thêm thiết bị</button>
-            </td>
-        </tr>
-    </table>
+                <tr>
+                    <td colspan="2" align="center" style="background:#fcfec7ff;">
+                        <button type="submit" name="submit" class="btn-add w-md-auto">Thêm thiết bị</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </form>
 
-    <a class="back-btn" href="thietbi.php">Quay lại</a>
+    <div style='text-align:center;'>
+        <a class='back-btn w-md-auto d-inline-block' href='thietbi.php'>Quay lại</a>
+    </div>
 
     <?php include("./footer.php"); ?>
 

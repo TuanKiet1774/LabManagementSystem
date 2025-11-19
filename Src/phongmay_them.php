@@ -68,7 +68,6 @@
 
     .btn-add {
         display: inline-block;
-        width: 20%;
         padding: 8px;
         font-size: 16px;
         background-color: #60a5fa;
@@ -138,52 +137,56 @@
     ?>
 
     <form method="POST">
-    <table>
-        <tr><th colspan="2">THÔNG TIN PHÒNG MỚI</th></tr>
+        <div class="table-responsive">
+            <table>
+                <tr><th colspan="2">THÔNG TIN PHÒNG MỚI</th></tr>
 
-        <tr>
-            <td>Tên phòng:</td>
-            <td><input type="text" name="tenPhong" required></td>
-        </tr>
+                <tr>
+                    <td>Tên phòng:</td>
+                    <td><input type="text" class="form-control" name="tenPhong" required></td>
+                </tr>
 
-        <tr>
-            <td>Sức chứa:</td>
-            <td><input type="text" name="sucChua" required></td>
-        </tr>
+                <tr>
+                    <td>Sức chứa:</td>
+                    <td><input type="text" class="form-control" name="sucChua" required></td>
+                </tr>
 
-        <tr>
-            <td>Nhóm phòng:</td>
-            <td>
-                <select name="maNhom" required>
-                    <option value="">-- Chọn nhóm phòng --</option>
-                    <?php while ($r = mysqli_fetch_assoc($nhom)) { ?>
-                        <option value="<?= $r['MaNhom'] ?>"><?= $r['TenNhom'] ?></option>
-                    <?php } ?>
-                </select>
-            </td>
-        </tr>
+                <tr>
+                    <td>Nhóm phòng:</td>
+                    <td>
+                        <select class="form-control" name="maNhom" required>
+                            <option value="">-- Chọn nhóm phòng --</option>
+                            <?php while ($r = mysqli_fetch_assoc($nhom)) { ?>
+                                <option value="<?= $r['MaNhom'] ?>"><?= $r['TenNhom'] ?></option>
+                            <?php } ?>
+                        </select>
+                    </td>
+                </tr>
 
-        <tr>
-            <td>Trạng thái:</td>
-            <td>
-                <select name="maTTP" required>
-                    <option value="">-- Chọn trạng thái --</option>
-                    <?php while ($t = mysqli_fetch_assoc($ttp)) { ?>
-                        <option value="<?= $t['MaTTP'] ?>"><?= $t['TenTTP'] ?></option>
-                    <?php } ?>
-                </select>
-            </td>
-        </tr>
+                <tr>
+                    <td>Trạng thái:</td>
+                    <td>
+                        <select class="form-control" name="maTTP" required>
+                            <option value="">-- Chọn trạng thái --</option>
+                            <?php while ($t = mysqli_fetch_assoc($ttp)) { ?>
+                                <option value="<?= $t['MaTTP'] ?>"><?= $t['TenTTP'] ?></option>
+                            <?php } ?>
+                        </select>
+                    </td>
+                </tr>
 
-        <tr>
-            <td colspan="2" align="center" style="background:#feffddff;">
-                    <input type="submit" name="submit" value="Thêm phòng" class='btn-add'>
-            </td>
-        </tr>
-    </table>
+                <tr>
+                    <td colspan="2" align="center" style="background:#feffddff;">
+                            <input type="submit" name="submit" value="Thêm phòng" class='btn-add w-md-auto'>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </form>
 
-    <a class="back-btn" href="phongmay.php">Quay lại</a>
+    <div style='text-align:center;'>
+        <a class='back-btn w-md-auto d-inline-block' href='phongmay.php'>Quay lại</a>
+    </div>
 
     <?php include("./footer.php"); ?>
 

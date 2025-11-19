@@ -61,7 +61,6 @@
 
             .btn-submit {
                 display: inline-block;
-                width: 15%;
                 padding: 12px;
                 font-size: 16px;
                 background-color: #60a5fa;
@@ -171,61 +170,63 @@
         ?>
 
         <form method="POST">
-        <table>
-            <tr><th colspan="2">CẬP NHẬT THÔNG TIN PHÒNG</th></tr>
+            <div class="table-responsive">
+                <table>
+                    <tr><th colspan="2">CẬP NHẬT THÔNG TIN PHÒNG</th></tr>
 
-            <tr>
-                <td>Mã phòng:</td>
-                <td><input type="text" name="maPhong" value="<?= $row['MaPhong'] ?>" readonly></td>
-            </tr>
+                    <tr>
+                        <td>Mã phòng:</td>
+                        <td><input type="text" class="form-control" name="maPhong" value="<?= $row['MaPhong'] ?>" readonly></td>
+                    </tr>
 
-            <tr>
-                <td>Tên phòng:</td>
-                <td><input type="text" name="tenPhong" value="<?= $row['TenPhong'] ?>"></td>
-            </tr>
+                    <tr>
+                        <td>Tên phòng:</td>
+                        <td><input type="text" class="form-control" name="tenPhong" value="<?= $row['TenPhong'] ?>"></td>
+                    </tr>
 
-            <tr>
-                <td>Tên nhóm:</td>
-                <td>
-                    <select name="maNhom" required
-                    style="width:75%; padding:10px; border-radius:8px; border:1px solid #c7d2fe; background:#f0f5ff;">
-                        <?php while ($nhom = mysqli_fetch_assoc($dsNhom)) { ?>
-                            <option value="<?= $nhom['MaNhom'] ?>"
-                                <?= $nhom['MaNhom'] == $row['MaNhom'] ? 'selected' : '' ?>>
-                                <?= $nhom['TenNhom'] ?>
-                            </option>
-                        <?php } ?>
-                    </select>
-                </td>
-            </tr>
+                    <tr>
+                        <td>Tên nhóm:</td>
+                        <td>
+                            <select class="form-control" name="maNhom" required
+                            style="width:75%; padding:10px; border-radius:8px; border:1px solid #c7d2fe; background:#f0f5ff;">
+                                <?php while ($nhom = mysqli_fetch_assoc($dsNhom)) { ?>
+                                    <option value="<?= $nhom['MaNhom'] ?>"
+                                        <?= $nhom['MaNhom'] == $row['MaNhom'] ? 'selected' : '' ?>>
+                                        <?= $nhom['TenNhom'] ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                        </td>
+                    </tr>
 
 
 
-            <tr>
-                <td>Sức chứa:</td>
-                <td><input type="text" name="sucChua" value="<?= $row['SucChua'] ?>"></td>
-            </tr>
+                    <tr>
+                        <td>Sức chứa:</td>
+                        <td><input type="text" class="form-control" name="sucChua" value="<?= $row['SucChua'] ?>"></td>
+                    </tr>
 
-            <tr>
-                <td>Trạng thái:</td>
-                <td>
-                    <select name="maTTP" required style="width:75%; padding:10px; border-radius:8px; border:1px solid #c7d2fe; background:#f0f5ff;">
-                        <?php
-                        while ($tt = mysqli_fetch_assoc($dsTrangThai)) { ?>
-                            <option value="<?= $tt['MaTTP'] ?>" <?= $tt['MaTTP']==$row['MaTTP']?'selected':'' ?>>
-                                <?= $tt['TenTTP'] ?>
-                            </option>
-                        <?php } ?>
-                    </select>
-                </td>
-            </tr>
+                    <tr>
+                        <td>Trạng thái:</td>
+                        <td>
+                            <select class="form-control" name="maTTP" required style="width:75%; padding:10px; border-radius:8px; border:1px solid #c7d2fe; background:#f0f5ff;">
+                                <?php
+                                while ($tt = mysqli_fetch_assoc($dsTrangThai)) { ?>
+                                    <option value="<?= $tt['MaTTP'] ?>" <?= $tt['MaTTP']==$row['MaTTP']?'selected':'' ?>>
+                                        <?= $tt['TenTTP'] ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                        </td>
+                    </tr>
 
-            <tr>
-                <td colspan="2" align="center" style="background:#feffddff;">
-                    <input type="submit" name="submit" value="Cập nhật" class='btn-submit'>
-                </td>
-            </tr>
-        </table>
+                    <tr>
+                        <td colspan="2" align="center" style="background:#feffddff;">
+                            <input type="submit" name="submit" value="Cập nhật" class='btn-submit w-md-auto'>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </form>
 
         <?php
@@ -233,7 +234,7 @@
             echo "<p style='text-align:center; color:red;'>Không tìm thấy phòng!</p>";
         }
         echo "<div style='text-align:center;'>
-            <a class='back-btn' href='phongmay.php'>Quay lại</a>
+            <a class='back-btn w-md-auto d-inline-block' href='phongmay.php'>Quay lại</a>
             </div>";
         ?>
         <?php include("./footer.php"); ?>
