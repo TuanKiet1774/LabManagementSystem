@@ -67,7 +67,6 @@
 
         .btn-add {
             display: inline-block;
-            width: 15%;
             padding: 8px;
             font-size: 16px;
             background-color: #60a5fa;
@@ -133,7 +132,18 @@
             $maTTT = $_POST['maTTT'];
 
             // ---------- 1. Tạo phiếu mượn ----------
-            $maPhieu = "PM" . time();
+            // Lấy mã phiếu lớn nhất
+            $sqlGetMax = mysqli_query($con, "SELECT MaPhieu FROM phieumuon ORDER BY MaPhieu DESC LIMIT 1");
+            $rowMax = mysqli_fetch_assoc($sqlGetMax);
+
+            if ($rowMax) {
+                $so = intval(substr($rowMax['MaPhieu'], 2)); 
+                $so++;
+                $maPhieu = "PH" . str_pad($so, 3, "0", STR_PAD_LEFT);
+            } else {
+                $maPhieu = "PH001";
+            }
+
             $sql1 = "INSERT INTO phieumuon(MaPhieu, MaPhong, MaND, MucDich, NgayBD, NgayKT, NgayTao)
                     VALUES ('$maPhieu', '$maPhong', '$maND', '$mucDich', '$ngayBD', '$ngayKT', NOW())";
 
@@ -160,77 +170,79 @@
     ?>
 
     <form method="POST">
-        <h2 style="text-align:center;">Tạo phiếu mượn phòng</h2>
-        <table>
-            <tr>
-                <td>Phòng:</td>
-                <td>
-                    <input type="text" value="<?= $tenPhong ?>" readonly>
-                    <input type="hidden" name="maPhong" value="<?= $maPhong ?>">
-                </td>
-            </tr>
+        <div class="table-responsive">
+            <h2 style="text-align:center;">Tạo phiếu mượn phòng</h2>
+            <table>
+                <tr>
+                    <td>Phòng:</td>
+                    <td>
+                        <input type="text" class="form-control" value="<?= $tenPhong ?>" readonly>
+                        <input type="hidden" name="maPhong" value="<?= $maPhong ?>">
+                    </td>
+                </tr>
 
 
-            <tr>
-                <td>Mục đích:</td>
-                <td><input type="text" name="mucDich" required></td>
-            </tr>
+                <tr>
+                    <td>Mục đích:</td>
+                    <td><input type="text" class="form-control" name="mucDich" required></td>
+                </tr>
 
-            <tr>
-                <td>Ngày bắt đầu:</td>
-                <td><input type="date" name="ngayBD" required></td>
-            </tr>
+                <tr>
+                    <td>Ngày bắt đầu:</td>
+                    <td><input type="date" class="form-control" name="ngayBD" required></td>
+                </tr>
 
-            <tr>
-                <td>Ngày kết thúc:</td>
-                <td><input type="date" name="ngayKT" required></td>
-            </tr>
+                <tr>
+                    <td>Ngày kết thúc:</td>
+                    <td><input type="date" class="form-control" name="ngayKT" required></td>
+                </tr>
 
-            <tr>
-                <td>Ngày trong tuần:</td>
-                <td>
-                    <select name="maNgay" required>
-                        <option value="">-- Chọn ngày --</option>
-                        <?php while($n = mysqli_fetch_assoc($listNgay)) { ?>
-                            <option value="<?= $n['MaNgay'] ?>"><?= $n['TenNgay'] ?></option>
+                <tr>
+                    <td>Ngày trong tuần:</td>
+                    <td>
+                        <select class="form-control" name="maNgay" required>
+                            <option value="">-- Chọn ngày --</option>
+                            <?php while($n = mysqli_fetch_assoc($listNgay)) { ?>
+                                <option value="<?= $n['MaNgay'] ?>"><?= $n['TenNgay'] ?></option>
+                            <?php } ?>
+                        </select>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>Trạng thái tuần:</td>
+                    <td>
+                        <select class="form-control" name="maTTT">
+                            <option value="">-- Chọn trạng thái --</option>
+                            <?php while($ttt = mysqli_fetch_assoc($listTTT)) { ?>
+                                <option value="<?= $ttt['MaTTT'] ?>">
+                                    <?= $ttt['TenTTT'] ?>
+                                </option>
+                            <?php } ?>
+                        </select>
+                    </td>
+                </tr>   
+
+                <tr>
+                    <td>Tiết học:</td>
+                    <td>
+                        <?php while($t = mysqli_fetch_assoc($listTiet)) { ?>
+                            <label style="display:block;">
+                                <input type="checkbox" name="maTiet[]" value="<?= $t['MaTiet'] ?>">
+                                <?= $t['TenTiet'] ?> (<?= $t['GioBG'] ?> - <?= $t['GioKT'] ?>)
+                            </label>
                         <?php } ?>
-                    </select>
-                </td>
-            </tr>
-            
-            <tr>
-                <td>Trạng thái tuần:</td>
-                <td>
-                    <select name="maTTT">
-                        <option value="">-- Chọn trạng thái --</option>
-                        <?php while($ttt = mysqli_fetch_assoc($listTTT)) { ?>
-                            <option value="<?= $ttt['MaTTT'] ?>">
-                                <?= $ttt['TenTTT'] ?>
-                            </option>
-                        <?php } ?>
-                    </select>
-                </td>
-            </tr>   
-
-            <tr>
-                <td>Tiết học:</td>
-                <td>
-                    <?php while($t = mysqli_fetch_assoc($listTiet)) { ?>
-                        <label style="display:block;">
-                            <input type="checkbox" name="maTiet[]" value="<?= $t['MaTiet'] ?>">
-                            <?= $t['TenTiet'] ?> (<?= $t['GioBG'] ?> - <?= $t['GioKT'] ?>)
-                        </label>
-                    <?php } ?>
-                </td>
-            </tr>
+                    </td>
+                </tr>
 
 
-            <tr>
-                <td colspan="2" align="center" style="background:#feffddff;">
-                        <input type="submit" name="submit" value="Tạo phiếu" class='btn-add w-md-auto'>
-                </td>
-            </tr>
-        </table>
+                <tr>
+                    <td colspan="2" align="center" style="background:#feffddff;">
+                            <input type="submit" name="submit" value="Tạo phiếu" class='btn-add w-md-auto'>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </form>
     <a class="back-btn" href="phongmay.php">Quay lại</a>
 

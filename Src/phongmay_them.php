@@ -49,7 +49,7 @@
         font-size: 16px;
     }
 
-    input[type="text"], select {
+    input[type="text"], input[type="number"], select {
         width: 100%;
         padding: 10px;
         border-radius: 8px;
@@ -59,7 +59,7 @@
         transition: 0.25s;
     }
 
-    input[type="text"]:focus,
+    input[type="text"]:focus, input[type="number"]:focus,
     select:focus {
         background: #e6f0ff;
         border-color: #93c5fd;
@@ -120,7 +120,19 @@
         $maTTP = $_POST['maTTP'];
 
         // Tạo mã phòng tự động
-        $maPhong = "P" . rand(1000, 9999);
+        $sqlGetMax = mysqli_query($con,
+            "SELECT MaPhong FROM phong ORDER BY MaPhong DESC LIMIT 1"
+        );
+        $rowMax = mysqli_fetch_assoc($sqlGetMax);
+
+        if ($rowMax) {
+            $so = intval(substr($rowMax['MaPhong'], 1)); 
+            $so++;
+            $maPhong = "P" . str_pad($so, 3, "0", STR_PAD_LEFT);
+        } else {
+            $maPhong = "P001";
+        }
+
 
         $sql1 = "INSERT INTO phong(MaPhong, TenPhong, SucChua, MaNhom)
                 VALUES('$maPhong', '$tenPhong', '$sucChua', '$maNhom')";
@@ -148,7 +160,7 @@
 
                 <tr>
                     <td>Sức chứa:</td>
-                    <td><input type="text" class="form-control" name="sucChua" required></td>
+                    <td><input type="number" class="form-control" name="sucChua" required></td>
                 </tr>
 
                 <tr>

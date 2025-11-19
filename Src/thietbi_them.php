@@ -106,42 +106,89 @@
     <h2>Thêm thiết bị</h2>
 
     <?php
-    // Lấy danh sách loại
-    $loai = mysqli_query($con, "SELECT * FROM loai");
+        // Lấy danh sách loại
+        $loai = mysqli_query($con, "SELECT * FROM loai");
 
-    // Lấy danh sách trạng thái thiết bị
-    $tttb = mysqli_query($con, "SELECT * FROM trangthaithietbi");
+        // Lấy danh sách trạng thái thiết bị
+        $tttb = mysqli_query($con, "SELECT * FROM trangthaithietbi");
+        
 
-    // Xử lý thêm phòng
-    if (isset($_POST['submit'])) {
-        $maThietBi = $_POST['maThietBi'];
-        $tenThietBi = $_POST['tenThietBi'];
-        $maLoai = $_POST['maLoai'];
-        $maTTTB = $_POST['maTTTB'];
+        // Xử lý thêm phòng
+        if (isset($_POST['submit'])) {
+            $tenThietBi = $_POST['tenThietBi'];
+            $maLoai = $_POST['maLoai'];
+            $maTTTB = $_POST['maTTTB'];
+
+            $loaiQuery = mysqli_query($con, "SELECT TenLoai FROM loai WHERE MaLoai='$maLoai'");
+            $loaiRow = mysqli_fetch_assoc($loaiQuery);
+            $tenLoai = $loaiRow['TenLoai'];
+
+            // Tạo prefix theo tên loại
+            switch ($tenLoai) {
+                case "Ghế":
+                    $prefix = "GHE";
+                    break;
+                case "Bàn phím":
+                $prefix = "BP";
+                break;
+                case "Ti vi":
+                    $prefix = "TV";
+                    break;
+                case "Dây cáp":
+                $prefix = "DC";
+                break;
+                case "Bàn":
+                    $prefix = "BAN";
+                    break;
+                case "Máy tính bàn":
+                    $prefix = "MTB";
+                    break;
+                case "Chuột":
+                    $prefix = "CH";
+                    break;
+                default:
+                    $prefix = "TB"; 
+            }
+
+            // Lấy mã lớn nhất theo prefix
+            $maxQuery = mysqli_query($con,
+                "SELECT MaThietBi FROM thietbi 
+                WHERE MaThietBi LIKE '$prefix%' 
+                ORDER BY MaThietBi DESC 
+                LIMIT 1"
+            );
+
+            if (mysqli_num_rows($maxQuery) > 0) {
+                $rowMax = mysqli_fetch_assoc($maxQuery);
+
+                $num = (int) filter_var($rowMax['MaThietBi'], FILTER_SANITIZE_NUMBER_INT);
+                $num++;
+            } else {
+                $num = 1; 
+            }
+
+            // Tạo mã mới
+            $maThietBi = $prefix . sprintf("%03d", $num);
 
 
-        $sql1 = "INSERT INTO thietbi(MaThietBi, TenThietBi, MaLoai)
-                VALUES('$maThietBi', '$tenThietBi', '$maLoai')";
+            $sql1 = "INSERT INTO thietbi(MaThietBi, TenThietBi, MaLoai)
+                    VALUES('$maThietBi', '$tenThietBi', '$maLoai')";
 
-        $sql2 = "INSERT INTO chitiettttb(MaThietBi, MaTTTB)
-                VALUES('$maThietBi', '$maTTTB')";
+            $sql2 = "INSERT INTO chitiettttb(MaThietBi, MaTTTB)
+                    VALUES('$maThietBi', '$maTTTB')";
 
-        if (mysqli_query($con, $sql1) && mysqli_query($con, $sql2)) {
-            echo "<p style='text-align:center; color:green;'>Thêm thiết bị thành công!</p>";
-        } else {
-            echo "<p style='text-align:center; color:red;'>Lỗi: " . mysqli_error($con) . "</p>";
+            if (mysqli_query($con, $sql1) && mysqli_query($con, $sql2)) {
+                echo "<p style='text-align:center; color:green;'>Thêm thiết bị thành công!</p>";
+            } else {
+                echo "<p style='text-align:center; color:red;'>Lỗi: " . mysqli_error($con) . "</p>";
+            }
         }
-    }
     ?>
 
     <form method="POST">
         <div class="table-responsive">
             <table>
-                <tr><th colspan="2">THÔNG TIN THIẾT BỊ MỚI</th></tr>   
-                <tr>
-                    <td>Mã thiết bị:</td>
-                    <td><input type="text" class="form-control"  name="maThietBi" required></td>
-                </tr>
+                <tr><th colspan="2">THÔNG TIN THIẾT BỊ MỚI</th></tr>
                 <tr>
                     <td>Tên thiết bị:</td>
                     <td><input type="text" class="form-control"  name="tenThietBi" required></td>
