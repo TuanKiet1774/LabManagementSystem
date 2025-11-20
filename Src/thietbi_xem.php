@@ -110,7 +110,7 @@
                 $row = mysqli_fetch_array($result);
 
                 echo "<table class='table mx-auto' style='max-width: 700px;'>";
-                $imagePath = "Image/" . $row['MaThietBi'] . ".jpg";
+                $imagePath = "Image/" . $row['MaLoai'] . ".jpg";
                 if(!file_exists($imagePath)) {
                     $imagePath = "Image/noimage.png"; 
                 }

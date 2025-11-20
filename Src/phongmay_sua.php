@@ -43,7 +43,7 @@
                 color: #333;
             }
 
-            input[type="text"] {
+            input[type="text"], input[type="number"] {
                 width: 75%;
                 padding: 10px;
                 border-radius: 8px;
@@ -53,7 +53,7 @@
                 text-overflow: hidden;
             }
 
-            input[type="text"]:focus {
+            input[type="text"]:focus, input[type="number"]:focus {
                 background: #e6f0ff;
                 border-color: #93c5fd;
                 outline: none;
@@ -107,15 +107,12 @@
 
             // Xử lý cập nhật
             if (isset($_POST['submit'])) {
-
                 $maPhong = $_POST['maPhong'];
                 $tenPhong = $_POST['tenPhong'];
-
                 $maNhom = $_POST['maNhom'];
-
-                $sucChua = $_POST['sucChua'];
-
+                $sucChua = ($_POST['sucChua']);
                 $maTTP = $_POST['maTTP'];
+                
 
                 // Cập nhật bảng phong
                 $sql1 = "UPDATE phong SET 
@@ -203,7 +200,10 @@
 
                     <tr>
                         <td>Sức chứa:</td>
-                        <td><input type="text" class="form-control" name="sucChua" value="<?= $row['SucChua'] ?>"></td>
+                        <td>
+                            <input type="number" class="form-control" name="sucChua" value="<?= $row['SucChua'] ?>" min="1">
+                            <span id="errSucChua" style="color:red; font-size:14px;"></span>
+                        </td>
                     </tr>
 
                     <tr>
@@ -230,12 +230,24 @@
         </form>
 
         <?php
-        } else {
-            echo "<p style='text-align:center; color:red;'>Không tìm thấy phòng!</p>";
+        //Đóng if(!empty($row))
+        } 
+        else {
+            echo "
+            <div class='container d-flex justify-content-center' 
+                style='min-height: calc(100vh - 200px);'>
+                <div class='text-center'>
+                    <p class='text-danger fw-bold mt-1'>Phòng không tồn tại!</p>
+                    <a href='phongmay.php' class='btn btn-secondary mt-2'>Quay lại</a>
+                </div>
+            </div>
+            ";
+            include("./footer.php");
+            exit;
         }
         echo "<div style='text-align:center;'>
             <a class='back-btn w-md-auto d-inline-block' href='phongmay.php'>Quay lại</a>
-            </div>";
+        </div>";
         ?>
         <?php include("./footer.php"); ?>
 
@@ -247,6 +259,7 @@
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-        crossorigin="anonymous"></script>
-    </body>
-    </html>
+        crossorigin="anonymous">
+    </script>
+</body>
+</html>

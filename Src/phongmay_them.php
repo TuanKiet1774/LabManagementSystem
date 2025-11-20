@@ -160,7 +160,7 @@
 
                 <tr>
                     <td>Sức chứa:</td>
-                    <td><input type="number" class="form-control" name="sucChua" required></td>
+                    <td><input type="number" class="form-control" name="sucChua" min="1" required></td>
                 </tr>
 
                 <tr>
