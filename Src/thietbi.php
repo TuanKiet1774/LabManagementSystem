@@ -197,7 +197,7 @@
                     Từ khóa tìm kiếm: <span style="color:#d63384;">'.($keyword).'</span>
                 </div>
 
-                <div class="text-center mt-3">
+                <div class="text-center mt-3" style="min-height: calc(100vh - 200px);">
                     <a href="thietbi.php" class="btn btn-primary px-4">Quay lại</a>
                 </div>
                 ';
