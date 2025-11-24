@@ -2,7 +2,7 @@
 ### List
 function infoHistory($search)
 {
-    $sql = "SELECT pm.MaPhieu, pm.MucDich, pm.NgayBD, pm.NgayKT, pm.NgayTao, ttpm.TenTTPM, nd.Ho, nd.Ten
+    $sql = "SELECT pm.MaPhieu, pm.MucDich, pm.NgayBD, pm.NgayKT, pm.NgayTao, ttpm.MaTTPM, ttpm.TenTTPM, nd.Ho, nd.Ten
                 FROM phieumuon pm
                 INNER JOIN chitietttpm ctpm 
                 ON pm.MaPhieu = ctpm.MaPhieu
@@ -57,17 +57,14 @@ function editHistory($con, $maphieu, $mattpm)
 }
 
 ### Delete
-function deleteHistory($con ,$maphieu)
+function deleteHistory($con, $maphieu)
 {
-    // Delete from thoigianmuon table
     $sqlDeleteTG = "DELETE FROM thoigianmuon WHERE MaPhieu = '$maphieu'";
     mysqli_query($con, $sqlDeleteTG);
 
-    // Delete from chitietttpm table
     $sqlDeleteCTTPM = "DELETE FROM chitietttpm WHERE MaPhieu = '$maphieu'";
     mysqli_query($con, $sqlDeleteCTTPM);
 
-    // Delete from phieumuon table
     $sqlDeletePM = "DELETE FROM phieumuon WHERE MaPhieu = '$maphieu'";
     mysqli_query($con, $sqlDeletePM);
 }

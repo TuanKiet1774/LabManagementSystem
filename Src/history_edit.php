@@ -89,6 +89,7 @@
         editHistory($con, $col1['MaPhieu'], $mattpm);
         header("Location: history.php");
     }
+    
     ?>
 
     <?php include './header.php'; ?>
@@ -114,7 +115,6 @@
                         <td>
                             <select name="mattpm" id="mattpm" required>
                                 <option value="" disabled>-- Chọn vai trò --</option>
-                                <option value="TTPM001" <?php echo isset($mattpm) && $mattpm == "TTPM001" ? "selected" : ""; ?>>Chưa duyệt</option>
                                 <option value="TTPM002" <?php echo isset($mattpm) && $mattpm == "TTPM002" ? "selected" : ""; ?>>Đã duyệt</option>
                                 <option value="TTPM003" <?php echo isset($mattpm) && $mattpm == "TTPM003" ? "selected" : ""; ?>>Không chấp nhận</option>
                             </select>

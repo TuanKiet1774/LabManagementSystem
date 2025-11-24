@@ -176,14 +176,24 @@
                     echo "<td class='d-none d-md-table-cell' align='center'>" . date("d/m/Y", strtotime($col['NgayKT'])) . "</td>";
                     echo "<td class='d-none d-md-table-cell' align='center'>" . date("d/m/Y H:i", strtotime($col['NgayTao'])) . "</td>";
                     echo "<td class='d-none d-md-table-cell' align='center'>" . $col['TenTTPM'] . "</td>";
-                    echo "<td align='center'>
-                            <a class='detail' href='history_detail.php?maphieu=" . $col['MaPhieu'] . "'>Xem</a><br class='d-md-none'>
-                            <a class='edit' href='history_edit.php?maphieu=" . $col['MaPhieu'] . "'>Sửa</a><br class='d-md-none'>
-                            <a class= 'delete' href='history_delete.php?maphieu=" . $col['MaPhieu'] . "'>Xóa</a>
-                        </td>";
+                    echo "<td align='center'>";
+                    echo "<a class='detail' href='history_detail.php?maphieu=" . $col['MaPhieu'] . "'>Xem</a><br class='d-md-none'>";
+                    if ($col['MaTTPM'] == "TTPM001") {
+                        echo "<a class='edit' href='history_edit.php?maphieu=" . $col['MaPhieu'] . "'>Sửa</a>";
+                    } else {
+                        echo "<a class='edit' href='#' onclick= 'alert('Phiếu này không được phép chỉnh sửa vì trạng thái không hợp lệ!'); return false;' style='opacity:0.6; cursor:not-allowed;'>Sửa</a>";
+                    }
+
+                    echo "<br class='d-md-none'>";
+
+                    // Nút Xóa
+                    echo "<a class='delete' href='history_delete.php?maphieu=" . $col['MaPhieu'] . "'>Xóa</a>";
+
+                    echo "</td>";
                     echo "</tr>";
                 }
                 ?>
+
             </table>
 
             <div class="pagination mt-3">
