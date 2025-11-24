@@ -69,38 +69,11 @@
                                 Trang chủ
                             </a>
                         </li>
-                        <!-- <li class="nav-item">
-                            <a class="nav-link" href="./lab_sched.php">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
                                 <i class="fa-solid fa-calendar"></i>
                                 Lịch phòng
                             </a>
-                        </li> -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                <i class="fa-solid fa-calendar"></i>
-                                Mượn phòng
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item" href="./lab_sched.php">
-                                        <i class="fa-solid fa-calendar-minus"></i>
-                                        Lịch phòng
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="./lab_week_sched.php">
-                                        <i class="fa-solid fa-calendar-days"></i>
-                                        Lịch tuần
-                                    </a>
-                                </li> 
-                                <li class="nav-item">
-                                    <a class="dropdown-item" href="./lab_booking_user.php">
-                                        <i class="fa-solid fa-calendar-check"></i>
-                                        Đăng ký
-                                    </a>
-                                </li>                               
-                            </ul>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -122,19 +95,21 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="./history.php">
                                         <i class="fa-solid fa-clock-rotate-left"></i>
                                         Lịch sử
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./statistic.php">
-                                <i class="fa-solid fa-square-poll-vertical"></i>
-                                Thống kê
-                            </a>
-                        </li>                       
+                        <?php if (isset($_SESSION['MaVT']) && $_SESSION['MaVT'] === 'QTV'): ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./statistic.php">
+                                    <i class="fa-solid fa-square-poll-vertical"></i>
+                                    Thống kê
+                                </a>
+                            </li>
+                        <?php endif; ?>
                     </ul>
 
                     <!-- Right items (User) -->
@@ -142,8 +117,15 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="./Image/male.jpg" class="user" alt="">
-                                <span>User</span>
+                                <?php
+                                $path = './Image/' . $_SESSION['Anh'];
+                                echo "<img src = '$path' class='user' alt=''>";
+                                ?>
+                                <span>
+                                    <?php
+                                    echo isset($_SESSION['HoTen']) ? $_SESSION['HoTen'] : "Người dùng";
+                                    ?>
+                                </span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
@@ -159,7 +141,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="./logout.php">
                                         <i class="fa-solid fa-right-from-bracket"></i>
                                         Đăng xuất
                                     </a>
