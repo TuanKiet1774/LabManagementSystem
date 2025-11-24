@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Thêm phòng máy</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link rel="icon" href="./Image/Logo.png" type="image/png">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.2.0/css/all.css" />
+    <title>Thêm phòng máy</title>
+
+</head>
 <style>
     body {
         font-family: "Segoe UI", Arial, sans-serif;
@@ -16,14 +22,14 @@
         font-size: 28px;
         margin-bottom: 20px;
         text-align: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-size: 32px;
-            font-weight: 700;
-            margin: 30px 0;
-            letter-spacing: 1px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-size: 32px;
+        font-weight: 700;
+        margin: 30px 0;
+        letter-spacing: 1px;
     }
 
     table {
@@ -33,7 +39,7 @@
         background: white;
         border-radius: 14px;
         overflow: hidden;
-        box-shadow: 0 4px 18px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
     }
 
     th {
@@ -49,7 +55,9 @@
         font-size: 16px;
     }
 
-    input[type="text"], input[type="number"], select {
+    input[type="text"],
+    input[type="number"],
+    select {
         width: 100%;
         padding: 10px;
         border-radius: 8px;
@@ -59,7 +67,8 @@
         transition: 0.25s;
     }
 
-    input[type="text"]:focus, input[type="number"]:focus,
+    input[type="text"]:focus,
+    input[type="number"]:focus,
     select:focus {
         background: #e6f0ff;
         border-color: #93c5fd;
@@ -93,11 +102,11 @@
         text-align: center;
         text-decoration: none;
     }
+
     .back-btn:hover {
         background: #818cf8;
     }
 </style>
-</head>
 
 <body>
 
@@ -120,13 +129,14 @@
         $maTTP = $_POST['maTTP'];
 
         // Tạo mã phòng tự động
-        $sqlGetMax = mysqli_query($con,
+        $sqlGetMax = mysqli_query(
+            $con,
             "SELECT MaPhong FROM phong ORDER BY MaPhong DESC LIMIT 1"
         );
         $rowMax = mysqli_fetch_assoc($sqlGetMax);
 
         if ($rowMax) {
-            $so = intval(substr($rowMax['MaPhong'], 1)); 
+            $so = intval(substr($rowMax['MaPhong'], 1));
             $so++;
             $maPhong = "P" . str_pad($so, 3, "0", STR_PAD_LEFT);
         } else {
@@ -151,7 +161,9 @@
     <form method="POST">
         <div class="table-responsive">
             <table>
-                <tr><th colspan="2">THÔNG TIN PHÒNG MỚI</th></tr>
+                <tr>
+                    <th colspan="2">THÔNG TIN PHÒNG MỚI</th>
+                </tr>
 
                 <tr>
                     <td>Tên phòng:</td>
@@ -189,7 +201,7 @@
 
                 <tr>
                     <td colspan="2" align="center" style="background:#feffddff;">
-                            <input type="submit" name="submit" value="Thêm phòng" class='btn-add w-md-auto'>
+                        <input type="submit" name="submit" value="Thêm phòng" class='btn-add w-md-auto'>
                     </td>
                 </tr>
             </table>
@@ -213,4 +225,5 @@
         crossorigin="anonymous"></script>
 
 </body>
+
 </html>

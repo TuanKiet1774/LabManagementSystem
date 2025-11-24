@@ -1,99 +1,104 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xóa thiết bị</title>
-    <style>
-        body {
-            font-family: "Inter", "Segoe UI", Arial, sans-serif;
-            min-height: 100vh;
-        }
-
-        h2 {
-            text-align: center;
-            color: #ffffff;
-            font-size: 32px;
-            margin-bottom: 30px;
-            font-weight: 700;
-            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-size: 32px;
-            font-weight: 700;
-            margin: 30px 0;
-            letter-spacing: 1px;
-        }
-
-        .info {
-            font-size: 16px;
-            margin-bottom: 15px;
-            color: #1e293b;
-            background: #eff6ffff;
-            padding: 15px 20px;
-            border-radius: 12px;
-            border-left: 4px solid #667eea;
-            border-right: 4px solid #667eea;
-            text-align: left;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 14px 28px;
-            font-size: 16px;
-            font-weight: 600;
-            border-radius: 12px;
-            text-decoration: none;
-            cursor: pointer;
-            margin: 8px;
-            border: none;
-            overflow: hidden;
-        }
-
-        .btn-delete {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-            color: white;
-        }
-
-        .btn-delete:hover {
-            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
-        }
-
-        .btn-delete:active {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
-        }
-
-        .btn-cancel {
-            background: linear-gradient(135deg, #64748b 0%, #475569 100%);
-            color: white;
-        }
-
-        .btn-cancel:hover {
-            background: linear-gradient(135deg, #475569 0%, #334155 100%);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(100, 116, 139, 0.4);
-        }
-
-        .btn-cancel:active {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.4);
-        }
-
-        .info-box {
-            background: #eff6ff;
-            padding: 15px 20px;
-            border-radius: 12px;
-            border-left: 4px solid #667eea;
-            border-right: 4px solid #667eea;
-        }
-    </style>
+    <title>Xoá thiết bị</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link rel="icon" href="./Image/Logo.png" type="image/png">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.2.0/css/all.css" />
 </head>
+<style>
+    body {
+        font-family: "Inter", "Segoe UI", Arial, sans-serif;
+        min-height: 100vh;
+    }
+
+    h2 {
+        text-align: center;
+        color: #ffffff;
+        font-size: 32px;
+        margin-bottom: 30px;
+        font-weight: 700;
+        text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-size: 32px;
+        font-weight: 700;
+        margin: 30px 0;
+        letter-spacing: 1px;
+    }
+
+    .info {
+        font-size: 16px;
+        margin-bottom: 15px;
+        color: #1e293b;
+        background: #eff6ffff;
+        padding: 15px 20px;
+        border-radius: 12px;
+        border-left: 4px solid #667eea;
+        border-right: 4px solid #667eea;
+        text-align: left;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 14px 28px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 12px;
+        text-decoration: none;
+        cursor: pointer;
+        margin: 8px;
+        border: none;
+        overflow: hidden;
+    }
+
+    .btn-delete {
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        color: white;
+    }
+
+    .btn-delete:hover {
+        background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
+    }
+
+    .btn-delete:active {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+    }
+
+    .btn-cancel {
+        background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+        color: white;
+    }
+
+    .btn-cancel:hover {
+        background: linear-gradient(135deg, #475569 0%, #334155 100%);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(100, 116, 139, 0.4);
+    }
+
+    .btn-cancel:active {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(100, 116, 139, 0.4);
+    }
+
+    .info-box {
+        background: #eff6ff;
+        padding: 15px 20px;
+        border-radius: 12px;
+        border-left: 4px solid #667eea;
+        border-right: 4px solid #667eea;
+    }
+</style>
+
 <body>
     <?php include("./header.php"); ?>
 
@@ -126,17 +131,17 @@
                 </div>
             </div>
             ";
-            include("./footer.php");
-            exit;
+        include("./footer.php");
+        exit;
     }
 
     // Xử lý xóa khi submit
     if (isset($_POST['confirm_delete'])) {
         $sql1 = "DELETE FROM chitiettttb WHERE MaThietBi='$maThietBi'";
         $sql2 = "DELETE FROM thietbi WHERE MaThietBi='$maThietBi'";
-        
+
         $ok = mysqli_query($con, $sql1) && mysqli_query($con, $sql2);
-        
+
         if ($ok) {
             echo "<p style='text-align:center; color:green;'>Xóa thiết bị thành công!</p>";
             echo "<div style='text-align:center; margin-top:20px;'>
@@ -167,7 +172,7 @@
                 </div>
             </div>
         </div>
-    </div>  
+    </div>
     <?php include("./footer.php"); ?>
 
     <script
@@ -180,4 +185,5 @@
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
 </body>
+
 </html>

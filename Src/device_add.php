@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Thêm thiết bị</title>
+    <title>Thêm thiết bị</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link rel="icon" href="./Image/Logo.png" type="image/png">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.2.0/css/all.css" />
+</head>
 <style>
     body {
         font-family: "Segoe UI", Arial, sans-serif;
@@ -16,14 +21,14 @@
         font-size: 28px;
         margin-bottom: 20px;
         text-align: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-size: 32px;
-            font-weight: 700;
-            margin: 30px 0;
-            letter-spacing: 1px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-size: 32px;
+        font-weight: 700;
+        margin: 30px 0;
+        letter-spacing: 1px;
     }
 
     table {
@@ -33,7 +38,7 @@
         background: white;
         border-radius: 14px;
         overflow: hidden;
-        box-shadow: 0 4px 18px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
     }
 
     th {
@@ -49,7 +54,8 @@
         font-size: 16px;
     }
 
-    input[type="text"], select {
+    input[type="text"],
+    select {
         width: 100%;
         padding: 10px;
         border-radius: 8px;
@@ -93,112 +99,114 @@
         text-align: center;
         text-decoration: none;
     }
+
     .back-btn:hover {
         background: #818cf8;
     }
 </style>
-</head>
 
 <body>
-
-    <?php include("./header.php"); ?>
     <?php include("../Database/config.php"); ?>
+    <?php include_once("./header.php"); ?>
     <h2>Thêm thiết bị</h2>
 
     <?php
-        // Lấy danh sách loại
-        $loai = mysqli_query($con, "SELECT * FROM loai");
+    // Lấy danh sách loại
+    $loai = mysqli_query($con, "SELECT * FROM loai");
 
-        // Lấy danh sách trạng thái thiết bị
-        $tttb = mysqli_query($con, "SELECT * FROM trangthaithietbi");
-        
+    // Lấy danh sách trạng thái thiết bị
+    $tttb = mysqli_query($con, "SELECT * FROM trangthaithietbi");
 
-        // Xử lý thêm phòng
-        if (isset($_POST['submit'])) {
-            $tenThietBi = $_POST['tenThietBi'];
-            $maLoai = $_POST['maLoai'];
-            $maTTTB = $_POST['maTTTB'];
 
-            $loaiQuery = mysqli_query($con, "SELECT TenLoai FROM loai WHERE MaLoai='$maLoai'");
-            $loaiRow = mysqli_fetch_assoc($loaiQuery);
-            $tenLoai = $loaiRow['TenLoai'];
+    // Xử lý thêm phòng
+    if (isset($_POST['submit'])) {
+        $tenThietBi = $_POST['tenThietBi'];
+        $maLoai = $_POST['maLoai'];
+        $maTTTB = $_POST['maTTTB'];
 
-            // Tạo prefix theo tên loại
-            switch ($tenLoai) {
-                case "Ghế":
-                    $prefix = "GHE";
-                    break;
-                case "Bàn phím":
+        $loaiQuery = mysqli_query($con, "SELECT TenLoai FROM loai WHERE MaLoai='$maLoai'");
+        $loaiRow = mysqli_fetch_assoc($loaiQuery);
+        $tenLoai = $loaiRow['TenLoai'];
+
+        // Tạo prefix theo tên loại
+        switch ($tenLoai) {
+            case "Ghế":
+                $prefix = "GHE";
+                break;
+            case "Bàn phím":
                 $prefix = "BP";
                 break;
-                case "Ti vi":
-                    $prefix = "TV";
-                    break;
-                case "Dây cáp":
+            case "Ti vi":
+                $prefix = "TV";
+                break;
+            case "Dây cáp":
                 $prefix = "DC";
                 break;
-                case "Bàn":
-                    $prefix = "BAN";
-                    break;
-                case "Máy tính bàn":
-                    $prefix = "MTB";
-                    break;
-                case "Chuột":
-                    $prefix = "CH";
-                    break;
-                default:
-                    $prefix = "TB"; 
-            }
+            case "Bàn":
+                $prefix = "BAN";
+                break;
+            case "Máy tính bàn":
+                $prefix = "MTB";
+                break;
+            case "Chuột":
+                $prefix = "CH";
+                break;
+            default:
+                $prefix = "TB";
+        }
 
-            // Lấy mã lớn nhất theo prefix
-            $maxQuery = mysqli_query($con,
-                "SELECT MaThietBi FROM thietbi 
+        // Lấy mã lớn nhất theo prefix
+        $maxQuery = mysqli_query(
+            $con,
+            "SELECT MaThietBi FROM thietbi 
                 WHERE MaThietBi LIKE '$prefix%' 
                 ORDER BY MaThietBi DESC 
                 LIMIT 1"
-            );
+        );
 
-            if (mysqli_num_rows($maxQuery) > 0) {
-                $rowMax = mysqli_fetch_assoc($maxQuery);
+        if (mysqli_num_rows($maxQuery) > 0) {
+            $rowMax = mysqli_fetch_assoc($maxQuery);
 
-                $num = (int) filter_var($rowMax['MaThietBi'], FILTER_SANITIZE_NUMBER_INT);
-                $num++;
-            } else {
-                $num = 1; 
-            }
+            $num = (int) filter_var($rowMax['MaThietBi'], FILTER_SANITIZE_NUMBER_INT);
+            $num++;
+        } else {
+            $num = 1;
+        }
 
-            // Tạo mã mới
-            $maThietBi = $prefix . sprintf("%03d", $num);
+        // Tạo mã mới
+        $maThietBi = $prefix . sprintf("%03d", $num);
 
 
-            $sql1 = "INSERT INTO thietbi(MaThietBi, TenThietBi, MaLoai)
+        $sql1 = "INSERT INTO thietbi(MaThietBi, TenThietBi, MaLoai)
                     VALUES('$maThietBi', '$tenThietBi', '$maLoai')";
 
-            $sql2 = "INSERT INTO chitiettttb(MaThietBi, MaTTTB)
+        $sql2 = "INSERT INTO chitiettttb(MaThietBi, MaTTTB)
                     VALUES('$maThietBi', '$maTTTB')";
 
-            if (mysqli_query($con, $sql1) && mysqli_query($con, $sql2)) {
-                echo "<p style='text-align:center; color:green;'>Thêm thiết bị thành công!</p>";
-            } else {
-                echo "<p style='text-align:center; color:red;'>Lỗi: " . mysqli_error($con) . "</p>";
-            }
+        if (mysqli_query($con, $sql1) && mysqli_query($con, $sql2)) {
+            echo "<p style='text-align:center; color:green;'>Thêm thiết bị thành công!</p>";
+        } else {
+            echo "<p style='text-align:center; color:red;'>Lỗi: " . mysqli_error($con) . "</p>";
         }
+    }
     ?>
 
     <form method="POST">
         <div class="table-responsive">
             <table>
-                <tr><th colspan="2">THÔNG TIN THIẾT BỊ MỚI</th></tr>
+                <tr>
+                    <th colspan="2">THÔNG TIN THIẾT BỊ MỚI</th>
+                </tr>
                 <tr>
                     <td>Tên thiết bị:</td>
-                    <td><input type="text" class="form-control"  name="tenThietBi" required></td>
+                    <td><input type="text" class="form-control" name="tenThietBi" required></td>
                 </tr>
 
 
                 <tr>
                     <td>Tên loại:</td>
                     <td>
-                        <select class="form-control"  name="maLoai" required>
+                        <select class="form-control" name="maLoai" required>
                             <option value="">-- Chọn loại thiết bị --</option>
                             <?php while ($r = mysqli_fetch_assoc($loai)) { ?>
                                 <option value="<?= $r['MaLoai'] ?>"><?= $r['TenLoai'] ?></option>
@@ -211,7 +219,7 @@
                 <tr>
                     <td>Trạng thái:</td>
                     <td>
-                        <select class="form-control"  name="maTTTB" required>
+                        <select class="form-control" name="maTTTB" required>
                             <option value="">-- Chọn trạng thái --</option>
                             <?php while ($t = mysqli_fetch_assoc($tttb)) { ?>
                                 <option value="<?= $t['MaTTTB'] ?>"><?= $t['TenTTTB'] ?></option>
@@ -246,4 +254,5 @@
         crossorigin="anonymous"></script>
 
 </body>
+
 </html>

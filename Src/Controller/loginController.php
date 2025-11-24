@@ -30,6 +30,10 @@ function logIn($con)
             $_SESSION['MaKhoa']  = $col['MaKhoa'];
             $_SESSION['Lop']     = $col['Lop'];
             $_SESSION['Anh']     = $col['Anh'];
+            $_SESSION['NgaySinh'] = $col['NgaySinh'] ?? "";
+            $_SESSION['GioiTinh'] = $col['GioiTinh'] ?? "";
+            $_SESSION['Sdt']      = $col['Sdt'] ?? "";
+            $_SESSION['DiaChi']   = $col['DiaChi'] ?? "";
 
             // Chuyển hướng theo vai trò
             if ($col['MaVT'] == 'QTV') {
@@ -56,33 +60,31 @@ function checkLogin()
 
     if (!isset($_SESSION['MaND'])) {
         // Chuyển hướng về login
-        header("Location: logins.php");
+        header("Location: login.php");
         exit();
     }
 
     return [
-        'MaND'   => $_SESSION['MaND'],
-        'HoTen'  => $_SESSION['HoTen'],
-        'Email'  => $_SESSION['Email'],
-        'MaVT'   => $_SESSION['MaVT'],
-        'MaKhoa' => $_SESSION['MaKhoa'],
-        'Lop'    => $_SESSION['Lop'],
-        'Anh'    => $_SESSION['Anh']
+        'MaND'      => $_SESSION['MaND'],
+        'HoTen'     => $_SESSION['HoTen'],
+        'Email'     => $_SESSION['Email'],
+        'MaVT'      => $_SESSION['MaVT'],
+        'MaKhoa'    => $_SESSION['MaKhoa'],
+        'Lop'       => $_SESSION['Lop'],
+        'Anh'       => $_SESSION['Anh'],
+        'NgaySinh'  => $_SESSION['NgaySinh'] ?? "",
+        'GioiTinh'  => $_SESSION['GioiTinh'] ?? "",
+        'sdt'       => $_SESSION['Sdt'] ?? "",
+        'DiaChi'    => $_SESSION['DiaChi'] ?? ""
     ];
 }
 
-function logout($page = "logins.php")
+function logout($page = "login.php")
 {
-    // Bắt đầu session nếu chưa bắt đầu
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
-
-    // Hủy session
     session_destroy();
-
-    // Chuyển hướng về trang login
     header("Location: $page");
     exit();
 }
-?>

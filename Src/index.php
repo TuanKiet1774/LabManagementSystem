@@ -10,14 +10,9 @@
 
 <body>
     <?php
-    session_start();
-
-    if (!isset($_SESSION['user'])) {
-        header("Location: logins.php");
-        exit();
-    }
-
-    echo "Xin chào " . $_SESSION['user']['username'];
+    include("../Database/config.php");
+    include_once('./Controller/loginController.php');
+    $user = checkLogin();
 
     ?>
     <?php include './header.php'; ?>

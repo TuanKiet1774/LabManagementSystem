@@ -123,7 +123,7 @@
     <main>
         <?php
         include_once('../Database/config.php');
-        include_once('./Controllers/signupControllers.php');
+        include_once('./Controller/signupController.php');
         insertUser($con);
         ?>
         <div class="signup">
@@ -189,7 +189,7 @@
                     <div class="col-md-6 mb-2">
                         <label class="form-label"><i class="fa-solid fa-address-book"></i> Vai trò</label>
                         <select name="vaitro" class="form-select" required>
-                            <option value="">-- Chọn vai trò --</option>
+                            <option value="" disabled>-- Chọn vai trò --</option>
                             <option value="GV" <?php echo isset($vaitro) && $vaitro == "GV" ? "selected" : ""; ?>>Giảng viên</option>
                             <option value="SV" <?php echo isset($vaitro) && $vaitro == "SV" ? "selected" : ""; ?>>Sinh viên</option>
                         </select>
@@ -217,7 +217,7 @@
 
                 <!-- Nút -->
                 <div class="text-center">
-                    <a href="./logins.php" class="btnBack me-3">Quay lại</a>
+                    <a href="./login.php" class="btnBack me-3">Quay lại</a>
                     <button type="submit" name="btnDK" class="btnDK">Đăng ký</button>
                 </div>
             </form>

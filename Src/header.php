@@ -83,31 +83,33 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="phongmay.php">
+                                    <a class="dropdown-item" href="#">
                                         <i class="fa-solid fa-house-laptop"></i>
                                         Phòng máy
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="thietbi.php">
+                                    <a class="dropdown-item" href="./device.php">
                                         <i class="fa-solid fa-computer"></i>
                                         Thiết bị
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="./history.php">
                                         <i class="fa-solid fa-clock-rotate-left"></i>
                                         Lịch sử
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./statistic.php">
-                                <i class="fa-solid fa-square-poll-vertical"></i>
-                                Thống kê
-                            </a>
-                        </li>
+                        <?php if (isset($_SESSION['MaVT']) && $_SESSION['MaVT'] === 'QTV'): ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./statistic.php">
+                                    <i class="fa-solid fa-square-poll-vertical"></i>
+                                    Thống kê
+                                </a>
+                            </li>
+                        <?php endif; ?>
                     </ul>
 
                     <!-- Right items (User) -->
@@ -115,8 +117,15 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="./Image/male.jpg" class="user" alt="">
-                                <span>User</span>
+                                <?php
+                                $path = './Image/' . $_SESSION['Anh'];
+                                echo "<img src = '$path' class='user' alt=''>";
+                                ?>
+                                <span>
+                                    <?php
+                                    echo isset($_SESSION['HoTen']) ? $_SESSION['HoTen'] : "Người dùng";
+                                    ?>
+                                </span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
@@ -132,7 +141,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="./logout.php">
                                         <i class="fa-solid fa-right-from-bracket"></i>
                                         Đăng xuất
                                     </a>

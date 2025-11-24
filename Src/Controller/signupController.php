@@ -43,7 +43,7 @@ function insertUser($con)
         } else {
             $result = mysqli_query($con, $sql);
             if ($result) {
-                echo "<script>alert('Đăng ký thành công! Vui lòng đăng nhập.'); window.location.href = './logins.php';</script>";
+                echo "<script>alert('Đăng ký thành công! Vui lòng đăng nhập.'); window.location.href = './login.php';</script>";
             } else {
                 echo "<script>alert('Đăng ký thất bại! Vui lòng thử lại.');</script>";
             }
