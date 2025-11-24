@@ -11,7 +11,7 @@
 <body>
     <?php
     include_once('../Database/config.php');
-    include './Controller/loginController.php';
+    include_once ('./Controller/loginController.php');
     $user = checkLogin();
     ?>
     <?php include './header.php'; ?>

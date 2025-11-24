@@ -50,6 +50,7 @@
 
     .btnBack {
         background: #93c5fd !important;
+        color: white !important;
     }
 
     .btnBack:hover {
@@ -59,6 +60,7 @@
 
     .btnEdit {
         background: #fda4af !important;
+        color: white !important;
     }
 
     .btnEdit:hover {
@@ -70,34 +72,14 @@
     <?php
     include_once('../Database/config.php');
     include_once('./Controller/loginController.php');
+    include_once('./Controller/historyController.php');
     $user = checkLogin();
 
-    $maphieu = isset($_GET['maphieu']) ? $_GET['maphieu'] : '';
-    $sql1 = "SELECT pm.MaPhieu, pm.MucDich, pm.NgayBD, pm.NgayKT, pm.NgayTao, p.TenPhong, nd.Ho, nd.Ten, nd.Email, np.TenNhom
-                FROM phieumuon pm
-                INNER JOIN nguoidung nd
-                ON pm.MaND = nd.MaND
-                INNER JOIN phong p
-                ON pm.MaPhong = p.MaPhong
-                INNER JOIN nhomphong np
-                ON p.MaNhom = np.MaNhom
-                WHERE pm.MaPhieu = '$maphieu'";
-
     $db1 = mysqli_query($con, $sql1);
-
-    $sql2 = "SELECT tgm.MaTGM, tt.TenTTT AS TrangThaiTuan, nt.TenNgay AS NgayTrongTuan, th.TenTiet, th.GioBG, th.GioKT
-            FROM thoigianmuon tgm
-            JOIN tiethoc th ON tgm.MaTiet = th.MaTiet
-            JOIN trangthaituan tt ON tgm.MaTTT = tt.MaTTT
-            JOIN ngaytuan nt ON tgm.MaNgay = nt.MaNgay
-            WHERE tgm.MaPhieu = '$maphieu'
-            ORDER BY th.GioBG;";
     $db2 = mysqli_query($con, $sql2);
     $db3 = mysqli_query($con, $sql2);
 
-    // Lấy dữ liệu cho các phần tử chính
     $col1 = mysqli_fetch_assoc($db1);
-    // Lưu ý: $col2 chỉ lấy dòng đầu tiên, nhưng ta sẽ không dùng nó để hiển thị chi tiết (sẽ dùng $db3)
     $col2 = mysqli_fetch_assoc($db2);
     ?>
     <?php include './header.php'; ?>

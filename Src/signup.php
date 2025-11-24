@@ -189,7 +189,7 @@
                     <div class="col-md-6 mb-2">
                         <label class="form-label"><i class="fa-solid fa-address-book"></i> Vai trò</label>
                         <select name="vaitro" class="form-select" required>
-                            <option value="">-- Chọn vai trò --</option>
+                            <option value="" disabled>-- Chọn vai trò --</option>
                             <option value="GV" <?php echo isset($vaitro) && $vaitro == "GV" ? "selected" : ""; ?>>Giảng viên</option>
                             <option value="SV" <?php echo isset($vaitro) && $vaitro == "SV" ? "selected" : ""; ?>>Sinh viên</option>
                         </select>

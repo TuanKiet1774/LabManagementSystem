@@ -128,35 +128,12 @@
     include_once('../Database/config.php');
     include_once('./Controller/controller.php');
     include_once('./Controller/loginController.php');
+    include_once('./Controller/historyController.php');
+
     $user = checkLogin();
 
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
-
-    if (isset($_GET['search']) && $_GET['search'] !== "") {
-        $search = $_GET['search'];
-        $sql = "SELECT pm.MaPhieu, pm.MucDich, pm.NgayBD, pm.NgayKT, pm.NgayTao, ttpm.TenTTPM, nd.Ho, nd.Ten
-                FROM phieumuon pm
-                INNER JOIN chitietttpm ctpm 
-                ON pm.MaPhieu = ctpm.MaPhieu
-                INNER JOIN trangthaiphieumuon ttpm
-                ON ctpm.MaTTPM = ttpm.MaTTPM
-                INNER JOIN nguoidung nd
-                ON pm.MaND = nd.MaND
-                WHERE pm.MucDich LIKE '%$search%' 
-                OR ttpm.TenTTPM LIKE '%$search%'
-                OR CONCAT(nd.Ho, ' ', nd.Ten) LIKE '%$search%'
-                ORDER BY MaPhieu DESC";
-    } else {
-        $sql = "SELECT pm.MaPhieu, pm.MucDich, pm.NgayBD, pm.NgayKT, pm.NgayTao, ttpm.TenTTPM, nd.Ho, nd.Ten
-                FROM phieumuon pm
-                INNER JOIN chitietttpm ctpm 
-                ON pm.MaPhieu = ctpm.MaPhieu
-                INNER JOIN trangthaiphieumuon ttpm
-                ON ctpm.MaTTPM = ttpm.MaTTPM
-                INNER JOIN nguoidung nd
-                ON pm.MaND = nd.MaND
-                ORDER BY MaPhieu DESC";
-    }
+    $sql = infoHistory($_GET['search'] ?? '');
     $pagination = pagination($con, 3, $sql, $page);
     $db = $pagination['data'];
     $maxPage = $pagination['maxPage'];

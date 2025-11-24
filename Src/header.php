@@ -102,12 +102,14 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./statistic.php">
-                                <i class="fa-solid fa-square-poll-vertical"></i>
-                                Thống kê
-                            </a>
-                        </li>
+                        <?php if (isset($_SESSION['MaVT']) && $_SESSION['MaVT'] === 'QTV'): ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./statistic.php">
+                                    <i class="fa-solid fa-square-poll-vertical"></i>
+                                    Thống kê
+                                </a>
+                            </li>
+                        <?php endif; ?>
                     </ul>
 
                     <!-- Right items (User) -->
@@ -115,9 +117,9 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <?php 
-                                $path = './Image/'.$_SESSION['Anh']; 
-                                echo "<img src = '$path' class='user' alt=''>"; 
+                                <?php
+                                $path = './Image/' . $_SESSION['Anh'];
+                                echo "<img src = '$path' class='user' alt=''>";
                                 ?>
                                 <span>
                                     <?php
