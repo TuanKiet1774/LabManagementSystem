@@ -1,3 +1,10 @@
+<?php
+        include("../Database/config.php");
+        include_once('./Controller/controller.php');
+        include_once('./Controller/deviceController.php');
+        include_once('./Controller/loginController.php');
+        $user = checkLogin();
+?>
 <!DOCTYPE html>
 <html>
 
@@ -109,7 +116,6 @@
 
 <body>
     <?php
-    include_once("../Database/config.php");
 
     // Lấy mã phòng từ URL
     $maPhong = $_GET['maPhong'];
@@ -250,7 +256,7 @@
             </table>
         </div>
     </form>
-    <a class="back-btn" href="phongmay.php">Quay lại</a>
+    <a class="back-btn" href="lab.php">Quay lại</a>
 
     <?php include("./footer.php"); ?>
 

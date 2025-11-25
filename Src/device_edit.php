@@ -1,3 +1,10 @@
+<?php
+        include("../Database/config.php");
+        include_once('./Controller/controller.php');
+        include_once('./Controller/deviceController.php');
+        include_once('./Controller/loginController.php');
+        $user = checkLogin();
+?>
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -101,7 +108,6 @@
     <?php include("./header.php"); ?>
 
     <?php
-    include("../Database/config.php");
 
     // Lấy mã tb
     if (isset($_GET['maThietBi'])) {
@@ -224,7 +230,7 @@
         echo "<p style='text-align:center; color:red;'>Không tìm thấy phòng!</p>";
     }
     echo "<div style='text-align:center;'>
-        <a class='back-btn w-md-auto d-inline-block' href='thietbi.php'>Quay lại</a>
+        <a class='back-btn w-md-auto d-inline-block' href='device.php'>Quay lại</a>
         </div>";
     ?>
     <?php include("./footer.php"); ?>

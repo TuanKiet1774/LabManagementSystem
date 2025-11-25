@@ -1,3 +1,10 @@
+<?php
+        include("../Database/config.php");
+        include_once('./Controller/controller.php');
+        include_once('./Controller/labController.php');
+        include_once('./Controller/loginController.php');
+        $user = checkLogin();
+?>
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -103,7 +110,6 @@
 <body>
     <?php include("./header.php"); ?>
     <?php
-    include("../Database/config.php");
 
     // Lấy mã phòng
     if (isset($_GET['maPhong'])) {
@@ -134,8 +140,7 @@
                         MaTTP='$maTTP'
                     WHERE MaPhong='$maPhong'";
 
-        $ok = mysqli_query($con, $sql1)
-            && mysqli_query($con, $sql2);
+        $ok = labEdit($con, $maPhong, $tenPhong, $sucChua, $maNhom, $maTTP);
 
 
         if ($ok) {
@@ -144,25 +149,11 @@
             echo "<p style='text-align:center; color:red;'>Lỗi cập nhật: " . mysqli_error($con) . "</p>";
         }
 
-        // Lấy lại dữ liệu sau khi cập nhật
-        $sql = "SELECT p.*, np.*, tt.*, ct.*
-            FROM phong p
-            JOIN nhomphong np ON np.MaNhom = p.MaNhom
-            JOIN chitietttp ct ON ct.MaPhong = p.MaPhong
-            JOIN trangthaiphong tt ON ct.MaTTP = tt.MaTTP
-            WHERE p.MaPhong = '$maPhong'";
-        $result = mysqli_query($con, $sql);
+        $result = getEdit_Detail($con, $maPhong);
         $row = mysqli_fetch_assoc($result);
     } else if (isset($maPhong)) {
 
-        // Lần đầu mở form
-        $sql = "SELECT p.*, np.*, tt.*, ct.*
-            FROM phong p
-            JOIN nhomphong np ON np.MaNhom = p.MaNhom
-            JOIN chitietttp ct ON ct.MaPhong = p.MaPhong
-            JOIN trangthaiphong tt ON ct.MaTTP = tt.MaTTP
-            WHERE p.MaPhong = '$maPhong'";
-        $result = mysqli_query($con, $sql);
+        $result = getEdit_Detail($con, $maPhong);
         $row = mysqli_fetch_assoc($result);
     }
 
@@ -242,7 +233,7 @@
             style='min-height: calc(100vh - 200px);'>
             <div class='text-center'>
                 <p class='text-danger fw-bold mt-1'>Phòng không tồn tại!</p>
-                <a href='phongmay.php' class='btn btn-secondary mt-2'>Quay lại</a>
+                <a href='lab.php' class='btn btn-secondary mt-2'>Quay lại</a>
             </div>
         </div>
         ";
@@ -250,7 +241,7 @@
         exit;
     }
     echo "<div style='text-align:center;'>
-        <a class='back-btn w-md-auto d-inline-block' href='phongmay.php'>Quay lại</a>
+        <a class='back-btn w-md-auto d-inline-block' href='lab.php'>Quay lại</a>
     </div>";
     ?>
     <?php include("./footer.php"); ?>

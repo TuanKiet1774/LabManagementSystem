@@ -1,3 +1,10 @@
+<?php
+        include("../Database/config.php");
+        include_once('./Controller/controller.php');
+        include_once('./Controller/labController.php');
+        include_once('./Controller/loginController.php');
+        $user = checkLogin();
+?>
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -111,7 +118,6 @@
 <body>
 
     <?php include("./header.php"); ?>
-    <?php include("../Database/config.php"); ?>
     <h2>Thêm phòng máy</h2>
 
     <?php
@@ -128,29 +134,10 @@
         $maNhom = $_POST['maNhom'];
         $maTTP = $_POST['maTTP'];
 
-        // Tạo mã phòng tự động
-        $sqlGetMax = mysqli_query(
-            $con,
-            "SELECT MaPhong FROM phong ORDER BY MaPhong DESC LIMIT 1"
-        );
-        $rowMax = mysqli_fetch_assoc($sqlGetMax);
-
-        if ($rowMax) {
-            $so = intval(substr($rowMax['MaPhong'], 1));
-            $so++;
-            $maPhong = "P" . str_pad($so, 3, "0", STR_PAD_LEFT);
-        } else {
-            $maPhong = "P001";
-        }
+        $result = labAdd($con, $tenPhong, $sucChua, $maNhom, $maTTP);
 
 
-        $sql1 = "INSERT INTO phong(MaPhong, TenPhong, SucChua, MaNhom)
-                VALUES('$maPhong', '$tenPhong', '$sucChua', '$maNhom')";
-
-        $sql2 = "INSERT INTO chitietttp(MaPhong, MaTTP)
-                VALUES('$maPhong', '$maTTP')";
-
-        if (mysqli_query($con, $sql1) && mysqli_query($con, $sql2)) {
+        if ($result['success']) {
             echo "<p style='text-align:center; color:green;'>Thêm phòng thành công!</p>";
         } else {
             echo "<p style='text-align:center; color:red;'>Lỗi: " . mysqli_error($con) . "</p>";
@@ -209,7 +196,7 @@
     </form>
 
     <div style='text-align:center;'>
-        <a class='back-btn w-md-auto d-inline-block' href='phongmay.php'>Quay lại</a>
+        <a class='back-btn w-md-auto d-inline-block' href='lab.php'>Quay lại</a>
     </div>
 
     <?php include("./footer.php"); ?>

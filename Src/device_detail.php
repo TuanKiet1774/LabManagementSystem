@@ -1,3 +1,10 @@
+<?php
+        include("../Database/config.php");
+        include_once('./Controller/controller.php');
+        include_once('./Controller/deviceController.php');
+        include_once('./Controller/loginController.php');
+        $user = checkLogin();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -99,7 +106,6 @@
     <?php include("./header.php"); ?>
     <div class="container my-4">
         <?php
-        include("../Database/config.php");
 
         if (isset($_GET['maThietBi'])) {
             $ma_thietbi = $_GET['maThietBi'];
@@ -142,7 +148,7 @@
             echo "</table>";
         }
         echo "<div style='text-align:center; class='text-center mt-4'>
-                <a class='back-btn' href='thietbi.php'>Quay lại</a>
+                <a class='back-btn' href='device.php'>Quay lại</a>
             </div>";
         ?>
     </div>

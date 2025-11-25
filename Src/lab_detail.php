@@ -1,3 +1,10 @@
+<?php
+        include("../Database/config.php");
+        include_once('./Controller/controller.php');
+        include_once('./Controller/labController.php');
+        include_once('./Controller/loginController.php');
+        $user = checkLogin();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -72,7 +79,7 @@
         margin-top: 6px;
     }
 
-    span {
+    .info-cell span {
         color: #333;
         font-size: 17px;
         margin-left: 5px;
@@ -99,52 +106,37 @@
     <?php include("./header.php"); ?>
     <div class="container my-4">
         <?php
-        include("../Database/config.php");
 
         if (isset($_GET['maPhong'])) {
-            $ma_phong = $_GET['maPhong'];
+            $maPhong = $_GET['maPhong'];
 
-            $sql = "SELECT p.MaPhong, p.TenPhong, p.SucChua, np.*, tt.TenTTP
-                FROM phong p
-                JOIN nhomphong np ON np.MaNhom = p.MaNhom
-                JOIN chitietttp ct ON ct.MaPhong = p.MaPhong
-                JOIN trangthaiphong tt ON ct.MaTTP = tt.MaTTP
-                WHERE p.MaPhong = '$ma_phong'
-                ";
-            $result = mysqli_query($con, $sql);
-            $row = mysqli_fetch_array($result);
-
-            echo "<table class='table mx-auto' style='max-width: 700px;'>";
-            $imagePath = "Image/" . $row['MaNhom'] . ".jpg";
-            if (!file_exists($imagePath)) {
-                $imagePath = "Image/noimage.png";
-            }
+            $row = labDetail($maPhong);
             if ($row) {
-                echo "<thead>";
-                echo "<tr>";
-                echo "<th colspan='2' style='background: #c7d2fe; color: #3f3d56';>" . $row['TenPhong'] . " - " . $row['TenNhom'] . "</th>";
-                echo "</tr>";
-                echo "</thead>";
-                echo "<tbody>";
-                echo "<tr class='d-block d-md-table-row'>";
-                echo "<td class='img-cell d-block d-md-table-cell text-center mb-3 mb-md-0'>";
-                echo "<img src='" . $imagePath . "' alt='" . $row['TenPhong'] . "' width='300'>";
-                echo "</td>";
+                echo "<table>";
+                    echo "<thead>";
+                        echo "<tr>";
+                        echo "<th colspan='2' style='background: #c7d2fe; color: #3f3d56';>" . $row['TenPhong'] . " - " . $row['TenNhom'] . "</th>";
+                        echo "</tr>";
+                    echo "</thead>";
+                    echo "<tbody>";
+                        echo "<tr class='d-block d-md-table-row'>";
+                            echo "<td class='img-cell d-block d-md-table-cell text-center mb-3 mb-md-0'>";
+                            echo "<img src='" . $row['Image'] . "' alt='" . $row['TenPhong'] . "' width='300'>";
+                            echo "</td>";
 
-                echo "<td class='info-cell d-block d-md-table-cell'>";
-                echo "<i>Sức chứa:</i>";
-                echo "<span>" . $row['SucChua'] . "</span><br>";
-                echo "<i>Trạng thái phòng: </i>";
-                echo "<span>" . $row['TenTTP'] . "</span>";
-                echo "</td>";
-                echo "</tr>";
-                echo "</tbody>";
+                            echo "<td class='info-cell d-block d-md-table-cell'>";
+                            echo "<i>Sức chứa:</i>";
+                            echo "<span>" . $row['SucChua'] . "</span><br>";
+                            echo "<i>Trạng thái phòng: </i>";
+                            echo "<span>" . $row['TenTTP'] . "</span>";
+                            echo "</td>";
+                        echo "</tr>";
+                    echo "</tbody>";
+                echo "</table>";
             }
-
-            echo "</table>";
         }
         echo "<div style='text-align:center; class='text-center mt-4'>
-                <a class='back-btn' href='phongmay.php'>Quay lại</a>
+                <a class='back-btn' href='lab.php'>Quay lại</a>
             </div>";
 
         ?>

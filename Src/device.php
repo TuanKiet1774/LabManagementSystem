@@ -35,8 +35,8 @@
     }
 
     thead th {
-        background: #c7d2fe;
-        color: #3f3d56;
+        background: #c7d2fe !important;
+        color: #3f3d56 !important;
         padding: 12px;
         font-size: 18px;
         text-align: center;
@@ -48,6 +48,21 @@
         vertical-align: top;
         font-size: 16px;
         color: #333;
+    }
+
+    .stripe td,
+    .stripe th {
+        padding-top: 14px !important;
+        padding-bottom: 14px !important;
+        line-height: 1.6; 
+    }
+
+    .stripe tbody tr:nth-child(even) td {
+        background-color: #f0f5ff !important;
+    }
+
+    .stripe tbody tr:hover td {
+        background-color: #e6f0ff !important; 
     }
 
     /* Responsive table actions */
@@ -94,7 +109,7 @@
     }
 
     button.btn-search {
-        background: #6366f1;
+        background: #6a5acd;
         color: white;
     }
 
@@ -118,7 +133,7 @@
     }
 
     .btn-add:hover {
-        background: #60a5fa;
+        background: #1096fd;
         color: white;
     }
 
@@ -154,53 +169,54 @@
     include("../Database/config.php");
     include_once('./Controller/controller.php');
     include_once('./Controller/deviceController.php');
+    include_once('./Controller/labController.php');
     include_once('./Controller/loginController.php');
     $user = checkLogin();
-    $page = isset($_GET['page']) ? $_GET['page'] : 1;
+    if(!isset($_GET['page'])) $_GET['page'] = 1;
 
-    $pagination = pagination($con, 3, $sql, $page);
-    $db = $pagination['data'];
+    $keyword = $_GET['keyword'] ?? '';
+    $search = "";
+
+    if (!empty($keyword)) {
+        $keyword = mysqli_real_escape_string($con, $keyword);
+        $search = "AND (
+            tb.TenThietBi LIKE '%$keyword%' OR 
+            loai.TenLoai LIKE '%$keyword%' OR 
+            tttb.TenTTTB LIKE '%$keyword%'
+        )";
+    }
+    $page = $_GET['page'] ?? 1;
+    $rowPerPage = 10;
+
+    // Query đếm
+    $sqlCount = "SELECT COUNT(*) as total
+        FROM thietbi tb
+        JOIN loai ON loai.MaLoai = tb.MaLoai
+        JOIN chitiettttb cttttb ON tb.MaThietBi = cttttb.MaThietBi
+        JOIN trangthaithietbi tttb ON cttttb.MaTTTB = tttb.MaTTTB
+        WHERE 1=1 $search";
+
+    // Query dữ liệu
+    $sqlData = "SELECT tb.*, tttb.TenTTTB, loai.*
+        FROM thietbi tb
+        JOIN loai ON loai.MaLoai = tb.MaLoai
+        JOIN chitiettttb cttttb ON tb.MaThietBi = cttttb.MaThietBi
+        JOIN trangthaithietbi tttb ON cttttb.MaTTTB = tttb.MaTTTB
+        WHERE 1=1 $search
+        ORDER BY tb.MaThietBi ASC";
+
+    // Gọi hàm pagination
+    $pagination = pagination($con, $rowPerPage, $sqlData, $sqlCount, $page);
+    $result = $pagination['data'];
     $maxPage = $pagination['maxPage'];
+    $offset = ($page - 1) * $rowPerPage;
+
 
     ?>
 
     <?php include("./header.php"); ?>
     <div class="container my-4">
         <?php
-        $keyword = $_GET['keyword'] ?? '';
-        $search = "";
-
-        if (!empty($keyword)) {
-            $keyword = mysqli_real_escape_string($con, $keyword);
-            $search = "AND (
-                    tb.TenThietBi LIKE '%$keyword%' OR 
-                    loai.TenLoai LIKE '%$keyword%' OR 
-                    tttb.TenTTTB LIKE '%$keyword%'
-                )";
-        }
-
-        $sqlCount = "SELECT COUNT(*) as total
-                FROM thietbi tb
-                JOIN loai ON loai.MaLoai = tb.MaLoai
-                JOIN chitiettttb cttttb ON tb.MaThietBi = cttttb.MaThietBi
-                JOIN trangthaithietbi tttb ON cttttb.MaTTTB = tttb.MaTTTB
-                WHERE 1=1 $search";
-
-        $resultCount = mysqli_query($con, $sqlCount);
-        $rowCount = mysqli_fetch_assoc($resultCount);
-        $totalRow = $rowCount['total'];
-        $maxPage = ceil($totalRow / $rowPerPage);
-
-        $sql = "SELECT tb.*, tttb.TenTTTB, loai.*
-                FROM thietbi tb
-                JOIN loai ON loai.MaLoai = tb.MaLoai
-                JOIN chitiettttb cttttb ON tb.MaThietBi = cttttb.MaThietBi
-                JOIN trangthaithietbi tttb ON cttttb.MaTTTB = tttb.MaTTTB
-                WHERE 1=1 $search
-                ORDER BY tb.MaThietBi ASC
-                LIMIT $offset, $rowPerPage";
-
-        $result = mysqli_query($con, $sql);
         $n = mysqli_num_rows($result);
         if ($n == 0) {
             echo "<h2>Danh sách thiết bị</h2>";
@@ -211,7 +227,7 @@
                 </div>
 
                 <div class="text-center mt-3" style="min-height: calc(100vh - 200px);">
-                    <a href="thietbi.php" class="btn btn-primary px-4">Quay lại</a>
+                    <a href="device.php" class="btn btn-primary px-4">Quay lại</a>
                 </div>
                 ';
         } else {
@@ -230,13 +246,13 @@
                             </div>
 
                             <div class="col-lg-4 col-md-5 mt-2">
-                                <a href="thietbi_them.php" class="btn-add w-auto px-3 py-1 px-md-4 py-md-2 text-sm text-md-base">+ Thêm</a>
+                                <a href="device_add.php" class="btn-add w-auto px-3 py-1 px-md-4 py-md-2 text-sm text-md-base">+ Thêm</a>
                             </div>
                         </div>
                     </div>';
 
                 echo '<div class="table-responsive">';
-                echo '<table class="table table-hover align-middle text-center">';
+                echo '<table class="table align-middle text-center stripe">';
                 echo "
                             <thead class='table-primary'>
                                 <tr>
@@ -276,28 +292,27 @@
 
                 // Pagination
                 echo '<div class="pagination-wrapper">';
-
-                if ($_GET['page'] > 1)
-                    echo "<a href='?page=" . ($_GET['page'] - 1) . "&keyword=" . urlencode($keyword) . "'>«</a>";
-
-                // Smart pagination for mobile
-                $range = 2;
-                for ($i = 1; $i <= $maxPage; $i++) {
-                    if ($i == 1 || $i == $maxPage || ($i >= $_GET['page'] - $range && $i <= $_GET['page'] + $range)) {
-                        if ($i == $_GET['page']) {
-                            echo "<span class='current'>$i</span>";
-                        } else {
-                            echo "<a href='?page=$i&keyword=" . urlencode($keyword) . "'>$i</a>";
-                        }
-                    } elseif ($i == $_GET['page'] - $range - 1 || $i == $_GET['page'] + $range + 1) {
-                        echo "<span>...</span>";
+                    // Nút Prev
+                    if ($_GET['page'] > 1) {
+                        echo "<a href='?page=" . ($_GET['page'] - 1) . "&keyword=" . ($keyword) . "'>«</a>";
                     }
-                }
 
-                if ($_GET['page'] < $maxPage)
-                    echo "<a href='?page=" . ($_GET['page'] + 1) . "&keyword=" . urlencode($keyword) . "'>»</a>";
+                    // Hiển thị tất cả các trang
+                    for ($i = 1; $i <= $maxPage; $i++) {
+                        if ($i == $_GET['page']) {
+                            echo "<span class='current'>$i</span>"; // trang hiện tại
+                        } else {
+                            echo "<a href='?page=$i&keyword=" . ($keyword) . "'>$i</a>";
+                        }
+                    }
 
-                echo '</div>';
+                    // Nút Next
+                    if ($_GET['page'] < $maxPage) {
+                        echo "<a href='?page=" . ($_GET['page'] + 1) . "&keyword=" . ($keyword) . "'>»</a>";
+                    }
+
+                    echo '</div>';
+
             }
         }
         ?>

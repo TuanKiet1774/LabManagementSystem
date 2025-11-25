@@ -1,3 +1,10 @@
+<?php
+        include("../Database/config.php");
+        include_once('./Controller/controller.php');
+        include_once('./Controller/labController.php');
+        include_once('./Controller/loginController.php');
+        $user = checkLogin();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,8 +43,8 @@
     }
 
     thead th {
-        background: #c7d2fe;
-        color: #3f3d56;
+        background: #c7d2fe !important;
+        color: #3f3d56 !important;
         padding: 12px;
         font-size: 18px;
         text-align: center;
@@ -49,6 +56,21 @@
         vertical-align: top;
         font-size: 16px;
         color: #333;
+    }
+
+    .stripe td,
+    .stripe th {
+        padding-top: 14px !important;
+        padding-bottom: 14px !important;
+        line-height: 1.6; 
+    }
+
+    .stripe tbody tr:nth-child(even) td {
+        background-color: #f0f5ff !important;
+    }
+
+    .stripe tbody tr:hover td {
+        background-color: #e6f0ff !important; 
     }
 
     /* Responsive table actions */
@@ -94,7 +116,7 @@
     }
 
     button.btn-search {
-        background: #6366f1;
+        background: #6a5acd;
         color: white;
     }
 
@@ -118,7 +140,7 @@
     }
 
     .btn-add:hover {
-        background: #60a5fa;
+        background: #1096fd;
         color: white;
     }
 
@@ -202,10 +224,7 @@
     <?php include("./header.php"); ?>
     <div class="container my-4">
         <?php
-        include("../Database/config.php");
-        if (!isset($_GET['page'])) {
-            $_GET['page'] = 1;
-        }
+        if(!isset($_GET['page'])) $_GET['page'] = 1;
         $keyword = $_GET['keyword'] ?? '';
         $search = "";
         if (!empty($keyword)) {
@@ -216,6 +235,7 @@
                     tt.TenTTP LIKE '%$keyword%'
                 )";
         }
+        $page = $_GET['page'] ?? 1;
         $rowPerPage = 10;
         $offset = ($_GET['page'] - 1) * $rowPerPage;
         // $sqlCount = "SELECT COUNT(*) as total from phong";
@@ -231,15 +251,19 @@
         $maxPage = ceil($totalRow / $rowPerPage);
 
 
-        $sql = "SELECT p.MaPhong, p.TenPhong, p.SucChua, np.TenNhom, tt.TenTTP
+        $sqlData = "SELECT p.MaPhong, p.TenPhong, p.SucChua, np.TenNhom, tt.TenTTP
             FROM phong p
             JOIN nhomphong np ON np.MaNhom = p.MaNhom
             JOIN chitietttp ct ON ct.MaPhong = p.MaPhong
             JOIN trangthaiphong tt ON ct.MaTTP = tt.MaTTP
             WHERE 1=1 $search
-            Order by p.MaPhong asc
-            LIMIT $offset, $rowPerPage";
-        $result = mysqli_query($con, $sql);
+            Order by p.MaPhong asc";
+
+        // Gọi hàm pagination
+        $pagination = pagination($con, $rowPerPage, $sqlData, $sqlCount, $page);
+        $result = $pagination['data'];
+        $maxPage = $pagination['maxPage'];
+        $offset = ($page - 1) * $rowPerPage;
         $n = mysqli_num_rows($result);
 
         if ($n == 0) {
@@ -272,13 +296,13 @@
                             </div>
 
                             <div class="col-lg-4 col-md-5 mt-2">
-                                <a href="phongmay_them.php" class="btn-add w-auto px-3 py-1 px-md-4 py-md-2 text-sm text-md-base">+ Thêm</a>
+                                <a href="lab_add.php" class="btn-add w-auto px-3 py-1 px-md-4 py-md-2 text-sm text-md-base">+ Thêm</a>
                             </div>
                         </div>
                     </div>';
 
                 echo '<div class="table-responsive">';
-                echo '<table class="table table-hover align-middle text-center">';
+                echo '<table class="table align-middle text-center stripe">';
                 echo "
                             <thead class='table-primary'>
                                 <tr>
@@ -302,7 +326,7 @@
                     $trangThai = $row['TenTTP'];
                     $disabledClass = ($trangThai != 'Hoạt động') ? 'disabled' : '';
                     $muonPhongLink = ($trangThai == 'Hoạt động')
-                        ? "phieumuon_them.php?maPhong=" . $row['MaPhong']
+                        ? "lab_booking.php?maPhong=" . $row['MaPhong']
                         : "#";
                     echo "<tr>
                                     <td>$index</td>
@@ -312,9 +336,9 @@
                                     <td class='d-none d-md-table-cell'>{$row['SucChua']}</td>
                                     <td class='d-none d-md-table-cell'>{$row['TenTTP']}</td>
                                     <td class='action-links flex-column flex-md-row'>
-                                        <a href='phongmay_xem.php?maPhong={$row['MaPhong']}'>Xem</a>
-                                        <a href='phongmay_sua.php?maPhong={$row['MaPhong']}'>Sửa</a>
-                                        <a href='phongmay_xoa.php?maPhong={$row['MaPhong']}'>Xóa</a>
+                                        <a href='lab_detail.php?maPhong={$row['MaPhong']}'>Xem</a>
+                                        <a href='lab_edit.php?maPhong={$row['MaPhong']}'>Sửa</a>
+                                        <a href='lab_delete.php?maPhong={$row['MaPhong']}'>Xóa</a>
                                         <a href='$muonPhongLink' class='$disabledClass muon-phong'>Mượn phòng</a>
                                     </td>
                                 </tr>";

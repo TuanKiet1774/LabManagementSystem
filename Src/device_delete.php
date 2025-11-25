@@ -1,3 +1,10 @@
+<?php
+        include("../Database/config.php");
+        include_once('./Controller/controller.php');
+        include_once('./Controller/deviceController.php');
+        include_once('./Controller/loginController.php');
+        $user = checkLogin();
+?>
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -103,7 +110,6 @@
     <?php include("./header.php"); ?>
 
     <?php
-    include("../Database/config.php");
 
     if (!isset($_GET['maThietBi'])) {
         echo "<p style='text-align:center; color:red;'>Không xác định được phòng!</p>";
@@ -145,7 +151,7 @@
         if ($ok) {
             echo "<p style='text-align:center; color:green;'>Xóa thiết bị thành công!</p>";
             echo "<div style='text-align:center; margin-top:20px;'>
-                    <a class='btn btn-cancel' href='thietbi.php' style='color: white;'>Quay lại danh sách</a>
+                    <a class='btn btn-cancel' href='device.php' style='color: white;'>Quay lại danh sách</a>
                 </div>";
         } else {
             echo "<p style='text-align:center; color:red;'>Lỗi khi xóa: " . mysqli_error($con) . "</p>";
