@@ -127,19 +127,6 @@
         $sucChua = ($_POST['sucChua']);
         $maTTP = $_POST['maTTP'];
 
-
-        // Cập nhật bảng phong
-        $sql1 = "UPDATE phong SET 
-                        TenPhong='$tenPhong',
-                        SucChua='$sucChua',
-                        MaNhom='$maNhom'
-                    WHERE MaPhong='$maPhong'";
-
-        // Gán trạng thái cho phòng
-        $sql2 = "UPDATE chitietttp SET
-                        MaTTP='$maTTP'
-                    WHERE MaPhong='$maPhong'";
-
         $ok = labEdit($con, $maPhong, $tenPhong, $sucChua, $maNhom, $maTTP);
 
 
@@ -149,11 +136,11 @@
             echo "<p style='text-align:center; color:red;'>Lỗi cập nhật: " . mysqli_error($con) . "</p>";
         }
 
-        $result = getEdit_Detail($con, $maPhong);
+        $result = getEdit_Detail_Lab($con, $maPhong);
         $row = mysqli_fetch_assoc($result);
     } else if (isset($maPhong)) {
 
-        $result = getEdit_Detail($con, $maPhong);
+        $result = getEdit_Detail_Lab($con, $maPhong);
         $row = mysqli_fetch_assoc($result);
     }
 

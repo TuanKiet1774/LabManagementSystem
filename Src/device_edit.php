@@ -125,19 +125,7 @@
         $maLoai = $_POST['maLoai'];
         $maTTTB = $_POST['maTTTB'];
 
-        // Cập nhật bảng thietbi
-        $sql1 = "UPDATE thietbi SET 
-                        TenThietBi='$tenThietBi',
-                        MaLoai='$maLoai'
-                    WHERE MaThietBi='$maThietBi'";
-
-        // Cập nhật tên trạng thái thiết bị
-        $sql2 = "UPDATE chitiettttb SET 
-                        MaTTTB='$maTTTB'
-                    WHERE MaThietBi='$maThietBi'";
-
-        $ok = mysqli_query($con, $sql1)
-            && mysqli_query($con, $sql2);
+        $ok = deviceEdit($con, $maThietBi, $tenThietBi, $maLoai, $maTTTB);
 
         if ($ok) {
             echo "<p style='text-align:center; color:green;'>Cập nhật thành công!</p>";
@@ -145,25 +133,10 @@
             echo "<p style='text-align:center; color:red;'>Lỗi cập nhật: " . mysqli_error($con) . "</p>";
         }
 
-        // Lấy lại dữ liệu sau khi cập nhật
-        $sql = "SELECT tb.*, tttb.*, loai.*, cttttb.MaTTTB
-            FROM thietbi tb
-            JOIN loai ON loai.MaLoai = tb.MaLoai
-            JOIN chitiettttb cttttb ON tb.MaThietBi = cttttb.MaThietBi
-            JOIN trangthaithietbi tttb ON cttttb.MaTTTB = tttb.MaTTTB
-            WHERE tb.MaThietBi= '$maThietBi'";
-        $result = mysqli_query($con, $sql);
+        $result = getEdit_Detail_Device($con, $maThietBi);
         $row = mysqli_fetch_assoc($result);
     } else if (isset($maThietBi)) {
-
-        // Lần đầu mở form
-        $sql = "SELECT tb.*, tttb.*, loai.*, cttttb.MaTTTB
-            FROM thietbi tb
-            JOIN loai ON loai.MaLoai = tb.MaLoai
-            JOIN chitiettttb cttttb ON tb.MaThietBi = cttttb.MaThietBi
-            JOIN trangthaithietbi tttb ON cttttb.MaTTTB = tttb.MaTTTB
-            WHERE tb.MaThietBi= '$maThietBi'";
-        $result = mysqli_query($con, $sql);
+        $result = getEdit_Detail_Device($con, $maThietBi);
         $row = mysqli_fetch_assoc($result);
     }
 

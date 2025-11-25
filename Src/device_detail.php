@@ -108,23 +108,12 @@
         <?php
 
         if (isset($_GET['maThietBi'])) {
-            $ma_thietbi = $_GET['maThietBi'];
+            $maThietBi = $_GET['maThietBi'];
 
-            $sql = "SELECT tb.*, tttb.TenTTTB, loai.*
-                FROM thietbi tb
-                JOIN loai ON loai.MaLoai = tb.MaLoai
-                JOIN chitiettttb cttttb ON tb.MaThietBi = cttttb.MaThietBi
-                JOIN trangthaithietbi tttb ON cttttb.MaTTTB = tttb.MaTTTB
-                WHERE tb.MaThietBi = '$ma_thietbi'
-                ";
-            $result = mysqli_query($con, $sql);
-            $row = mysqli_fetch_array($result);
+            $row = deviceDetail($maThietBi);
 
             echo "<table class='table mx-auto' style='max-width: 700px;'>";
-            $imagePath = "Image/" . $row['MaLoai'] . ".jpg";
-            if (!file_exists($imagePath)) {
-                $imagePath = "Image/noimage.png";
-            }
+
             if ($row) {
                 echo "<thead>";
                 echo "<tr>";
@@ -134,7 +123,7 @@
                 echo "<tbody>";
                 echo "<tr class='d-block d-md-table-row'>";
                 echo "<td class='img-cell d-block d-md-table-cell text-center mb-3 mb-md-0'>";
-                echo "<img src='" . $imagePath . "' alt='" . $row['TenThietBi'] . "' width='300'>";
+                echo "<img src='" . $row['Image'] . "' alt='" . $row['TenThietBi'] . "' width='300'>";
                 echo "</td>";
 
                 echo "<td class='info-cell d-block d-md-table-cell'>";

@@ -24,6 +24,19 @@
         return $sqlfull;
     }
 
+    //search
+    function deviceSearch($con, $keyword)  {
+        if (empty($keyword)) return "";
+
+        $keyword = mysqli_real_escape_string($con, $keyword);
+
+        return "AND (
+            tb.TenThietBi LIKE '%$keyword%' OR 
+            loai.TenLoai LIKE '%$keyword%' OR 
+            tttb.TenTTTB LIKE '%$keyword%'
+        )";
+    }
+
     //them tb
     function deviceAdd($con, $tenThietBi, $maLoai, $maTTTB) {
         $loaiQuery = mysqli_query($con, "SELECT TenLoai FROM loai WHERE MaLoai='$maLoai'");
@@ -90,6 +103,86 @@
         } else {
             return ['success' => false, 'error' => mysqli_error($con)];
         }
+    }
+
+    //detail 
+    function deviceDetail($maThietBi) {
+        include("../Database/config.php");
+        $maThietBi = mysqli_real_escape_string($con, $maThietBi);
+        // Câu truy vấn lấy chi tiết thiết bị
+        $sql = "SELECT tb.*, tttb.TenTTTB, loai.*
+                FROM thietbi tb
+                JOIN loai ON loai.MaLoai = tb.MaLoai
+                JOIN chitiettttb cttttb ON tb.MaThietBi = cttttb.MaThietBi
+                JOIN trangthaithietbi tttb ON cttttb.MaTTTB = tttb.MaTTTB
+                WHERE tb.MaThietBi = '$maThietBi'
+                ";
+        $result = mysqli_query($con, $sql);
+        $row = mysqli_fetch_assoc($result);
+
+        if (!$result || mysqli_num_rows($result) == 0) {
+            return null; // Không có thiết bị
+        }
+        // Xử lý ảnh
+        $imagePath = "Image/" . $row['MaLoai'] . ".jpg";
+        if (!file_exists($imagePath)) {
+            $imagePath = "Image/noimage.png";
+        }
+        // Thêm đường dẫn ảnh vào kết quả trả về
+        $row['Image'] = $imagePath;
+        return $row;
+    }
+
+    //edit
+    function deviceEdit($con, $maThietBi, $tenThietBi, $maLoai, $maTTTB) {
+        // Cập nhật bảng thietbi
+        $sql1 = "UPDATE thietbi SET 
+                        TenThietBi='$tenThietBi',
+                        MaLoai='$maLoai'
+                    WHERE MaThietBi='$maThietBi'";
+
+        // Cập nhật tên trạng thái thiết bị
+        $sql2 = "UPDATE chitiettttb SET 
+                        MaTTTB='$maTTTB'
+                    WHERE MaThietBi='$maThietBi'";
+
+        $ok = mysqli_query($con, $sql1)
+            && mysqli_query($con, $sql2);
+        return $ok;
+    }
+
+    //get detail(edit): lấy lại thông tin thiết bị sau khi chỉnh sửa:
+    function getEdit_Detail_Device($con, $maThietBi) {
+        $sql = "SELECT tb.*, tttb.*, loai.*, cttttb.MaTTTB
+            FROM thietbi tb
+            JOIN loai ON loai.MaLoai = tb.MaLoai
+            JOIN chitiettttb cttttb ON tb.MaThietBi = cttttb.MaThietBi
+            JOIN trangthaithietbi tttb ON cttttb.MaTTTB = tttb.MaTTTB
+            WHERE tb.MaThietBi= '$maThietBi'";
+        $result = mysqli_query($con, $sql);
+        return $result;
+    }
+
+    //delete
+    function deviceDelete($con, $maThietBi) {
+        $sql = "SELECT tb.*, tttb.TenTTTB, loai.*
+                FROM thietbi tb
+                JOIN loai ON loai.MaLoai = tb.MaLoai
+                JOIN chitiettttb cttttb ON tb.MaThietBi = cttttb.MaThietBi
+                JOIN trangthaithietbi tttb ON cttttb.MaTTTB = tttb.MaTTTB
+                WHERE tb.MaThietBi= '$maThietBi'";
+        $result = mysqli_query($con, $sql);
+        $row = mysqli_fetch_assoc($result);
+        return $row;
+    }
+
+    //delete confirm
+    function deviceDeleteConfirm($con, $maThietBi) {
+        $sql1 = "DELETE FROM chitiettttb WHERE MaThietBi='$maThietBi'";
+        $sql2 = "DELETE FROM thietbi WHERE MaThietBi='$maThietBi'";
+
+        $ok = mysqli_query($con, $sql1) && mysqli_query($con, $sql2);
+        return $ok;
     }
 
 ?>

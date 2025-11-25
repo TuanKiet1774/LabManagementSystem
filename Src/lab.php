@@ -226,15 +226,8 @@
         <?php
         if(!isset($_GET['page'])) $_GET['page'] = 1;
         $keyword = $_GET['keyword'] ?? '';
-        $search = "";
-        if (!empty($keyword)) {
-            $keyword = mysqli_real_escape_string($con, $keyword);
-            $search = "AND (
-                    p.TenPhong LIKE '%$keyword%' OR 
-                    np.TenNhom LIKE '%$keyword%' OR 
-                    tt.TenTTP LIKE '%$keyword%'
-                )";
-        }
+        $search = labSearch($con, $keyword);
+
         $page = $_GET['page'] ?? 1;
         $rowPerPage = 10;
         $offset = ($_GET['page'] - 1) * $rowPerPage;
@@ -276,7 +269,7 @@
                 </div>
 
                 <div class="text-center mt-3" style="min-height: calc(100vh - 200px);">
-                    <a href="phongmay.php" class="btn btn-primary px-4">Quay lại</a>
+                    <a href="lab.php" class="btn btn-primary px-4">Quay lại</a>
                 </div>
                 ';
         } else {

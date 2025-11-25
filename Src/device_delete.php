@@ -118,14 +118,7 @@
 
     $maThietBi = $_GET['maThietBi'];
     // Lấy thông tin phòng để hiển thị
-    $sql = "SELECT tb.*, tttb.TenTTTB, loai.*
-                FROM thietbi tb
-                JOIN loai ON loai.MaLoai = tb.MaLoai
-                JOIN chitiettttb cttttb ON tb.MaThietBi = cttttb.MaThietBi
-                JOIN trangthaithietbi tttb ON cttttb.MaTTTB = tttb.MaTTTB
-                WHERE tb.MaThietBi= '$maThietBi'";
-    $result = mysqli_query($con, $sql);
-    $row = mysqli_fetch_assoc($result);
+    $row = deviceDelete($con, $maThietBi);
 
     if (!$row) {
         echo "
@@ -143,10 +136,9 @@
 
     // Xử lý xóa khi submit
     if (isset($_POST['confirm_delete'])) {
-        $sql1 = "DELETE FROM chitiettttb WHERE MaThietBi='$maThietBi'";
-        $sql2 = "DELETE FROM thietbi WHERE MaThietBi='$maThietBi'";
+        
 
-        $ok = mysqli_query($con, $sql1) && mysqli_query($con, $sql2);
+        $ok = deviceDeleteConfirm($con, $maThietBi);
 
         if ($ok) {
             echo "<p style='text-align:center; color:green;'>Xóa thiết bị thành công!</p>";

@@ -1,4 +1,21 @@
 <?php
+    //search
+    function labSearch($con, $keyword) 
+    {
+        if (empty($keyword)) return "";
+
+        $keyword = mysqli_real_escape_string($con, $keyword);
+
+        return "AND (
+            p.TenPhong LIKE '%$keyword%' OR 
+            np.TenNhom LIKE '%$keyword%' OR 
+            tt.TenTTP LIKE '%$keyword%'
+        )";
+    }
+
+
+
+    //Add
     function labAdd($con, $tenPhong, $sucChua, $maNhom, $maTTP) {
         $sqlGetMax = mysqli_query(
             $con,
@@ -32,8 +49,6 @@
     function labDetail($maPhong)
     {
         include("../Database/config.php");
-
-        // Chống SQL Injection
         $maPhong = mysqli_real_escape_string($con, $maPhong);
 
         // Câu truy vấn lấy chi tiết phòng
@@ -85,7 +100,7 @@
     }
 
     //get detail(edit): lấy lại thông tin phòng sau khi chỉnh sửa: 
-    function getEdit_Detail($con, $maPhong)
+    function getEdit_Detail_Lab($con, $maPhong)
     {
         $sql = "SELECT p.*, np.*, tt.*, ct.*
                 FROM phong p
@@ -116,7 +131,8 @@
         $sql1 = "DELETE FROM chitietttp WHERE MaPhong='$maPhong'";
         $sql2 = "DELETE FROM phong WHERE MaPhong='$maPhong'";
 
-        return mysqli_query($con, $sql1) && mysqli_query($con, $sql2);
+        $ok = mysqli_query($con, $sql1) && mysqli_query($con, $sql2);
+        return $ok;
     }
 
 ?>
