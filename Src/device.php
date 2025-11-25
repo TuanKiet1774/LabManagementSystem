@@ -176,60 +176,57 @@
 
 <body>
     <?php
-    if(!isset($_GET['page'])) $_GET['page'] = 1;
+        include("./header.php");
+        if(!isset($_GET['page'])) $_GET['page'] = 1;
 
-    $keyword = $_GET['keyword'] ?? '';
-    $search = deviceSearch($con, $keyword);
-    $page = $_GET['page'] ?? 1;
-    $rowPerPage = 10;
+        $keyword = $_GET['keyword'] ?? '';
+        $search = deviceSearch($con, $keyword);
+        $page = $_GET['page'] ?? 1;
+        $rowPerPage = 10;
 
-    // Query đếm
-    $sqlCount = "SELECT COUNT(*) as total
-        FROM thietbi tb
-        JOIN loai ON loai.MaLoai = tb.MaLoai
-        JOIN chitiettttb cttttb ON tb.MaThietBi = cttttb.MaThietBi
-        JOIN trangthaithietbi tttb ON cttttb.MaTTTB = tttb.MaTTTB
-        WHERE 1=1 $search";
+        // Query đếm
+        $sqlCount = "SELECT COUNT(*) as total
+            FROM thietbi tb
+            JOIN loai ON loai.MaLoai = tb.MaLoai
+            JOIN chitiettttb cttttb ON tb.MaThietBi = cttttb.MaThietBi
+            JOIN trangthaithietbi tttb ON cttttb.MaTTTB = tttb.MaTTTB
+            WHERE 1=1 $search";
 
-    // Query dữ liệu
-    $sqlData = "SELECT tb.*, tttb.TenTTTB, loai.*
-        FROM thietbi tb
-        JOIN loai ON loai.MaLoai = tb.MaLoai
-        JOIN chitiettttb cttttb ON tb.MaThietBi = cttttb.MaThietBi
-        JOIN trangthaithietbi tttb ON cttttb.MaTTTB = tttb.MaTTTB
-        WHERE 1=1 $search
-        ORDER BY tb.MaThietBi ASC";
+        // Query dữ liệu
+        $sqlData = "SELECT tb.*, tttb.TenTTTB, loai.*
+            FROM thietbi tb
+            JOIN loai ON loai.MaLoai = tb.MaLoai
+            JOIN chitiettttb cttttb ON tb.MaThietBi = cttttb.MaThietBi
+            JOIN trangthaithietbi tttb ON cttttb.MaTTTB = tttb.MaTTTB
+            WHERE 1=1 $search
+            ORDER BY tb.MaThietBi ASC";
 
-    // Gọi hàm pagination
-    $pagination = pagination($con, $rowPerPage, $sqlData, $sqlCount, $page);
-    $result = $pagination['data'];
-    $maxPage = $pagination['maxPage'];
-    $offset = ($page - 1) * $rowPerPage;
-
-
+        // Gọi hàm pagination
+        $pagination = pagination($con, $rowPerPage, $sqlData, $sqlCount, $page);
+        $result = $pagination['data'];
+        $maxPage = $pagination['maxPage'];
+        $offset = ($page - 1) * $rowPerPage;
     ?>
-
-    <?php include("./header.php"); ?>
     <div class="container my-4">
         <?php
-        $n = mysqli_num_rows($result);
-        if ($n == 0) {
-            echo "<h2>Danh sách thiết bị</h2>";
-            echo '
-                <div class="alert alert-danger text-center mt-4" style="font-size:18px; border-radius:10px;">
-                    <strong>Không tìm thấy kết quả.</strong><br>
-                    Từ khóa tìm kiếm: <span style="color:#d63384;">' . ($keyword) . '</span>
-                </div>
-
-                <div class="text-center mt-3" style="min-height: calc(100vh - 200px);">
-                    <a href="device.php" class="btn btn-primary px-4">Quay lại</a>
-                </div>
-                ';
-        } else {
-            if ($n > 0) {
+            $n = mysqli_num_rows($result);
+            if ($n == 0) {
                 echo "<h2>Danh sách thiết bị</h2>";
                 echo '
-                    <div class="row mb-3 align-items-center">
+                    <div class="alert alert-danger text-center mt-4" style="font-size:18px; border-radius:10px;">
+                        <strong>Không tìm thấy kết quả.</strong><br>
+                        Từ khóa tìm kiếm: <span style="color:#d63384;">' . ($keyword) . '</span>
+                    </div>
+
+                    <div class="text-center mt-3" style="min-height: calc(100vh - 200px);">
+                        <a href="device.php" class="btn btn-primary px-4">Quay lại</a>
+                    </div>
+                    ';
+            } 
+            else {
+                if ($n > 0) {
+                    echo "<h2>Danh sách thiết bị</h2>";
+                    echo '<div class="row mb-3 align-items-center">
                         <div class="">
                             <div class="col-lg-4 col-md-7 mb-2 mb-md-0">
                                 <form method="GET" class="d-flex flex-column flex-md-row gap-2 search-form">
@@ -246,10 +243,9 @@
                         </div>
                     </div>';
 
-                echo '<div class="table-responsive">';
-                echo '<table class="table align-middle text-center stripe">';
-                echo "
-                            <thead class='table-primary'>
+                    echo '<div class="table-responsive">';
+                        echo '<table class="table align-middle text-center stripe">';
+                            echo "<thead class='table-primary'>
                                 <tr>
                                     <th>STT</th>
                                     <th>Mã thiết bị</th>
@@ -259,15 +255,12 @@
                                     <th>Chức năng</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                            ";
+                            <tbody>";
 
-
-                $index = $offset + 1;
-
-                for ($i = 0; $i < $n; $i++) {
-                    $row = mysqli_fetch_assoc($result);
-                    echo "<tr>
+                            $index = $offset + 1;
+                            for ($i = 0; $i < $n; $i++) {
+                                $row = mysqli_fetch_assoc($result);
+                                echo "<tr>
                                     <td>$index</td>
                                     <td>{$row['MaThietBi']}</td>
                                     <td>{$row['TenThietBi']}</td>
@@ -279,37 +272,36 @@
                                         <a href='Device_delete.php?maThietBi={$row['MaThietBi']}'>Xóa</a>
                                     </td>
                                 </tr>";
-                    $index++;
-                }
+                                $index++;
+                            }
+                            echo "</tbody>
+                        </table>";
+                    echo "</div>"; // table-responsive
 
-                echo "</tbody></table>";
-                echo "</div>"; // table-responsive
-
-                // Pagination
-                echo '<div class="pagination-wrapper">';
-                    // Nút Prev
-                    if ($_GET['page'] > 1) {
-                        echo "<a href='?page=" . ($_GET['page'] - 1) . "&keyword=" . ($keyword) . "'>«</a>";
-                    }
-
-                    // Hiển thị tất cả các trang
-                    for ($i = 1; $i <= $maxPage; $i++) {
-                        if ($i == $_GET['page']) {
-                            echo "<span class='current'>$i</span>"; // trang hiện tại
-                        } else {
-                            echo "<a href='?page=$i&keyword=" . ($keyword) . "'>$i</a>";
+                    // Pagination
+                    echo '<div class="pagination-wrapper">';
+                        // Nút Prev
+                        if ($_GET['page'] > 1) {
+                            echo "<a href='?page=" . ($_GET['page'] - 1) . "&keyword=" . ($keyword) . "'>«</a>";
                         }
-                    }
 
-                    // Nút Next
-                    if ($_GET['page'] < $maxPage) {
-                        echo "<a href='?page=" . ($_GET['page'] + 1) . "&keyword=" . ($keyword) . "'>»</a>";
-                    }
+                        // Hiển thị tất cả các trang
+                        for ($i = 1; $i <= $maxPage; $i++) {
+                            if ($i == $_GET['page']) {
+                                echo "<span class='current'>$i</span>"; // trang hiện tại
+                            } else {
+                                echo "<a href='?page=$i&keyword=" . ($keyword) . "'>$i</a>";
+                            }
+                        }
 
-                    echo '</div>';
+                        // Nút Next
+                        if ($_GET['page'] < $maxPage) {
+                            echo "<a href='?page=" . ($_GET['page'] + 1) . "&keyword=" . ($keyword) . "'>»</a>";
+                        }
 
+                        echo '</div>';
+                }
             }
-        }
         ?>
     </div>
 

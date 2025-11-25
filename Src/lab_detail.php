@@ -16,129 +16,128 @@
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.2.0/css/all.css" />
     <title>Thông tin phòng máy</title>
 
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f7f5ff;
+        }
+
+        h2,
+        th {
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        table {
+            width: 55%;
+            margin: 10px auto;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+        }
+
+        thead th {
+            background: #c7d2fe;
+            color: #3f3d56;
+            padding: 12px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        td {
+            padding: 15px;
+            border: 1px solid #eee;
+            vertical-align: top;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .img-cell {
+            width: 45%;
+            text-align: center;
+            background: #f0f5ff;
+        }
+
+        .img-cell img {
+            width: 280px;
+            border-radius: 10px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+        }
+
+        .info-cell {
+            background: #fafaff;
+            padding-left: 20px;
+        }
+
+        .info-cell i {
+            font-style: normal;
+            font-weight: bold;
+            color: #6a5acd;
+            display: inline-block;
+            margin-top: 6px;
+        }
+
+        .info-cell span {
+            color: #333;
+            font-size: 17px;
+            margin-left: 5px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin: 20px auto;
+            padding: 10px 18px;
+            text-decoration: none;
+            background: #a5b4fc;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .back-btn:hover {
+            background: #818cf8;
+        }
+    </style>
+
 </head>
-<style>
-    body {
-        font-family: "Segoe UI", Arial, sans-serif;
-        background: #f7f5ff;
-    }
 
-    h2,
-    th {
-        font-family: "Segoe UI", Arial, sans-serif;
-    }
-
-    table {
-        width: 55%;
-        margin: 10px auto;
-        border-collapse: collapse;
-        background: white;
-        border-radius: 14px;
-        overflow: hidden;
-        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
-    }
-
-    thead th {
-        background: #c7d2fe;
-        color: #3f3d56;
-        padding: 12px;
-        font-size: 18px;
-        text-align: center;
-    }
-
-    td {
-        padding: 15px;
-        border: 1px solid #eee;
-        vertical-align: top;
-        font-size: 16px;
-        color: #333;
-    }
-
-    .img-cell {
-        width: 45%;
-        text-align: center;
-        background: #f0f5ff;
-    }
-
-    .img-cell img {
-        width: 280px;
-        border-radius: 10px;
-        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
-    }
-
-    .info-cell {
-        background: #fafaff;
-        padding-left: 20px;
-    }
-
-    .info-cell i {
-        font-style: normal;
-        font-weight: bold;
-        color: #6a5acd;
-        display: inline-block;
-        margin-top: 6px;
-    }
-
-    .info-cell span {
-        color: #333;
-        font-size: 17px;
-        margin-left: 5px;
-    }
-
-    .back-btn {
-        display: inline-block;
-        margin: 20px auto;
-        padding: 10px 18px;
-        text-decoration: none;
-        background: #a5b4fc;
-        color: white;
-        font-size: 16px;
-        border-radius: 8px;
-        text-align: center;
-    }
-
-    .back-btn:hover {
-        background: #818cf8;
-    }
-</style>
 
 <body>
     <?php include("./header.php"); ?>
     <div class="container my-4">
         <?php
+            if (isset($_GET['maPhong'])) {
+                $maPhong = $_GET['maPhong'];
+                $row = labDetail($maPhong);
+                if ($row) {
+                    echo "<table>";
+                        echo "<thead>";
+                            echo "<tr>";
+                            echo "<th colspan='2' style='background: #c7d2fe; color: #3f3d56';>" . $row['TenPhong'] . " - " . $row['TenNhom'] . "</th>";
+                            echo "</tr>";
+                        echo "</thead>";
+                        echo "<tbody>";
+                            echo "<tr class='d-block d-md-table-row'>";
+                                echo "<td class='img-cell d-block d-md-table-cell text-center mb-3 mb-md-0'>";
+                                echo "<img src='" . $row['Image'] . "' alt='" . $row['TenPhong'] . "' width='300'>";
+                                echo "</td>";
 
-        if (isset($_GET['maPhong'])) {
-            $maPhong = $_GET['maPhong'];
-
-            $row = labDetail($maPhong);
-            if ($row) {
-                echo "<table>";
-                    echo "<thead>";
-                        echo "<tr>";
-                        echo "<th colspan='2' style='background: #c7d2fe; color: #3f3d56';>" . $row['TenPhong'] . " - " . $row['TenNhom'] . "</th>";
-                        echo "</tr>";
-                    echo "</thead>";
-                    echo "<tbody>";
-                        echo "<tr class='d-block d-md-table-row'>";
-                            echo "<td class='img-cell d-block d-md-table-cell text-center mb-3 mb-md-0'>";
-                            echo "<img src='" . $row['Image'] . "' alt='" . $row['TenPhong'] . "' width='300'>";
-                            echo "</td>";
-
-                            echo "<td class='info-cell d-block d-md-table-cell'>";
-                            echo "<i>Sức chứa:</i>";
-                            echo "<span>" . $row['SucChua'] . "</span><br>";
-                            echo "<i>Trạng thái phòng: </i>";
-                            echo "<span>" . $row['TenTTP'] . "</span>";
-                            echo "</td>";
-                        echo "</tr>";
-                    echo "</tbody>";
-                echo "</table>";
+                                echo "<td class='info-cell d-block d-md-table-cell'>";
+                                echo "<i>Sức chứa:</i>";
+                                echo "<span>" . $row['SucChua'] . "</span><br>";
+                                echo "<i>Trạng thái phòng: </i>";
+                                echo "<span>" . $row['TenTTP'] . "</span>";
+                                echo "</td>";
+                            echo "</tr>";
+                        echo "</tbody>";
+                    echo "</table>";
+                }
             }
-        }
-        echo "<div style='text-align:center; class='text-center mt-4'>
-                <a class='back-btn' href='lab.php'>Quay lại</a>
-            </div>";
-
+            echo "<div style='text-align:center; class='text-center mt-4'>
+                    <a class='back-btn' href='lab.php'>Quay lại</a>
+                </div>";
         ?>
     </div>
     <?php include("./footer.php"); ?>

@@ -16,135 +16,137 @@
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.2.0/css/all.css" />
     <title>Cập nhật thông tin phòng máy</title>
 
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f7f5ff;
+        }
+
+        h2 {
+            text-align: center;
+            color: #6a5acd;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 55%;
+            margin: 10px auto;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+        }
+
+        th {
+            background: #feffddff;
+            color: #3f3d56;
+            padding: 12px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        td {
+            padding: 15px;
+            border: 1px solid #eee;
+            vertical-align: top;
+            font-size: 16px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 75%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #c7d2fe;
+            background: #f0f5ff;
+            font-size: 15px;
+            text-overflow: hidden;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus {
+            background: #e6f0ff;
+            border-color: #93c5fd;
+            outline: none;
+        }
+
+        .btn-submit {
+            display: inline-block;
+            padding: 12px;
+            font-size: 16px;
+            background-color: #60a5fa;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .btn-submit:hover {
+            background: #048ff9ff;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin: 20px auto;
+            padding: 10px 18px;
+            text-decoration: none;
+            background: #a5b4fc;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .back-btn:hover {
+            background: #818cf8;
+        }
+    </style>
+
 </head>
-<style>
-    body {
-        font-family: "Segoe UI", Arial, sans-serif;
-        background: #f7f5ff;
-    }
 
-    h2 {
-        text-align: center;
-        color: #6a5acd;
-        font-size: 28px;
-        margin-bottom: 20px;
-    }
-
-    table {
-        width: 55%;
-        margin: 10px auto;
-        border-collapse: collapse;
-        background: white;
-        border-radius: 14px;
-        overflow: hidden;
-        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
-    }
-
-    th {
-        background: #feffddff;
-        color: #3f3d56;
-        padding: 12px;
-        font-size: 18px;
-        text-align: center;
-    }
-
-    td {
-        padding: 15px;
-        border: 1px solid #eee;
-        vertical-align: top;
-        font-size: 16px;
-        color: #333;
-    }
-
-    input[type="text"],
-    input[type="number"] {
-        width: 75%;
-        padding: 10px;
-        border-radius: 8px;
-        border: 1px solid #c7d2fe;
-        background: #f0f5ff;
-        font-size: 15px;
-        text-overflow: hidden;
-    }
-
-    input[type="text"]:focus,
-    input[type="number"]:focus {
-        background: #e6f0ff;
-        border-color: #93c5fd;
-        outline: none;
-    }
-
-    .btn-submit {
-        display: inline-block;
-        padding: 12px;
-        font-size: 16px;
-        background-color: #60a5fa;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: 0.25s;
-    }
-
-    .btn-submit:hover {
-        background: #048ff9ff;
-    }
-
-    .back-btn {
-        display: inline-block;
-        margin: 20px auto;
-        padding: 10px 18px;
-        text-decoration: none;
-        background: #a5b4fc;
-        color: white;
-        font-size: 16px;
-        border-radius: 8px;
-        text-align: center;
-    }
-
-    .back-btn:hover {
-        background: #818cf8;
-    }
-</style>
 
 <body>
     <?php include("./header.php"); ?>
     <?php
 
-    // Lấy mã phòng
-    if (isset($_GET['maPhong'])) {
-        $maPhong = $_GET['maPhong'];
-    }
-
-    $dsNhom = mysqli_query($con, "SELECT * FROM nhomphong");
-    $dsTrangThai = mysqli_query($con, "SELECT * FROM trangthaiphong");
-
-    // Xử lý cập nhật
-    if (isset($_POST['submit'])) {
-        $maPhong = $_POST['maPhong'];
-        $tenPhong = $_POST['tenPhong'];
-        $maNhom = $_POST['maNhom'];
-        $sucChua = ($_POST['sucChua']);
-        $maTTP = $_POST['maTTP'];
-
-        $ok = labEdit($con, $maPhong, $tenPhong, $sucChua, $maNhom, $maTTP);
-
-
-        if ($ok) {
-            echo "<p style='text-align:center; color:green;'>Cập nhật thành công!</p>";
-        } else {
-            echo "<p style='text-align:center; color:red;'>Lỗi cập nhật: " . mysqli_error($con) . "</p>";
+        // Lấy mã phòng
+        if (isset($_GET['maPhong'])) {
+            $maPhong = $_GET['maPhong'];
         }
 
-        $result = getEdit_Detail_Lab($con, $maPhong);
-        $row = mysqli_fetch_assoc($result);
-    } else if (isset($maPhong)) {
+        $dsNhom = mysqli_query($con, "SELECT * FROM nhomphong");
+        $dsTrangThai = mysqli_query($con, "SELECT * FROM trangthaiphong");
 
-        $result = getEdit_Detail_Lab($con, $maPhong);
-        $row = mysqli_fetch_assoc($result);
-    }
+        // Xử lý cập nhật
+        if (isset($_POST['submit'])) {
+            $maPhong = $_POST['maPhong'];
+            $tenPhong = $_POST['tenPhong'];
+            $maNhom = $_POST['maNhom'];
+            $sucChua = ($_POST['sucChua']);
+            $maTTP = $_POST['maTTP'];
 
-    if (!empty($row)) {
+            $ok = labEdit($con, $maPhong, $tenPhong, $sucChua, $maNhom, $maTTP);
+
+
+            if ($ok) {
+                echo "<p style='text-align:center; color:green;'>Cập nhật thành công!</p>";
+            } else {
+                echo "<p style='text-align:center; color:red;'>Lỗi cập nhật: " . mysqli_error($con) . "</p>";
+            }
+
+            $result = getEdit_Detail_Lab($con, $maPhong);
+            $row = mysqli_fetch_assoc($result);
+        } else if (isset($maPhong)) {
+
+            $result = getEdit_Detail_Lab($con, $maPhong);
+            $row = mysqli_fetch_assoc($result);
+        }
+
+        if (!empty($row)) {
     ?>
 
         <form method="POST">
@@ -214,22 +216,23 @@
 
     <?php
         //Đóng if(!empty($row))
-    } else {
-        echo "
-        <div class='container d-flex justify-content-center' 
-            style='min-height: calc(100vh - 200px);'>
-            <div class='text-center'>
-                <p class='text-danger fw-bold mt-1'>Phòng không tồn tại!</p>
-                <a href='lab.php' class='btn btn-secondary mt-2'>Quay lại</a>
+        } 
+        else {
+            echo "
+            <div class='container d-flex justify-content-center' 
+                style='min-height: calc(100vh - 200px);'>
+                <div class='text-center'>
+                    <p class='text-danger fw-bold mt-1'>Phòng không tồn tại!</p>
+                    <a href='lab.php' class='btn btn-secondary mt-2'>Quay lại</a>
+                </div>
             </div>
-        </div>
-        ";
-        include("./footer.php");
-        exit;
-    }
-    echo "<div style='text-align:center;'>
-        <a class='back-btn w-md-auto d-inline-block' href='lab.php'>Quay lại</a>
-    </div>";
+            ";
+            include("./footer.php");
+            exit;
+        }
+        echo "<div style='text-align:center;'>
+            <a class='back-btn w-md-auto d-inline-block' href='lab.php'>Quay lại</a>
+        </div>";
     ?>
     <?php include("./footer.php"); ?>
 

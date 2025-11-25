@@ -112,46 +112,42 @@
 
     <?php
 
-    if (!isset($_GET['maPhong'])) {
-        echo "<p style='text-align:center; color:red;'>Không xác định được phòng!</p>";
-        exit;
-    }
-    $maPhong = $_GET['maPhong'];
-
-    // Lấy thông tin phòng để hiển thị
-    
-    $row = labDelete($con, $maPhong);
-
-    if (!$row) {
-        echo "
-            <div class='container d-flex justify-content-center' 
-                style='min-height: calc(100vh - 200px);'>
-                <div class='text-center'>
-                    <p class='text-danger fw-bold mt-1'>Phòng không tồn tại!</p>
-                    <a href='lab.php' class='btn btn-secondary mt-2'>Quay lại</a>
-                </div>
-            </div>
-            ";
-        include("./footer.php");
-        exit;
-    }
-
-
-
-    // Xử lý xóa khi submit
-    if (isset($_POST['confirm_delete'])) {
-
-        $ok = labDeleteConfirm($con, $maPhong);
-
-        if ($ok) {
-            echo "<p style='text-align:center; color:green;'>Xóa phòng thành công!</p>";
-            echo "<div style='text-align:center; margin-top:20px;'>
-                        <a class='btn btn-cancel' href='phongmay.php' style='color: white;'>Quay lại danh sách</a>
-                    </div>";
-        } else {
-            echo "<p style='text-align:center; color:red;'>Lỗi khi xóa: " . mysqli_error($con) . "</p>";
+        if (!isset($_GET['maPhong'])) {
+            echo "<p style='text-align:center; color:red;'>Không xác định được phòng!</p>";
+            exit;
         }
-    }
+        $maPhong = $_GET['maPhong'];
+
+        // Lấy thông tin phòng để hiển thị
+        
+        $row = labDelete($con, $maPhong);
+
+        if (!$row) {
+            echo "
+                <div class='container d-flex justify-content-center' 
+                    style='min-height: calc(100vh - 200px);'>
+                    <div class='text-center'>
+                        <p class='text-danger fw-bold mt-1'>Phòng không tồn tại!</p>
+                        <a href='lab.php' class='btn btn-secondary mt-2'>Quay lại</a>
+                    </div>
+                </div>
+                ";
+            include("./footer.php");
+            exit;
+        }
+
+        // Xử lý xóa khi submit
+        if (isset($_POST['confirm_delete'])) {
+            $ok = labDeleteConfirm($con, $maPhong);
+            if ($ok) {
+                echo "<p style='text-align:center; color:green;'>Xóa phòng thành công!</p>";
+                echo "<div style='text-align:center; margin-top:20px;'>
+                            <a class='btn btn-cancel' href='phongmay.php' style='color: white;'>Quay lại danh sách</a>
+                        </div>";
+            } else {
+                echo "<p style='text-align:center; color:red;'>Lỗi khi xóa: " . mysqli_error($con) . "</p>";
+            }
+        }
     ?>
 
     <div class="container my-4">
