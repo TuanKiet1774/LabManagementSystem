@@ -11,7 +11,11 @@ function logIn($con)
             return;
         }
 
-        $sql = "SELECT * FROM nguoidung WHERE Email = '$user' LIMIT 1";
+        $sql = "SELECT nd.*, k.*, vt.*
+                FROM nguoidung nd
+                JOIN khoa k ON nd.MaKhoa = k.MaKhoa
+                JOIN vaitro vt ON vt.MaVT = nd.MaVT
+         WHERE Email = '$user' LIMIT 1";
         $result = mysqli_query($con, $sql);
 
         if (mysqli_num_rows($result) == 0) {
@@ -29,11 +33,14 @@ function logIn($con)
             $_SESSION['MaVT']    = $col['MaVT'];
             $_SESSION['MaKhoa']  = $col['MaKhoa'];
             $_SESSION['Lop']     = $col['Lop'];
+            $_SESSION['Sdt']     = $col['Sdt'];
+            $_SESSION['NgaySinh']     = $col['NgaySinh'];
+            $_SESSION['GioiTinh']     = $col['GioiTinh'];
+            $_SESSION['NgayTao']     = $col['NgayTao'];
+            $_SESSION['DiaChi']     = $col['DiaChi'];
             $_SESSION['Anh']     = $col['Anh'];
-            $_SESSION['NgaySinh'] = $col['NgaySinh'] ?? "";
-            $_SESSION['GioiTinh'] = $col['GioiTinh'] ?? "";
-            $_SESSION['Sdt']      = $col['Sdt'] ?? "";
-            $_SESSION['DiaChi']   = $col['DiaChi'] ?? "";
+            $_SESSION['TenVT']     = $col['TenVT'];
+            $_SESSION['TenKhoa']     = $col['TenKhoa'];
 
             // Chuyển hướng theo vai trò
             if ($col['MaVT'] == 'QTV') {
@@ -65,26 +72,34 @@ function checkLogin()
     }
 
     return [
-        'MaND'      => $_SESSION['MaND'],
-        'HoTen'     => $_SESSION['HoTen'],
-        'Email'     => $_SESSION['Email'],
-        'MaVT'      => $_SESSION['MaVT'],
-        'MaKhoa'    => $_SESSION['MaKhoa'],
-        'Lop'       => $_SESSION['Lop'],
-        'Anh'       => $_SESSION['Anh'],
-        'NgaySinh'  => $_SESSION['NgaySinh'] ?? "",
-        'GioiTinh'  => $_SESSION['GioiTinh'] ?? "",
-        'sdt'       => $_SESSION['Sdt'] ?? "",
-        'DiaChi'    => $_SESSION['DiaChi'] ?? ""
+        'MaND'      => $_SESSION['MaND'] ?? '',
+        'HoTen'     => $_SESSION['HoTen'] ?? '',
+        'Email'     => $_SESSION['Email'] ?? '',
+        'MaVT'      => $_SESSION['MaVT'] ?? '',
+        'MaKhoa'    => $_SESSION['MaKhoa'] ?? '',
+        'Lop'       => $_SESSION['Lop'] ?? '',
+        'Anh'       => $_SESSION['Anh'] ?? '',
+        'Sdt'       => $_SESSION['Sdt'] ?? '',
+        'GioiTinh'  => $_SESSION['GioiTinh'] ?? '',
+        'NgaySinh'  => $_SESSION['NgaySinh'] ?? '',
+        'DiaChi'    => $_SESSION['DiaChi'] ?? '',
+        'TenKhoa'   => $_SESSION['TenKhoa'] ?? '',
+        'NgayTao'   => $_SESSION['NgayTao'] ?? ''
     ];
 }
 
 function logout($page = "login.php")
 {
+    // Bắt đầu session nếu chưa bắt đầu
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
+
+    // Hủy session
     session_destroy();
+
+    // Chuyển hướng về trang login
     header("Location: $page");
     exit();
 }
+?>

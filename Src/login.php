@@ -142,7 +142,7 @@
         <?php
         session_start();
         include_once('../Database/config.php');
-        include_once('./Controller/loginController.php');
+        include './Controller/loginController.php';
         logIn($con);
         ?>
         <div class="login container-fluid">
