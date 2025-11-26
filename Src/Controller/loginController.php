@@ -11,7 +11,7 @@ function logIn($con)
             return;
         }
 
-        $sql = "SELECT * FROM nguoidung WHERE Email = '$user' LIMIT 1";
+        $sql = "SELECT nd.*, k.* FROM nguoidung nd INNER JOIN khoa k ON k.MaKhoa = nd.MaKhoa WHERE Email = '$user' LIMIT 1";
         $result = mysqli_query($con, $sql);
 
         if (mysqli_num_rows($result) == 0) {
@@ -34,6 +34,7 @@ function logIn($con)
             $_SESSION['GioiTinh'] = $col['GioiTinh'] ?? "";
             $_SESSION['Sdt']      = $col['Sdt'] ?? "";
             $_SESSION['DiaChi']   = $col['DiaChi'] ?? "";
+            $_SESSION['TenKhoa'] = $col['TenKhoa'];
 
             // Chuyển hướng theo vai trò
             if ($col['MaVT'] == 'QTV') {
@@ -74,8 +75,9 @@ function checkLogin()
         'Anh'       => $_SESSION['Anh'],
         'NgaySinh'  => $_SESSION['NgaySinh'] ?? "",
         'GioiTinh'  => $_SESSION['GioiTinh'] ?? "",
-        'sdt'       => $_SESSION['Sdt'] ?? "",
-        'DiaChi'    => $_SESSION['DiaChi'] ?? ""
+        'Sdt'       => $_SESSION['Sdt'] ?? "",
+        'DiaChi'    => $_SESSION['DiaChi'] ?? "",
+        'TenKhoa'   => $_SESSION['TenKhoa'] ?? ""
     ];
 }
 

@@ -140,7 +140,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="./profile.php">
                                         <i class="fa-solid fa-address-card"></i>
                                         Thông tin cá nhân
                                     </a>
