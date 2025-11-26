@@ -41,12 +41,6 @@
         width: 40px;
         border-radius: 50%;
     }
-    .navbar-brand {
-    white-space: normal !important;
-    max-width: 380px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    }
 </style>
 
 <body>
@@ -89,13 +83,13 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="./phongmay.php">
+                                    <a class="dropdown-item" href="#">
                                         <i class="fa-solid fa-house-laptop"></i>
                                         Phòng máy
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="./thietbi.php">
+                                    <a class="dropdown-item" href="#">
                                         <i class="fa-solid fa-computer"></i>
                                         Thiết bị
                                     </a>
@@ -108,12 +102,14 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./statistic.php">
-                                <i class="fa-solid fa-square-poll-vertical"></i>
-                                Thống kê
-                            </a>
-                        </li>
+                        <?php if (isset($_SESSION['MaVT']) && $_SESSION['MaVT'] === 'QTV'): ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./statistic.php">
+                                    <i class="fa-solid fa-square-poll-vertical"></i>
+                                    Thống kê
+                                </a>
+                            </li>
+                        <?php endif; ?>
                     </ul>
 
                     <!-- Right items (User) -->
@@ -121,12 +117,15 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <?php 
-                                    $avatarFile = $_SESSION['Anh'] ?? 'default_avatar.png';
-                                    $path = './Image/' . basename($avatarFile);
-                                    echo "<img src='$path' class='user' alt='User Avatar'>"; 
+                                <?php
+                                if ($_SESSION['Anh'] != "") {
+                                    $path = './Image/' . $_SESSION['Anh'];
+                                    echo "<img src = '$path' class='user' alt=''>";
+                                } else {
+                                    $anh = $_SESSION['GioiTinh'] == 1 ? "male.jpg" : "female.jpg";
+                                    echo "<img src = './Image/" . $anh . "' class='user' alt=''>";
+                                }
                                 ?>
-
                                 <span>
                                     <?php
                                     echo isset($_SESSION['HoTen']) ? $_SESSION['HoTen'] : "Người dùng";

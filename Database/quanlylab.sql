@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 23, 2025 at 07:48 AM
+-- Generation Time: Nov 26, 2025 at 02:21 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -73,7 +73,9 @@ INSERT INTO `chitietttpm` (`MaPhieu`, `MaTTPM`) VALUES
 ('PH002', 'TTPM002'),
 ('PH003', 'TTPM001'),
 ('PH004', 'TTPM002'),
-('PH005', 'TTPM001');
+('PH005', 'TTPM001'),
+('PH006', 'TTPM001'),
+('PH007', 'TTPM001');
 
 -- --------------------------------------------------------
 
@@ -207,19 +209,20 @@ CREATE TABLE `nguoidung` (
 --
 
 INSERT INTO `nguoidung` (`MaND`, `MaVT`, `Ho`, `Ten`, `Email`, `MatKhau`, `Anh`, `Sdt`, `NgaySinh`, `GioiTinh`, `DiaChi`, `MaKhoa`, `Lop`, `NgayTao`) VALUES
-('ND001', 'QTV', 'Nguyễn', 'Hiếu', 'hieu@ntu.edu.vn', '$2y$10$N/IBmFfak52udQo86yT1jOAGwikJyJfvDjnqf4ZGDNHocM39TTAoG', 'hieu.jpg', '0985904921', '1990-05-10', 1, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
-('ND002', 'QTV', 'Phạm ', 'Thị Thu Thuý', 'thuthuypt@ntu.edu.vn', '$2y$10$P9QqlwHjNtiBWUMY0QGEIOfeQtSk6r2OcCt8b00K/3QZ9g3VjUVuq', 'thuy.jpg', '0997256141', '1981-11-12', 0, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
-('ND003', 'QTV', 'Bùi', 'Chí Thành', 'thanhbuic@ntu.edu.vn', '$2y$10$TH5tHCkus8Bwb5W6efXUUOyicU.0zN5XbCPpzw8chG4UJf78mPOgm', 'thanh.jpg', '0836825785', '1983-08-22', 1, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
+('ND001', 'GV', 'Nguyễn', 'Hiếu', 'hieu@ntu.edu.vn', '$2y$10$N/IBmFfak52udQo86yT1jOAGwikJyJfvDjnqf4ZGDNHocM39TTAoG', 'hieu.jpg', '0985904921', '1990-05-10', 1, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
+('ND002', 'GV', 'Phạm ', 'Thị Thu Thuý', 'thuthuypt@ntu.edu.vn', '$2y$10$P9QqlwHjNtiBWUMY0QGEIOfeQtSk6r2OcCt8b00K/3QZ9g3VjUVuq', 'thuy.jpg', '0997256141', '1981-11-12', 0, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
+('ND003', 'GV', 'Bùi', 'Chí Thành', 'thanhbuic@ntu.edu.vn', '$2y$10$TH5tHCkus8Bwb5W6efXUUOyicU.0zN5XbCPpzw8chG4UJf78mPOgm', 'thanh.jpg', '0836825785', '1983-08-22', 1, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
 ('ND004', 'GV', 'Nguyễn', 'Hải Triều', 'trieu.nh.@ntu.edu.vn', '$2y$10$CBFlipyDSHLsEnMm4PCCxe2jEaV.3HK8DsiftGGtuoz1xFjoRXoqm', 'trieu.jpg', '0992682518', '1995-03-09', 1, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
-('ND005', 'GV', 'Nguyễn', 'Đình Hưng', 'ndhung@ntu.edu.vn', '$2y$10$NfjaZXyxxb.UQkX45q7oVOi48EKEwiOvypONcbyKkRNMa1fjHT/Se', 'hung.jpg', '0987656787', '1980-10-10', 1, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
+('ND005', 'GV', 'Nguyễn', 'Đình Hưng', 'ndhung@ntu.edu.vn', '$2y$10$oqd8N.G3Tf6JyfBmcqrcpe3qH.EYGmQ28P0hCrpRjlyamgCv6Z4vO', 'hung.jpg', '0987656787', '1980-10-10', 1, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
 ('ND006', 'GV', 'Nguyễn', 'Thị Hương Lý', 'lyngth@ntu.edu.vn', '$2y$10$au.04JDfwkrAWLBryaDGJusR4AnKJL06j7lTekVUsoRSMYJ9cDdx2', 'ly.jpg', '0987789789', '1987-12-01', 0, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
 ('ND007', 'GV', 'Phạm', 'Thị Kim Ngoan', 'ptkngoan@ntu.edu.vn', '$2y$10$Pb6oQqEWXcQaTTjRnypvpu2Qnu29W9j8/2cjUUUeMpw4vVrhQqXmC', 'ngoan.jpg', '0898531219', '1985-09-04', 0, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
 ('ND008', 'SV', 'Phạm', 'Tuấn Kiệt', 'kiet.pt.64cntt@ntu.edu.vn', '$2y$10$hcUR9f0ARPBC1gGlINwekuHjVNTy7WjgRw2fjRmhqV89CI8JHNXqG', 'kiet.jpg', '0987654671', '2004-07-17', 1, 'Diên Khánh', 'CNTT', '64.CNTT-1', '2025-11-14 08:03:10'),
 ('ND009', 'SV', 'Cao', 'Linh Hà', 'ha.cl.64cntt@ntu.edu.vn', '$2y$10$HANCTWaf9XLH5mTSSAnkCe5YVHfEQRF21itAfULOcMjSAeXMZVSdO', 'ha.jpg', '0828635809', '2004-12-17', 0, 'Ninh Hoà', 'CNTT', '64.CNTT-2', '2025-11-14 08:03:10'),
 ('ND010', 'SV', 'Huỳnh', 'Minh Bảo', 'bao.hm.64nna@ntu.edu.vn', '$2y$10$Wf7K9D0WfQF5hJuJyp3hkuVcB2lrHCW2NyaaAjiSK27fGfQcdUtoC', 'bao.jpg', '0987654653', '2000-06-30', 1, 'DienKhanh', 'NN', '64.NNA-1', '2025-11-14 08:03:10'),
-('ND011', 'SV', 'Nguyễn ', 'Hồ Thanh Bình', 'binh.nht.64NTTS@ntu.edu.vn', '$2y$10$qzT5WWBcn5xCgILMkyGLA.1dSF233IpYsJpOWruNOlNIsny8D.pJe', 'binh.jpg', '0987654453', '2004-04-02', 0, 'Ninh Hoà', 'NTTS', '64.NTTS-2', '2025-11-14 08:03:10'),
-('ND012', 'SV', 'Nguyễn ', 'Hiểu Quyên', 'quyen.nh.64cntp@ntu.edu.vn', '$2y$10$FwNYMIOibKKTGVPAJS1EiOCl/Lu0OTBEfy3MvR/rjU11DtNViriCu', 'quyen.jpg', '0828635784', '2004-10-17', 0, 'Diên Sơn', 'CNTP', '64.CNTP-3', '2025-11-14 08:03:10'),
-('ND013', 'SV', 'Phùng', 'Mai Linh', 'Linh.pm.cntt@gmail.com', '$2y$10$YtpMEJeY.YAarZfmYLKV7uAkQ3EQuvK.5a0s1GhZNS4/9ZWiXh1mq', 'female.jpg', '0123456789', '2004-01-12', 0, 'Hà Nội', 'CNTT', '', '2025-11-16 11:27:04');
+('ND011', 'SV', 'Nguyễn ', 'Hồ Thanh Bình', 'binh.nht.64cntt@ntu.edu.vn', '$2y$10$qzT5WWBcn5xCgILMkyGLA.1dSF233IpYsJpOWruNOlNIsny8D.pJe', 'binh.jpg', '0987654453', '2004-04-02', 0, 'Ninh Hoà', 'NTTS', '64.NTTS-2', '2025-11-14 08:03:10'),
+('ND012', 'SV', 'Nguyễn ', 'Hiểu Quyên', 'quyen.nh.64cntt@ntu.edu.vn', '$2y$10$FwNYMIOibKKTGVPAJS1EiOCl/Lu0OTBEfy3MvR/rjU11DtNViriCu', 'quyen.jpg', '0828635784', '2004-10-17', 0, 'Diên Sơn', 'CNTP', '64.CNTP-3', '2025-11-14 08:03:10'),
+('ND013', 'SV', 'Phùng', 'Mai Linh', 'Linh.pm.cntt@gmail.com', '$2y$10$YtpMEJeY.YAarZfmYLKV7uAkQ3EQuvK.5a0s1GhZNS4/9ZWiXh1mq', 'female.jpg', '0123456789', '2004-01-12', 0, 'Hà Nội', 'CNTT', '', '2025-11-16 11:27:04'),
+('ND014', 'QTV', 'Phạm', 'Tuấn', 'kelvinkai6804@gmail.com', '$2y$10$bmtMlNvG2Aw24hM13GWGEeBO1Ci/.5qNm3qoOivUTyNMKDRwMloyC', 'male.jpg', '0123456789', '2004-07-07', 1, 'Nha Trang', 'CNTT', '', '2025-11-26 03:18:31');
 
 -- --------------------------------------------------------
 
@@ -266,7 +269,9 @@ INSERT INTO `phieumuon` (`MaPhieu`, `MaPhong`, `MaND`, `MucDich`, `NgayBD`, `Nga
 ('PH002', 'P004', 'ND003', 'Thực hành phát triển ứng dụng Web', '2025-11-15', '2025-12-26', '2025-11-14 08:33:38'),
 ('PH003', 'P008', 'ND002', 'Thực hành hệ quản trị cơ sở dữ liệu', '2025-11-15', '2025-12-26', '2025-11-14 08:33:38'),
 ('PH004', 'P002', 'ND006', 'Thực hành thiết kế giao diện Web', '2025-11-15', '2025-12-26', '2025-11-14 08:33:38'),
-('PH005', 'P004', 'ND005', 'Thực hành lập trình hướng đối tượng', '2025-11-15', '2025-12-26', '2025-11-14 08:33:38');
+('PH005', 'P004', 'ND005', 'Thực hành lập trình hướng đối tượng', '2025-11-15', '2025-12-26', '2025-11-14 08:33:38'),
+('PH006', 'P011', 'ND008', 'Sinh hoạt câu lạc bộ Tin Học', '2025-11-30', '2025-11-30', '2025-11-26 08:19:53'),
+('PH007', 'P009', 'ND011', 'Sinh nhật Đội tình nguyện khoa công nghệ thông tin', '2025-12-10', '2025-12-10', '2025-11-26 08:19:53');
 
 -- --------------------------------------------------------
 
