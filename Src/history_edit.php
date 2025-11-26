@@ -49,6 +49,7 @@
         width: 70%;
         border-collapse: collapse;
     }
+
     tr,
     td {
         padding: 5px;
@@ -77,9 +78,13 @@
 
 <body>
     <?php
+    require '../vendor/phpmailer/phpmailer/src/Exception.php';
+    require '../vendor/phpmailer/phpmailer/src/PHPMailer.php';
+    require '../vendor/phpmailer/phpmailer/src/SMTP.php';
     include_once('../Database/config.php');
     include_once('./Controller/loginController.php');
     include_once('./Controller/historyController.php');
+
     $user = checkLogin();
     $db1 = mysqli_query($con, $sql1);
     $col1 = mysqli_fetch_assoc($db1);
@@ -87,9 +92,22 @@
     if (isset($_POST['btnSave'])) {
         $mattpm = $_POST['mattpm'];
         editHistory($con, $col1['MaPhieu'], $mattpm);
+        $trangthai = ($mattpm == "TTPM002") ? "Đã duyệt" : "Không chấp nhận";
+
+        sendMailNotification(
+            $_SESSION['Email'],
+            $col1['Email'],
+            $col1['TenPhong'],
+            $col1['MaPhieu'],
+            $col1['MucDich'],
+            $trangthai
+        );
+
         header("Location: history.php");
+        exit();
     }
-    
+
+
     ?>
 
     <?php include './header.php'; ?>

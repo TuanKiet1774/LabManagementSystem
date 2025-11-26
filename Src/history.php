@@ -133,7 +133,8 @@
     $user = checkLogin();
 
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
-    $sql = infoHistory($_GET['search'] ?? '');
+    $search = isset($_GET['search']) ? mysqli_real_escape_string($con, $_GET['search']) : '';
+    $sql = infoHistory($search, $user);
     $pagination = pagination($con, 3, $sql, $page);
     $db = $pagination['data'];
     $maxPage = $pagination['maxPage'];
@@ -164,7 +165,9 @@
                     <th class="d-none d-md-table-cell">Kết thúc</th>
                     <th class="d-none d-md-table-cell">Thời gian tạo</th>
                     <th class="d-none d-md-table-cell">Trạng thái</th>
-                    <th>Chức năng</th>
+                    <?php if ($user['MaVT'] == 'QTV'): ?>
+                        <th>Chức năng</th>
+                    <?php endif; ?>
                 </tr>
                 <?php
                 while ($col = mysqli_fetch_assoc($db)) {
@@ -176,24 +179,24 @@
                     echo "<td class='d-none d-md-table-cell' align='center'>" . date("d/m/Y", strtotime($col['NgayKT'])) . "</td>";
                     echo "<td class='d-none d-md-table-cell' align='center'>" . date("d/m/Y H:i", strtotime($col['NgayTao'])) . "</td>";
                     echo "<td class='d-none d-md-table-cell' align='center'>" . $col['TenTTPM'] . "</td>";
-                    echo "<td align='center'>";
-                    echo "<a class='detail' href='history_detail.php?maphieu=" . $col['MaPhieu'] . "'>Xem</a><br class='d-md-none'>";
-                    if ($col['MaTTPM'] == "TTPM001") {
-                        echo "<a class='edit' href='history_edit.php?maphieu=" . $col['MaPhieu'] . "'>Sửa</a>";
-                    } else {
-                        echo "<a class='edit' href='#' onclick= 'alert('Phiếu này không được phép chỉnh sửa vì trạng thái không hợp lệ!'); return false;' style='opacity:0.6; cursor:not-allowed;'>Sửa</a>";
+                    if ($user['MaVT'] === 'QTV') {
+                        echo "<td align='center'>";
+                        echo "<a class='detail' href='history_detail.php?maphieu=" . $col['MaPhieu'] . "'>Xem</a><br class='d-md-none'>";
+
+                        if ($col['MaTTPM'] == "TTPM001") {
+                            echo "<a class='edit' href='history_edit.php?maphieu=" . $col['MaPhieu'] . "'>Sửa</a>";
+                        } else {
+                            echo "<a class='edit' href='#' onclick=\"alert('Phiếu này không được phép chỉnh sửa vì trạng thái không hợp lệ!'); return false;\" style='opacity:0.6; cursor:not-allowed;'>Sửa</a>";
+                        }
+
+                        echo "<br class='d-md-none'>";
+                        echo "<a class='delete' href='history_delete.php?maphieu=" . $col['MaPhieu'] . "'>Xóa</a>";
+                        echo "</td>";
                     }
 
-                    echo "<br class='d-md-none'>";
-
-                    // Nút Xóa
-                    echo "<a class='delete' href='history_delete.php?maphieu=" . $col['MaPhieu'] . "'>Xóa</a>";
-
-                    echo "</td>";
                     echo "</tr>";
                 }
                 ?>
-
             </table>
 
             <div class="pagination mt-3">

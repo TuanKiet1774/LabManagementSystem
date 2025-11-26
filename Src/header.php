@@ -118,8 +118,13 @@
                             <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                 <?php
-                                $path = './Image/' . $_SESSION['Anh'];
-                                echo "<img src = '$path' class='user' alt=''>";
+                                if ($_SESSION['Anh'] != "") {
+                                    $path = './Image/' . $_SESSION['Anh'];
+                                    echo "<img src = '$path' class='user' alt=''>";
+                                } else {
+                                    $anh = $_SESSION['GioiTinh'] == 1 ? "male.jpg" : "female.jpg";
+                                    echo "<img src = './Image/" . $anh . "' class='user' alt=''>";
+                                }
                                 ?>
                                 <span>
                                     <?php
