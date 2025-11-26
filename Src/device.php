@@ -177,6 +177,7 @@
 <body>
     <?php
         include("./header.php");
+        $vaiTro = $user['MaVT'] ?? '';
         if(!isset($_GET['page'])) $_GET['page'] = 1;
 
         $keyword = $_GET['keyword'] ?? '';
@@ -237,9 +238,11 @@
                                 </form>
                             </div>
 
-                            <div class="col-lg-4 col-md-5 mt-2">
-                                <a href="device_add.php" class="btn-add w-auto px-3 py-1 px-md-4 py-md-2 text-sm text-md-base">+ Thêm</a>
-                            </div>
+                            <div class="col-lg-4 col-md-5 mt-2">';
+                                if ($vaiTro === 'QTV') {
+                                    echo '<a href="device_add.php" class="btn-add w-auto px-3 py-1 px-md-4 py-md-2 text-sm text-md-base">+ Thêm</a>';
+                                }
+                            echo '</div>
                         </div>
                     </div>';
 
@@ -267,10 +270,12 @@
                                     <td class='d-none d-md-table-cell'>{$row['TenLoai']}</td>
                                     <td class='d-none d-md-table-cell'>{$row['TenTTTB']}</td>
                                     <td class='action-links flex-column flex-md-row'>
-                                        <a href='Device_detail.php?maThietBi={$row['MaThietBi']}'>Xem</a>
-                                        <a href='Device_edit.php?maThietBi={$row['MaThietBi']}'>Sửa</a>
-                                        <a href='Device_delete.php?maThietBi={$row['MaThietBi']}'>Xóa</a>
-                                    </td>
+                                        <a href='Device_detail.php?maThietBi={$row['MaThietBi']}'>Xem</a>";
+                                        if ($vaiTro === 'QTV') {
+                                            echo "<a href='Device_edit.php?maThietBi={$row['MaThietBi']}'>Sửa</a>
+                                            <a href='Device_delete.php?maThietBi={$row['MaThietBi']}'>Xóa</a>";
+                                        }
+                                    echo "</td>
                                 </tr>";
                                 $index++;
                             }

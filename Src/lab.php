@@ -225,6 +225,7 @@
 <body>
     <?php 
         include("./header.php"); 
+        $vaiTro = $user['MaVT'] ?? '';
         if(!isset($_GET['page'])) $_GET['page'] = 1;
         $keyword = $_GET['keyword'] ?? '';
         $search = labSearch($con, $keyword);
@@ -290,9 +291,11 @@
                                 </form>
                             </div>
 
-                            <div class="col-lg-4 col-md-5 mt-2">
-                                <a href="lab_add.php" class="btn-add w-auto px-3 py-1 px-md-4 py-md-2 text-sm text-md-base">+ Thêm</a>
-                            </div>
+                            <div class="col-lg-4 col-md-5 mt-2">';
+                                if ($vaiTro === 'QTV') {
+                                    echo '<a href="lab_add.php" class="btn-add w-auto px-3 py-1 px-md-4 py-md-2 text-sm text-md-base">+ Thêm</a>';
+                                }
+                            echo '</div>
                         </div>
                     </div>';
 
@@ -326,10 +329,12 @@
                                         <td class='d-none d-md-table-cell'>{$row['SucChua']}</td>
                                         <td class='d-none d-md-table-cell'>{$row['TenTTP']}</td>
                                         <td class='action-links flex-column flex-md-row'>
-                                            <a href='lab_detail.php?maPhong={$row['MaPhong']}'>Xem</a>
-                                            <a href='lab_edit.php?maPhong={$row['MaPhong']}'>Sửa</a>
-                                            <a href='lab_delete.php?maPhong={$row['MaPhong']}'>Xóa</a>
-                                            <a href='$muonPhongLink' class='$disabledClass muon-phong'>Mượn phòng</a>
+                                            <a href='lab_detail.php?maPhong={$row['MaPhong']}'>Xem</a>";
+                                            if ($vaiTro === 'QTV') {
+                                                echo "<a href='lab_edit.php?maPhong={$row['MaPhong']}'>Sửa</a>
+                                                <a href='lab_delete.php?maPhong={$row['MaPhong']}'>Xóa</a>";
+                                            }
+                                            echo "<a href='$muonPhongLink' class='$disabledClass muon-phong'>Mượn phòng</a>
                                         </td>
                                     </tr>";
                                     $index++;

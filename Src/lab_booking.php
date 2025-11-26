@@ -183,7 +183,7 @@
                     <td><input type="date" class="form-control" name="ngayKT" required></td>
                 </tr>
 
-                <tr>
+                <tr id="rowNgay">
                     <td>Ngày trong tuần:</td>
                     <td>
                         <select class="form-control" name="maNgay" required>
@@ -195,7 +195,7 @@
                     </td>
                 </tr>
 
-                <tr>
+                <tr id="rowTuan">
                     <td>Trạng thái tuần:</td>
                     <td>
                         <select class="form-control" name="maTTT">
@@ -243,6 +243,78 @@
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
+
+        <script>
+            function updateForm() {
+                const ngayBD = document.querySelector("input[name='ngayBD']").value;
+                const ngayKT = document.querySelector("input[name='ngayKT']").value;
+
+                const rowNgay = document.getElementById("rowNgay");
+                const rowTuan = document.getElementById("rowTuan");
+                const maNgay = document.querySelector("select[name='maNgay']");
+                const maTTT = document.querySelector("select[name='maTTT']");
+
+                if (!ngayBD || !ngayKT) return;
+
+                const d1 = new Date(ngayBD);
+                const d2 = new Date(ngayKT);
+
+                if (d1.getTime() === d2.getTime()) {
+                    // Mượn 1 ngày → ẩn ngày tuần + trạng thái tuần
+                    rowNgay.style.display = "none";
+                    rowTuan.style.display = "none";
+                    maNgay.required = false;
+                    maTTT.required = false;
+                } else {
+                    // Mượn nhiều ngày → hiện
+                    rowNgay.style.display = "";
+                    rowTuan.style.display = "";
+                    maNgay.required = true;
+                    maTTT.required = true;
+                }
+            }
+
+            // Kiểm tra người dùng chọn thứ hợp lệ
+            function validateForm(event) {
+                const ngayBD = document.querySelector("input[name='ngayBD']").value;
+                const ngayKT = document.querySelector("input[name='ngayKT']").value;
+                const maNgay = document.querySelector("select[name='maNgay']").value;
+
+                if (!maNgay) return; // không kiểm tra nếu không cần thứ
+
+                const start = new Date(ngayBD);
+                const end = new Date(ngayKT);
+
+                let found = false;
+
+                // Lặp từ ngàyBD đến ngàyKT
+                for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+                    const jsThu = d.getDay(); // 0=CN → 1=Thứ 2
+                    const maNgayInt = parseInt(maNgay); // DB của bạn: 1=Thứ2, 7=CN
+
+                    if (jsThu === (maNgayInt % 7)) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found) {
+                    alert("Khoảng ngày không chứa ngày bạn đã chọn trong tuần!");
+                    event.preventDefault();
+                }
+            }
+
+            // Gọi update khi đổi ngày
+            document.querySelector("input[name='ngayBD']").addEventListener("change", updateForm);
+            document.querySelector("input[name='ngayKT']").addEventListener("change", updateForm);
+
+            // Bắt submit form
+            document.querySelector("form").addEventListener("submit", validateForm);
+
+            // Khởi tạo ban đầu
+            updateForm();
+        </script>
+
 </body>
 
 </html>
