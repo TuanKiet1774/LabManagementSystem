@@ -5,6 +5,7 @@
     include_once('./Controller/labController.php');
     include_once('./Controller/loginController.php');
     $user = checkLogin();
+    $vaiTro = $user['MaVT'] ?? '';
 
 ?>
 <!doctype html>
@@ -177,7 +178,6 @@
 <body>
     <?php
         include("./header.php");
-        $vaiTro = $user['MaVT'] ?? '';
         if(!isset($_GET['page'])) $_GET['page'] = 1;
 
         $keyword = $_GET['keyword'] ?? '';

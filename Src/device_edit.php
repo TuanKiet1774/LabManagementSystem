@@ -4,6 +4,16 @@
         include_once('./Controller/deviceController.php');
         include_once('./Controller/loginController.php');
         $user = checkLogin();
+        $vaiTro = $user['MaVT'] ?? '';
+        if ($vaiTro !== 'QTV') {
+            // Không có quyền => chuyển hướng về danh sách hoặc báo lỗi
+            header("Location: lab.php?error=permission");
+            exit();
+        }
+        if (isset($_GET['error']) && $_GET['error'] == 'permission') {
+            echo "<div class='alert alert-danger'>Bạn không có quyền truy cập chức năng này.</div>";
+        }
+
 ?>
 <!DOCTYPE html>
 <html lang="vi">
