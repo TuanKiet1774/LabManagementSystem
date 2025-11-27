@@ -69,11 +69,32 @@
                                 Trang chủ
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./lab_week_sched.php">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
                                 <i class="fa-solid fa-calendar"></i>
-                                Lịch phòng
+                                Mượn phòng
                             </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="./lab_sched.php">
+                                        <i class="fa-solid fa-calendar-minus"></i>
+                                        Lịch phòng
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="./lab_week_sched.php">
+                                        <i class="fa-solid fa-calendar-days"></i>
+                                        Lịch tuần
+                                    </a>
+                                </li> 
+                                <li class="nav-item">
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-calendar-check"></i>
+                                        Đăng ký
+                                    </a>
+                                </li>                               
+                            </ul>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -134,7 +155,7 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="borrowed_labs.php">
                                         <i class="fa-solid fa-window-restore"></i>
                                         Phòng mượn
                                     </a>

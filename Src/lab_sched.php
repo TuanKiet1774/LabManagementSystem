@@ -81,11 +81,23 @@
         padding: 0;
         box-sizing: border-box;
     }
+    html, body {
+        height: 100%;
+    }
 
-    body {
-        font-family: Arial, sans-serif;
+    body { 
+        font-family: Arial, sans-serif; 
+        margin: 0; 
+        display: flex; 
+        flex-direction: column; 
+        min-height: 100vh;
         background-color: #f5f5f5;
     }
+    
+    main {
+        flex-grow: 1;
+        padding: 20px 0;
+    }  
 
     .container {
         width: 95%;
@@ -322,7 +334,7 @@
                         <b>Chú thích: - tiết bận | 0..9 tiết trống</b>
                     </div>
 
-                    <?php if (empty($all_rooms)): // Dùng $all_rooms để kiểm tra nếu không có phòng nào thỏa mãn bộ lọc ?>
+                    <?php if (empty($all_rooms)):?>
                         <div class="empty-state">
                             <p>Không có phòng nào trong nhóm đã chọn để hiển thị.</p>
                         </div>
@@ -364,22 +376,39 @@
                         <?php endforeach; ?>
                     </div>
 
+                  
                     <?php if ($maxPage > 1): ?>
-                        <div class="text-center my-4">
+                        <div class="d-flex justify-content-center my-4">
                             <nav aria-label="Room Page navigation">
-                                <ul class="pagination justify-content-center">
+                                <ul class="pagination">
                                     
                                     <?php if ($currentPage > 1): ?>
                                         <li class="page-item">
                                             <a class="page-link" 
                                             href="?page=<?php echo $currentPage - 1; ?>&year=<?php echo $selected_year; ?>&week=<?php echo $selected_week; ?>&nhomphong=<?php echo $selected_group; ?>&phong=<?php echo $selected_room; ?>&action=view" 
                                             aria-label="Previous">
-                                                <span aria-hidden="true">←</span> 
+                                                <span aria-hidden="true">«</span> 
                                             </a>
                                         </li>
                                     <?php endif; ?>
                                     
-                                    <?php for ($i = 1; $i <= $maxPage; $i++): ?>
+                                    <?php 
+                                    // Thiết lập phạm vi trang hiển thị (2 trang trước và 2 trang sau trang hiện tại)
+                                    $range = 2; 
+                                    $start = max(1, $currentPage - $range);
+                                    $end = min($maxPage, $currentPage + $range);
+
+                                    // Hiển thị Trang 1 (nếu không nằm trong phạm vi)
+                                    if ($start > 1) {
+                                        $is_active = (1 == $currentPage) ? 'active' : '';
+                                        echo '<li class="page-item ' . $is_active . '"><a class="page-link" href="?page=1&year=' . $selected_year . '&week=' . $selected_week . '&nhomphong=' . $selected_group . '&phong=' . $selected_room . '&action=view">1</a></li>';
+                                        if ($start > 2) {
+                                            echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
+                                        }
+                                    }
+                                    
+                                    // Hiển thị các trang trong phạm vi
+                                    for ($i = $start; $i <= $end; $i++): ?>
                                         <li class="page-item <?php echo ($i == $currentPage) ? 'active' : ''; ?>">
                                             <a class="page-link" 
                                             href="?page=<?php echo $i; ?>&year=<?php echo $selected_year; ?>&week=<?php echo $selected_week; ?>&nhomphong=<?php echo $selected_group; ?>&phong=<?php echo $selected_room; ?>&action=view">
@@ -387,23 +416,35 @@
                                             </a>
                                         </li>
                                     <?php endfor; ?>
+                                    
+                                    <?php 
+                                    // Hiển thị Trang cuối cùng (nếu không nằm trong phạm vi)
+                                    if ($end < $maxPage) {
+                                        if ($end < $maxPage - 1) {
+                                            echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
+                                        }
+                                        // Đảm bảo trang cuối cùng có trạng thái active nếu đang ở đó
+                                        $is_active = ($maxPage == $currentPage) ? 'active' : '';
+                                        echo '<li class="page-item ' . $is_active . '">';
+                                        echo '<a class="page-link" href="?page=' . $maxPage . '&year=' . $selected_year . '&week=' . $selected_week . '&nhomphong=' . $selected_group . '&phong=' . $selected_room . '&action=view">' . $maxPage . '</a>';
+                                        echo '</li>';
+                                    }
+                                    ?>
 
                                     <?php if ($currentPage < $maxPage): ?>
                                         <li class="page-item">
                                             <a class="page-link" 
                                             href="?page=<?php echo $currentPage + 1; ?>&year=<?php echo $selected_year; ?>&week=<?php echo $selected_week; ?>&nhomphong=<?php echo $selected_group; ?>&phong=<?php echo $selected_room; ?>&action=view" 
                                             aria-label="Next">
-                                                <span aria-hidden="true">→</span>
+                                                <span aria-hidden="true">»</span>
                                             </a>
                                         </li>
-                                    <?php endif; ?> 
-                                                                       
+                                    <?php endif; ?>
+                                    <?php endif; ?>
                                 </ul>
                             </nav>
                         </div>
-                        <?php endif; ?>
-                    <?php endif; ?>
-
+                        <?php endif; ?>                
                 </div>
             </div>
         </div>
