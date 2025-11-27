@@ -145,7 +145,7 @@
         <div class="container-fluid">
             <form method="GET" class="search-box mb-3">
                 <h3 class="me-auto d-md-block d-none">
-                    <b>Lịch sử tìm kiếm</b>
+                    <b>Lịch sử phiếu mượn</b>
                 </h3>
                 <div class="d-flex justify-content-between">
                     <input type="text" name="search" placeholder="Mục đích, trạng thái, tên..." value="<?= isset($_GET['search']) ? $_GET['search'] : '' ?>">
