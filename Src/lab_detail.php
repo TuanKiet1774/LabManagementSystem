@@ -128,7 +128,30 @@
                                 echo "<i>Sức chứa:</i>";
                                 echo "<span>" . $row['SucChua'] . "</span><br>";
                                 echo "<i>Trạng thái phòng: </i>";
-                                echo "<span>" . $row['TenTTP'] . "</span>";
+                                echo "<span>" . $row['TenTTP'] . "</span><br>";
+                                $dsTB = "Không có thiết bị";
+
+                                if (!empty($row['ThietBi'])) {
+                                    $countTB = [];
+
+                                    foreach ($row['ThietBi'] as $tb) {
+                                        $ten = $tb['TenThietBi'];
+                                        if (!isset($countTB[$ten])) {
+                                            $countTB[$ten] = 0;
+                                        }
+                                        $countTB[$ten]++;
+                                    }
+
+                                    $dsTB_arr = [];
+                                    foreach ($countTB as $ten => $sl) {
+                                        $dsTB_arr[] = $sl . " " . $ten;  // Ví dụ: "1 Máy tính"
+                                    }
+
+                                    $dsTB = implode(", ", $dsTB_arr);
+                                }
+
+                                echo "<i>Thiết bị:</i> <span>$dsTB</span>";
+
                                 echo "</td>";
                             echo "</tr>";
                         echo "</tbody>";

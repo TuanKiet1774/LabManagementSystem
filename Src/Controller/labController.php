@@ -67,6 +67,22 @@
 
         $row = mysqli_fetch_assoc($result);
 
+        // --- Lấy danh sách thiết bị ---
+        $sqlTb = "SELECT tb.MaThietBi, tb.TenThietBi, l.TenLoai
+                FROM thietbi_phong tp
+                JOIN thietbi tb ON tb.MaThietBi = tp.MaThietBi
+                JOIN loai l ON tb.MaLoai = l.MaLoai
+                WHERE tp.MaPhong = '$maPhong'";
+
+        $resultTb = mysqli_query($con, $sqlTb);
+
+        $dsThietBi = [];
+        while ($tb = mysqli_fetch_assoc($resultTb)) {
+            $dsThietBi[] = $tb;
+        }
+
+        $row['ThietBi'] = $dsThietBi;
+
         // Xử lý ảnh
         $imagePath = "Image/" . $row['MaNhom'] . ".jpg";
         if (!file_exists($imagePath)) {
