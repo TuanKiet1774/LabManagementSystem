@@ -3,6 +3,9 @@
         include_once('./Controller/controller.php');
         include_once('./Controller/labController.php');
         include_once('./Controller/loginController.php');
+        require '../vendor/phpmailer/phpmailer/src/Exception.php';
+        require '../vendor/phpmailer/phpmailer/src/PHPMailer.php';
+        require '../vendor/phpmailer/phpmailer/src/SMTP.php';
         $user = checkLogin();
         $vaiTro = $user['MaVT'] ?? '';
         $suaTT = ($vaiTro === 'GV'); 
@@ -132,12 +135,21 @@
             $maNhom = $_POST['maNhom'];
             $sucChua = ($_POST['sucChua']);
             $maTTP = $_POST['maTTP'];
+            $trangThai = ($maTTP == "TTPM001") ? "Hoạt động" : "Không hoạt động";
 
             $ok = labEdit($con, $maPhong, $tenPhong, $sucChua, $maNhom, $maTTP);
 
 
             if ($ok) {
                 echo "<p style='text-align:center; color:green;'>Cập nhật thành công!</p>";
+                $fromEmail = 'thanhbinhngh@gmail.com'; 
+                $toEmail = 'binh.nht.64cntt@ntu.edu.vn';
+                $mailSent = labSendMailNotification($fromEmail, $toEmail, $tenPhong, $maPhong, $trangThai);
+                if ($mailSent) {
+                    echo "<p style='text-align:center; color:blue;'>Email thông báo đã được gửi!</p>";
+                } else {
+                    echo "<p style='text-align:center; color:red;'>Gửi email thất bại. Kiểm tra cấu hình SMTP.</p>";
+                }
             } else {
                 echo "<p style='text-align:center; color:red;'>Lỗi cập nhật: " . mysqli_error($con) . "</p>";
             }
@@ -173,15 +185,17 @@
                     <tr>
                         <td>Tên nhóm:</td>
                         <td>
-                            <select class="form-control" name="maNhom" required
-                                style="width:75%; padding:10px; border-radius:8px; border:1px solid #c7d2fe; background:#f0f5ff;" <?= $laQTV ? '' : 'disabled' ?>>
-                                <?php while ($nhom = mysqli_fetch_assoc($dsNhom)) { ?>
-                                    <option value="<?= $nhom['MaNhom'] ?>"
-                                        <?= $nhom['MaNhom'] == $row['MaNhom'] ? 'selected' : '' ?>>
-                                        <?= $nhom['TenNhom'] ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
+                            <select class="form-control" name="maNhom" <?= $laQTV ? '' : 'disabled' ?>>
+                            <?php while ($nhom = mysqli_fetch_assoc($dsNhom)) { ?>
+                                <option value="<?= $nhom['MaNhom'] ?>" <?= $nhom['MaNhom'] == $row['MaNhom'] ? 'selected' : '' ?>>
+                                    <?= $nhom['TenNhom'] ?>
+                                </option>
+                            <?php } ?>
+                        </select>
+                        <?php if (!$laQTV) { ?>
+                            <input type="hidden" name="maNhom" value="<?= $row['MaNhom'] ?>">
+                        <?php } ?>
+
                         </td>
                     </tr>
 

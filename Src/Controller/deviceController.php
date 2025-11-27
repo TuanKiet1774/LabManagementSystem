@@ -163,6 +163,59 @@
         return $result;
     }
 
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
+
+    function deviceSendMailNotification($fromEmail, $toEmail, $tenThietBi, $maThietBi, $trangThai)
+    {
+        $mail = new PHPMailer(true);
+        $mail->CharSet = 'UTF-8';
+        $mail->Encoding = 'base64';
+
+        try {
+            // Cấu hình SMTP Gmail
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->SMTPAuth   = true;
+            $mail->Username   = $fromEmail;
+            $mail->Password   = 'qefi dapq qqxp onpw';  // App password
+            $mail->SMTPSecure = 'ssl';
+            $mail->Port       = 465;
+
+            // Người gửi - người nhận
+            $mail->setFrom($fromEmail, 'Hệ thống Lab Management');
+            $mail->addAddress($toEmail);
+
+            // Nội dung email
+            $mail->isHTML(true);
+            $mail->Subject = "Cập nhật trạng thái thiết bị $tenThietBi";
+            $mail->Body    = "
+                <h3>Thông báo cập nhật trạng thái thiết bị</h3>
+                <p><b>Mã thiết bị:</b> $maThietBi</p>
+                <p><b>Tên thiết bị:</b> $tenThietBi</p>
+                <p><b>Trạng thái mới:</b> 
+                    <span style='color:blue; font-weight:bold;'>$trangThai</span>
+                </p>
+            ";
+
+            $mail->send();
+            return true; // thành công
+
+        } catch (Exception $e) {
+            error_log("Email error: " . $mail->ErrorInfo);
+            return false; // thất bại
+        }
+    }
+
+    //delete confirm
+    function deviceDeleteConfirm($con, $maThietBi) {
+        $sql1 = "DELETE FROM chitiettttb WHERE MaThietBi='$maThietBi'";
+        $sql2 = "DELETE FROM thietbi WHERE MaThietBi='$maThietBi'";
+
+        $ok = mysqli_query($con, $sql1) && mysqli_query($con, $sql2);
+        return $ok;
+    }
+
     //delete
     function deviceDelete($con, $maThietBi) {
         $sql = "SELECT tb.*, tttb.TenTTTB, loai.*
@@ -174,15 +227,6 @@
         $result = mysqli_query($con, $sql);
         $row = mysqli_fetch_assoc($result);
         return $row;
-    }
-
-    //delete confirm
-    function deviceDeleteConfirm($con, $maThietBi) {
-        $sql1 = "DELETE FROM chitiettttb WHERE MaThietBi='$maThietBi'";
-        $sql2 = "DELETE FROM thietbi WHERE MaThietBi='$maThietBi'";
-
-        $ok = mysqli_query($con, $sql1) && mysqli_query($con, $sql2);
-        return $ok;
     }
 
 ?>
