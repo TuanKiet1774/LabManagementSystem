@@ -1,9 +1,9 @@
 <?php
-        include("../Database/config.php");
-        include_once('./Controller/controller.php');
-        include_once('./Controller/deviceController.php');
-        include_once('./Controller/loginController.php');
-        $user = checkLogin();
+include("../Database/config.php");
+include_once('./Controller/controller.php');
+include_once('./Controller/deviceController.php');
+include_once('./Controller/loginController.php');
+$user = checkLogin();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -101,40 +101,41 @@
         }
     </style>
 </head>
+
 <body>
     <?php include("./header.php"); ?>
     <div class="container my-4">
         <?php
-            if (isset($_GET['maThietBi'])) {
-                $maThietBi = $_GET['maThietBi'];
+        if (isset($_GET['maThietBi'])) {
+            $maThietBi = $_GET['maThietBi'];
 
-                $row = deviceDetail($maThietBi);
+            $row = deviceDetail($maThietBi);
 
-                echo "<table class='table mx-auto' style='max-width: 700px;'>";
+            echo "<table class='table mx-auto' style='max-width: 700px;'>";
 
-                if ($row) {
-                    echo "<thead>";
-                    echo "<tr>";
-                    echo "<th colspan='2;' style='background: #c7d2fe; color: #3f3d56';>" . $row['TenThietBi'] . "</th>";
-                    echo "</tr>";
-                    echo "</thead>";
-                    echo "<tbody>";
-                    echo "<tr class='d-block d-md-table-row'>";
-                    echo "<td class='img-cell d-block d-md-table-cell text-center mb-3 mb-md-0'>";
-                    echo "<img src='" . $row['Image'] . "' alt='" . $row['TenThietBi'] . "' width='300'>";
-                    echo "</td>";
+            if ($row) {
+                echo "<thead>";
+                echo "<tr>";
+                echo "<th colspan='2;' style='background: #c7d2fe; color: #3f3d56';>" . $row['TenThietBi'] . "</th>";
+                echo "</tr>";
+                echo "</thead>";
+                echo "<tbody>";
+                echo "<tr class='d-block d-md-table-row'>";
+                echo "<td class='img-cell d-block d-md-table-cell text-center mb-3 mb-md-0'>";
+                echo "<img src='" . $row['Image'] . "' alt='" . $row['TenThietBi'] . "' width='300'>";
+                echo "</td>";
 
-                    echo "<td class='info-cell d-block d-md-table-cell'>";
-                    echo "<i>Trạng thái thiết bị: </i>";
-                    echo "<span>" . $row['TenTTTB'] . "</span>";
-                    echo "</td>";
-                    echo "</tr>";
-                    echo "</tbody>";
-                }
-
-                echo "</table>";
+                echo "<td class='info-cell d-block d-md-table-cell'>";
+                echo "<i>Trạng thái thiết bị: </i>";
+                echo "<span>" . $row['TenTTTB'] . "</span>";
+                echo "</td>";
+                echo "</tr>";
+                echo "</tbody>";
             }
-            echo "<div style='text-align:center; class='text-center mt-4'>
+
+            echo "</table>";
+        }
+        echo "<div style='text-align:center; class='text-center mt-4'>
                     <a class='back-btn' href='device.php'>Quay lại</a>
                 </div>";
         ?>

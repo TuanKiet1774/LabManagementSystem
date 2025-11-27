@@ -1,15 +1,15 @@
 <?php
-        include("../Database/config.php");
-        include_once('./Controller/controller.php');
-        include_once('./Controller/deviceController.php');
-        include_once('./Controller/loginController.php');
-         require '../vendor/phpmailer/phpmailer/src/Exception.php';
-        require '../vendor/phpmailer/phpmailer/src/PHPMailer.php';
-        require '../vendor/phpmailer/phpmailer/src/SMTP.php';
-        $user = checkLogin();
-        $vaiTro = $user['MaVT'] ?? '';
-        $suaTT = ($vaiTro === 'GV'); 
-        $laQTV = ($vaiTro === 'QTV');
+include("../Database/config.php");
+include_once('./Controller/controller.php');
+include_once('./Controller/deviceController.php');
+include_once('./Controller/loginController.php');
+require '../vendor/phpmailer/phpmailer/src/Exception.php';
+require '../vendor/phpmailer/phpmailer/src/PHPMailer.php';
+require '../vendor/phpmailer/phpmailer/src/SMTP.php';
+$user = checkLogin();
+$vaiTro = $user['MaVT'] ?? '';
+$suaTT = ($vaiTro === 'GV');
+$laQTV = ($vaiTro === 'QTV');
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -142,32 +142,47 @@
 
 <body>
     <?php
-        include("./header.php");
-        // Lấy mã tb
-        if (isset($_GET['maThietBi'])) {
-            $maThietBi = $_GET['maThietBi'];
+    include("./header.php");
+    // Lấy mã tb
+    if (isset($_GET['maThietBi'])) {
+        $maThietBi = $_GET['maThietBi'];
+    }
+
+    $dsLoai = mysqli_query($con, "SELECT * FROM loai");
+    $dsTTTB = mysqli_query($con, "SELECT * FROM trangthaithietbi");
+
+
+    if (isset($_POST['submit'])) {
+
+        $maThietBi = $_POST['maThietBi'];
+        $tenThietBi = $_POST['tenThietBi'];
+        $maLoai = $_POST['maLoai'];
+        $maTTTB = $_POST['maTTTB'];
+
+        if ($maTTTB == "TTTB001") {
+            $trangThai = "Hoạt động tốt";
+        } elseif ($maTTTB == "TTTB002") {
+            $trangThai = "Đang bảo trì";
+        } elseif ($maTTTB == "TTTB003") {
+            $trangThai = "Cần kiểm tra lại";
+        } else {
+            $trangThai = "Hỏng";
         }
 
-        $dsLoai = mysqli_query($con, "SELECT * FROM loai");
-        $dsTTTB = mysqli_query($con, "SELECT * FROM trangthaithietbi");
 
+        $ok = deviceEdit($con, $maThietBi, $tenThietBi, $maLoai, $maTTTB);
 
-        if (isset($_POST['submit'])) {
-
-            $maThietBi = $_POST['maThietBi'];
-            $tenThietBi = $_POST['tenThietBi'];
-            $maLoai = $_POST['maLoai'];
-            $maTTTB = $_POST['maTTTB'];
-
-            if ($maTTTB == "TTTB001") {
-                $trangThai = "Hoạt động tốt";
-            } elseif ($maTTTB == "TTTB002") {
-                $trangThai = "Đang bảo trì";
-            } elseif ($maTTTB == "TTTB003") {
-                $trangThai = "Cần kiểm tra lại";
+        if ($ok) {
+            echo "<p style='text-align:center; color:green;'>Cập nhật thành công!</p>";
+            $fromEmail = $_SESSION['Email'];
+            $toEmail = 'binh.nht.64cntt@ntu.edu.vn';
+            $mailSent = deviceSendMailNotification($fromEmail, $toEmail, $tenThietBi, $maThietBi, $trangThai);
+            if ($mailSent) {
+                echo "<p style='text-align:center; color:blue;'>Email thông báo đã được gửi!</p>";
             } else {
-                $trangThai = "Hỏng";
+                echo "<p style='text-align:center; color:red;'>Gửi email thất bại. Kiểm tra cấu hình SMTP.</p>";
             }
+
 
 
             $ok = deviceEdit($con, $maThietBi, $tenThietBi, $maLoai, $maTTTB);
@@ -196,9 +211,20 @@
         } else if (isset($maThietBi)) {
             $result = getEdit_Detail_Device($con, $maThietBi);
             $row = mysqli_fetch_assoc($result);
+
+        } else {
+            echo "<p style='text-align:center; color:red;'>Lỗi cập nhật: " . mysqli_error($con) . "</p>";
+
         }
 
-        if (!empty($row)) {
+        $result = getEdit_Detail_Device($con, $maThietBi);
+        $row = mysqli_fetch_assoc($result);
+    } else if (isset($maThietBi)) {
+        $result = getEdit_Detail_Device($con, $maThietBi);
+        $row = mysqli_fetch_assoc($result);
+    }
+
+    if (!empty($row)) {
     ?>
         <form method="POST">
             <div class="table-responsive">
@@ -229,8 +255,8 @@
                                 <?php } ?>
                             </select>
                             <?php if (!$laQTV) { ?>
-                            <input type="hidden" name="maLoai" value="<?= $row['MaLoai'] ?>">
-                        <?php } ?>
+                                <input type="hidden" name="maLoai" value="<?= $row['MaLoai'] ?>">
+                            <?php } ?>
                         </td>
                     </tr>
 
@@ -258,11 +284,11 @@
             </div>
         </form>
     <?php
-    // }: đóng if (!empty($row))
-        } else {
-            echo "<p style='text-align:center; color:red;'>Không tìm thấy phòng!</p>";
-        }
-        echo "<div style='text-align:center;'>
+        // }: đóng if (!empty($row))
+    } else {
+        echo "<p style='text-align:center; color:red;'>Không tìm thấy phòng!</p>";
+    }
+    echo "<div style='text-align:center;'>
             <a class='back-btn w-md-auto d-inline-block' href='device.php'>Quay lại</a>
             </div>";
     ?>
