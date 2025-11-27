@@ -1,15 +1,15 @@
 <?php
-        include("../Database/config.php");
-        include_once('./Controller/controller.php');
-        include_once('./Controller/labController.php');
-        include_once('./Controller/loginController.php');
-        require '../vendor/phpmailer/phpmailer/src/Exception.php';
-        require '../vendor/phpmailer/phpmailer/src/PHPMailer.php';
-        require '../vendor/phpmailer/phpmailer/src/SMTP.php';
-        $user = checkLogin();
-        $vaiTro = $user['MaVT'] ?? '';
-        $suaTT = ($vaiTro === 'GV'); 
-        $laQTV = ($vaiTro === 'QTV');
+require '../vendor/phpmailer/phpmailer/src/Exception.php';
+require '../vendor/phpmailer/phpmailer/src/PHPMailer.php';
+require '../vendor/phpmailer/phpmailer/src/SMTP.php';
+include("../Database/config.php");
+include_once('./Controller/controller.php');
+include_once('./Controller/labController.php');
+include_once('./Controller/loginController.php');
+$user = checkLogin();
+$vaiTro = $user['MaVT'] ?? '';
+$suaTT = ($vaiTro === 'GV');
+$laQTV = ($vaiTro === 'QTV');
 
 ?>
 <!DOCTYPE html>
@@ -63,7 +63,8 @@
         }
 
         input[type="text"],
-        input[type="number"] {
+        input[type="number"],
+        select.form-control {
             width: 75%;
             padding: 10px;
             border-radius: 8px;
@@ -73,8 +74,40 @@
             text-overflow: hidden;
         }
 
+        select.form-control:disabled,
+        input[type="text"][readonly],
+        input[type="number"][readonly] {
+            background: #e2e2e2; 
+            color: #333;
+            cursor: not-allowed;
+        }
+
+        select.form-control:disabled:hover,
+        input[type="text"][readonly]:hover,
+        input[type="number"][readonly]:hover,
+        select.form-control:disabled:focus,
+        input[type="text"][readonly]:focus,
+        input[type="number"][readonly]:focus {
+            background: #e2e2e2; 
+            outline: none;
+        }
+
+        input[readonly],
+        input[readonly]:focus,
+        input[disabled],
+        input[disabled]:focus,
+        select:disabled,
+        select:disabled:focus {
+            background: #e2e2e2;
+            color: #333;
+            cursor: not-allowed;
+            outline: none;
+            box-shadow: none; 
+        }
+
         input[type="text"]:focus,
-        input[type="number"]:focus {
+        input[type="number"]:focus,
+        select.form-control:focus {
             background: #e6f0ff;
             border-color: #93c5fd;
             outline: none;
@@ -120,49 +153,54 @@
     <?php include("./header.php"); ?>
     <?php
 
-        // Lấy mã phòng
-        if (isset($_GET['maPhong'])) {
-            $maPhong = $_GET['maPhong'];
-        }
+    // Lấy mã phòng
+    if (isset($_GET['maPhong'])) {
+        $maPhong = $_GET['maPhong'];
+    }
 
-        $dsNhom = mysqli_query($con, "SELECT * FROM nhomphong");
-        $dsTrangThai = mysqli_query($con, "SELECT * FROM trangthaiphong");
+    $dsNhom = mysqli_query($con, "SELECT * FROM nhomphong");
+    $dsTrangThai = mysqli_query($con, "SELECT * FROM trangthaiphong");
 
-        // Xử lý cập nhật
-        if (isset($_POST['submit'])) {
-            $maPhong = $_POST['maPhong'];
-            $tenPhong = $_POST['tenPhong'];
-            $maNhom = $_POST['maNhom'];
-            $sucChua = ($_POST['sucChua']);
-            $maTTP = $_POST['maTTP'];
-            $trangThai = ($maTTP == "TTPM001") ? "Hoạt động" : "Không hoạt động";
+    // Xử lý cập nhật
+    if (isset($_POST['submit'])) {
+        $maPhong = $_POST['maPhong'];
+        $tenPhong = $_POST['tenPhong'];
+        $maNhom = $_POST['maNhom'];
+        $sucChua = ($_POST['sucChua']);
+        $maTTP = $_POST['maTTP'];
+        $trangThai = ($maTTP == "TTPM001") ? "Hoạt động" : "Không hoạt động";
 
-            $ok = labEdit($con, $maPhong, $tenPhong, $sucChua, $maNhom, $maTTP);
+        $ok = labEdit($con, $maPhong, $tenPhong, $sucChua, $maNhom, $maTTP);
 
 
-            if ($ok) {
-                echo "<p style='text-align:center; color:green;'>Cập nhật thành công!</p>";
+        if ($ok) {
+            echo "<p style='text-align:center; color:green;'>Cập nhật thành công!</p>";
+            if($vaiTro === 'GV') {
+                 $queryQTV = mysqli_query($con, "SELECT Email FROM nguoidung WHERE MaVT = 'QTV' LIMIT 1");
+                $rowQTV = mysqli_fetch_assoc($queryQTV);
+                $toEmail = $rowQTV['Email'];
                 $fromEmail = $_SESSION['Email'];
-                $toEmail = 'binh.nht.64cntt@ntu.edu.vn';
                 $mailSent = labSendMailNotification($fromEmail, $toEmail, $tenPhong, $maPhong, $trangThai);
                 if ($mailSent) {
                     echo "<p style='text-align:center; color:blue;'>Email thông báo đã được gửi!</p>";
                 } else {
                     echo "<p style='text-align:center; color:red;'>Gửi email thất bại. Kiểm tra cấu hình SMTP.</p>";
                 }
-            } else {
-                echo "<p style='text-align:center; color:red;'>Lỗi cập nhật: " . mysqli_error($con) . "</p>";
             }
-
-            $result = getEdit_Detail_Lab($con, $maPhong);
-            $row = mysqli_fetch_assoc($result);
-        } else if (isset($maPhong)) {
-
-            $result = getEdit_Detail_Lab($con, $maPhong);
-            $row = mysqli_fetch_assoc($result);
+        } 
+        else {
+            echo "<p style='text-align:center; color:red;'>Lỗi cập nhật: " . mysqli_error($con) . "</p>";
         }
 
-        if (!empty($row)) {
+        $result = getEdit_Detail_Lab($con, $maPhong);
+        $row = mysqli_fetch_assoc($result);
+    } else if (isset($maPhong)) {
+
+        $result = getEdit_Detail_Lab($con, $maPhong);
+        $row = mysqli_fetch_assoc($result);
+    }
+
+    if (!empty($row)) {
     ?>
 
         <form method="POST">
@@ -186,15 +224,15 @@
                         <td>Tên nhóm:</td>
                         <td>
                             <select class="form-control" name="maNhom" <?= $laQTV ? '' : 'disabled' ?>>
-                            <?php while ($nhom = mysqli_fetch_assoc($dsNhom)) { ?>
-                                <option value="<?= $nhom['MaNhom'] ?>" <?= $nhom['MaNhom'] == $row['MaNhom'] ? 'selected' : '' ?>>
-                                    <?= $nhom['TenNhom'] ?>
-                                </option>
+                                <?php while ($nhom = mysqli_fetch_assoc($dsNhom)) { ?>
+                                    <option value="<?= $nhom['MaNhom'] ?>" <?= $nhom['MaNhom'] == $row['MaNhom'] ? 'selected' : '' ?>>
+                                        <?= $nhom['TenNhom'] ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                            <?php if (!$laQTV) { ?>
+                                <input type="hidden" class="form-control" name="maNhom" value="<?= $row['MaNhom'] ?>">
                             <?php } ?>
-                        </select>
-                        <?php if (!$laQTV) { ?>
-                            <input type="hidden" name="maNhom" value="<?= $row['MaNhom'] ?>">
-                        <?php } ?>
 
                         </td>
                     </tr>
@@ -234,9 +272,8 @@
 
     <?php
         //Đóng if(!empty($row))
-        } 
-        else {
-            echo "
+    } else {
+        echo "
             <div class='container d-flex justify-content-center' 
                 style='min-height: calc(100vh - 200px);'>
                 <div class='text-center'>
@@ -245,10 +282,10 @@
                 </div>
             </div>
             ";
-            include("./footer.php");
-            exit;
-        }
-        echo "<div style='text-align:center;'>
+        include("./footer.php");
+        exit;
+    }
+    echo "<div style='text-align:center;'>
             <a class='back-btn w-md-auto d-inline-block' href='lab.php'>Quay lại</a>
         </div>";
     ?>

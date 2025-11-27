@@ -61,7 +61,8 @@
             color: #333;
         }
 
-        input[type="text"] {
+        input[type="text"],
+        select.form-control  {
             width: 75%;
             padding: 10px;
             border-radius: 8px;
@@ -71,7 +72,34 @@
             text-overflow: hidden;
         }
 
-        input[type="text"]:focus {
+        select.form-control:disabled, input[type="text"][readonly] {
+            background: #e2e2e2ff; 
+            color: #333;
+            cursor: not-allowed;
+        }
+
+        select.form-control:disabled:hover,
+        input[type="text"][readonly]:hover,
+        select.form-control:disabled:focus,
+        input[type="text"][readonly]:focus {
+            background: #e2e2e2; 
+            outline: none;
+        }
+
+        input[readonly]:focus,
+        input[disabled],
+        input[disabled]:focus,
+        select.form-control:disabled,
+        select.form-control:disabled:focus {
+            background: #e2e2e2;
+            color: #333;
+            cursor: not-allowed;
+            outline: none;
+            box-shadow: none; 
+        }
+
+        input[type="text"]:focus,
+        select.form-control:focus {
             background: #e6f0ff;
             border-color: #93c5fd;
             outline: none;
@@ -146,15 +174,20 @@
 
             if ($ok) {
                 echo "<p style='text-align:center; color:green;'>Cập nhật thành công!</p>";
-                $fromEmail = $_SESSION['Email']; 
-                $toEmail = 'binh.nht.64cntt@ntu.edu.vn';
-                $mailSent = deviceSendMailNotification($fromEmail, $toEmail, $tenThietBi, $maThietBi, $trangThai);
-                if ($mailSent) {
-                    echo "<p style='text-align:center; color:blue;'>Email thông báo đã được gửi!</p>";
-                } else {
-                    echo "<p style='text-align:center; color:red;'>Gửi email thất bại. Kiểm tra cấu hình SMTP.</p>";
+                if($vaiTro === 'GV') {
+                    $queryQTV = mysqli_query($con, "SELECT Email FROM nguoidung WHERE MaVT = 'QTV' LIMIT 1");
+                    $rowQTV = mysqli_fetch_assoc($queryQTV);
+                    $toEmail = $rowQTV['Email'];
+                    $fromEmail = $_SESSION['Email'];
+                    $mailSent = deviceSendMailNotification($fromEmail, $toEmail, $tenThietBi, $maThietBi, $trangThai);
+                    if ($mailSent) {
+                        echo "<p style='text-align:center; color:blue;'>Email thông báo đã được gửi!</p>";
+                    } else {
+                        echo "<p style='text-align:center; color:red;'>Gửi email thất bại. Kiểm tra cấu hình SMTP.</p>";
+                    }
                 }
-            } else {
+            } 
+            else {
                 echo "<p style='text-align:center; color:red;'>Lỗi cập nhật: " . mysqli_error($con) . "</p>";
             }
 
@@ -187,7 +220,7 @@
                         <td>Tên loại:</td>
                         <td>
                             <select class="form-control" name="maLoai" <?= $laQTV ? '' : 'disabled' ?> required
-                                style="width:75%; padding:10px; border-radius:8px; border:1px solid #c7d2fe; background:#f0f5ff;">
+                                style="width:75%; padding:10px; border-radius:8px; border:1px solid #c7d2fe;">
                                 <?php while ($l = mysqli_fetch_assoc($dsLoai)) { ?>
                                     <option value="<?= $l['MaLoai'] ?>"
                                         <?= $l['MaLoai'] == $row['MaLoai'] ? 'selected' : '' ?>>
