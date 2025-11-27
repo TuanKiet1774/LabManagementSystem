@@ -330,9 +330,11 @@
                                         <td class='d-none d-md-table-cell'>{$row['TenTTP']}</td>
                                         <td class='action-links flex-column flex-md-row'>
                                             <a href='lab_detail.php?maPhong={$row['MaPhong']}'>Xem</a>";
+                                            if ($vaiTro === 'QTV' || $vaiTro === 'GV') {
+                                                echo "<a href='lab_edit.php?maPhong={$row['MaPhong']}'>Sửa</a>";
+                                            }
                                             if ($vaiTro === 'QTV') {
-                                                echo "<a href='lab_edit.php?maPhong={$row['MaPhong']}'>Sửa</a>
-                                                <a href='lab_delete.php?maPhong={$row['MaPhong']}'>Xóa</a>";
+                                                echo "<a href='lab_delete.php?maPhong={$row['MaPhong']}'>Xóa</a>";
                                             }
                                             echo "<a href='$muonPhongLink' class='$disabledClass muon-phong'>Mượn phòng</a>
                                         </td>

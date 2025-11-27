@@ -5,11 +5,9 @@
         include_once('./Controller/loginController.php');
         $user = checkLogin();
         $vaiTro = $user['MaVT'] ?? '';
-        if ($vaiTro !== 'QTV') {
-            // Không có quyền => chuyển hướng về danh sách hoặc báo lỗi
-            header("Location: lab.php?error=permission");
-            exit();
-        }
+        $suaTT = ($vaiTro === 'GV'); 
+        $laQTV = ($vaiTro === 'QTV');
+
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -169,14 +167,14 @@
 
                     <tr>
                         <td>Tên phòng:</td>
-                        <td><input type="text" class="form-control" name="tenPhong" value="<?= $row['TenPhong'] ?>"></td>
+                        <td><input type="text" class="form-control" name="tenPhong" value="<?= $row['TenPhong'] ?>" <?= $laQTV ? '' : 'readonly' ?>></td>
                     </tr>
 
                     <tr>
                         <td>Tên nhóm:</td>
                         <td>
                             <select class="form-control" name="maNhom" required
-                                style="width:75%; padding:10px; border-radius:8px; border:1px solid #c7d2fe; background:#f0f5ff;">
+                                style="width:75%; padding:10px; border-radius:8px; border:1px solid #c7d2fe; background:#f0f5ff;" <?= $laQTV ? '' : 'disabled' ?>>
                                 <?php while ($nhom = mysqli_fetch_assoc($dsNhom)) { ?>
                                     <option value="<?= $nhom['MaNhom'] ?>"
                                         <?= $nhom['MaNhom'] == $row['MaNhom'] ? 'selected' : '' ?>>
@@ -192,7 +190,7 @@
                     <tr>
                         <td>Sức chứa:</td>
                         <td>
-                            <input type="number" class="form-control" name="sucChua" value="<?= $row['SucChua'] ?>" min="1">
+                            <input type="number" class="form-control" name="sucChua" value="<?= $row['SucChua'] ?>" <?= $laQTV ? '' : 'readonly' ?> min="1">
                             <span id="errSucChua" style="color:red; font-size:14px;"></span>
                         </td>
                     </tr>

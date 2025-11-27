@@ -271,9 +271,11 @@
                                     <td class='d-none d-md-table-cell'>{$row['TenTTTB']}</td>
                                     <td class='action-links flex-column flex-md-row'>
                                         <a href='Device_detail.php?maThietBi={$row['MaThietBi']}'>Xem</a>";
+                                        if ($vaiTro === 'QTV' || $vaiTro === 'GV') {
+                                            echo "<a href='Device_edit.php?maThietBi={$row['MaThietBi']}'>Sửa</a>";
+                                        }
                                         if ($vaiTro === 'QTV') {
-                                            echo "<a href='Device_edit.php?maThietBi={$row['MaThietBi']}'>Sửa</a>
-                                            <a href='Device_delete.php?maThietBi={$row['MaThietBi']}'>Xóa</a>";
+                                            echo "<a href='Device_delete.php?maThietBi={$row['MaThietBi']}'>Xóa</a>";
                                         }
                                     echo "</td>
                                 </tr>";

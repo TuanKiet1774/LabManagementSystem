@@ -6,8 +6,7 @@
         $user = checkLogin();
         $vaiTro = $user['MaVT'] ?? '';
         if ($vaiTro !== 'QTV') {
-            // Không có quyền => chuyển hướng về danh sách hoặc báo lỗi
-            header("Location: lab.php?error=permission");
+            header("Location: device.php?error=permission");
             exit();
         }
 ?>

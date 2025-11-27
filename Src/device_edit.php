@@ -5,15 +5,8 @@
         include_once('./Controller/loginController.php');
         $user = checkLogin();
         $vaiTro = $user['MaVT'] ?? '';
-        if ($vaiTro !== 'QTV') {
-            // Không có quyền => chuyển hướng về danh sách hoặc báo lỗi
-            header("Location: lab.php?error=permission");
-            exit();
-        }
-        if (isset($_GET['error']) && $_GET['error'] == 'permission') {
-            echo "<div class='alert alert-danger'>Bạn không có quyền truy cập chức năng này.</div>";
-        }
-
+        $suaTT = ($vaiTro === 'GV'); 
+        $laQTV = ($vaiTro === 'QTV');
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -166,12 +159,12 @@
 
                     <tr>
                         <td>Tên thiết bị:</td>
-                        <td><input type="text" class="form-control" name="tenThietBi" value="<?= $row['TenThietBi'] ?>"></td>
+                        <td><input type="text" class="form-control" name="tenThietBi" value="<?= $row['TenThietBi'] ?>" <?= $laQTV ? '' : 'readonly' ?>></td>
                     </tr>
                     <tr>
                         <td>Tên loại:</td>
                         <td>
-                            <select class="form-control" name="maLoai" required
+                            <select class="form-control" name="maLoai" <?= $laQTV ? '' : 'disabled' ?> required
                                 style="width:75%; padding:10px; border-radius:8px; border:1px solid #c7d2fe; background:#f0f5ff;">
                                 <?php while ($l = mysqli_fetch_assoc($dsLoai)) { ?>
                                     <option value="<?= $l['MaLoai'] ?>"

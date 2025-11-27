@@ -4,6 +4,11 @@
         include_once('./Controller/labBookingController.php');
         include_once('./Controller/loginController.php');
         $user = checkLogin();
+        $vaiTro = $user['MaVT'] ?? '';
+        if ($vaiTro !== 'QTV' && $vaiTro !== 'GV' && $vaiTro !== 'SV') {
+            header("Location: lab.php?error=permission");
+            exit();
+        }
 ?>
 <!DOCTYPE html>
 <html>
