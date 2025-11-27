@@ -1,28 +1,37 @@
 <?php
 ### List
-function infoHistory($search)
+function infoHistory($search, $user)
 {
-    $sql = "SELECT pm.MaPhieu, pm.MucDich, pm.NgayBD, pm.NgayKT, pm.NgayTao, ttpm.MaTTPM, ttpm.TenTTPM, nd.Ho, nd.Ten
-                FROM phieumuon pm
-                INNER JOIN chitietttpm ctpm 
-                ON pm.MaPhieu = ctpm.MaPhieu
-                INNER JOIN trangthaiphieumuon ttpm
-                ON ctpm.MaTTPM = ttpm.MaTTPM
-                INNER JOIN nguoidung nd
-                ON pm.MaND = nd.MaND";
-    $condition = "WHERE pm.MucDich LIKE '%$search%' 
-                OR ttpm.TenTTPM LIKE '%$search%'
-                OR CONCAT(nd.Ho, ' ', nd.Ten) LIKE '%$search%'";
-    $sort = "ORDER BY MaPhieu DESC";
+    $sql = "SELECT pm.MaPhieu, pm.MucDich, pm.NgayBD, pm.NgayKT, pm.NgayTao,
+                    ttpm.MaTTPM, ttpm.TenTTPM,
+                    nd.Ho, nd.Ten
+            FROM phieumuon pm
+            INNER JOIN chitietttpm ctpm ON pm.MaPhieu = ctpm.MaPhieu
+            INNER JOIN trangthaiphieumuon ttpm ON ctpm.MaTTPM = ttpm.MaTTPM
+            INNER JOIN nguoidung nd ON pm.MaND = nd.MaND";
 
-    if (isset($search) && $search !== "") {
-        $sqlfull = $sql . " " . $condition . " " . $sort;
-    } else {
-        $sqlfull = $sql . " " . $sort;
+    $where = [];
+
+    if ($search !== "") {
+        $where[] = "(pm.MucDich LIKE '%$search%' 
+                    OR ttpm.TenTTPM LIKE '%$search%'
+                    OR CONCAT(nd.Ho, ' ', nd.Ten) LIKE '%$search%')";
     }
 
-    return $sqlfull;
+    if ($user['MaVT'] !== 'QTV') {
+        $MaND = $user['MaND'];
+        $where[] = "pm.MaND = '$MaND'";
+    }
+
+    if (count($where) > 0) {
+        $sql .= " WHERE " . implode(" AND ", $where);
+    }
+
+    $sql .= " ORDER BY pm.MaPhieu DESC";
+
+    return $sql;
 }
+
 
 ### Detail
 $maphieu = isset($_GET['maphieu']) ? $_GET['maphieu'] : '';
@@ -67,4 +76,50 @@ function deleteHistory($con, $maphieu)
 
     $sqlDeletePM = "DELETE FROM phieumuon WHERE MaPhieu = '$maphieu'";
     mysqli_query($con, $sqlDeletePM);
+}
+
+### Send Email on Edit
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+function sendMailNotification($fromEmail, $toEmail, $tenPhong, $maPhieu, $mucDich, $trangthai)
+{
+    $mail = new PHPMailer(true);
+    $mail->CharSet = 'UTF-8';
+    $mail->Encoding = 'base64';
+
+    try {
+        // Cấu hình SMTP Gmail
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.gmail.com';
+        $mail->SMTPAuth   = true;
+        $mail->Username   = $fromEmail;
+        $mail->Password   = 'inwf mpad thax aqma';  // App password
+        $mail->SMTPSecure = 'ssl';
+        $mail->Port       = 465;
+
+        // Người gửi - người nhận
+        $mail->setFrom($fromEmail, 'Hệ thống Lab Management');
+        $mail->addAddress($toEmail);
+
+        // Nội dung email
+        $mail->isHTML(true);
+        $mail->Subject = "Yêu cầu mượn phòng $tenPhong";
+        $mail->Body    = "
+            <h3>Thông báo cập nhật trạng thái phiếu mượn</h3>
+            <p><b>Mã phiếu:</b> $maPhieu</p>
+            <p><b>Mục đích:</b> $mucDich</p>
+            <p><b>Trạng thái mới:</b> 
+                <span style='color:blue; font-weight:bold;'>$trangthai</span>
+            </p>
+        ";
+
+        $mail->send();
+        return true; // thành công
+
+    } catch (Exception $e) {
+        error_log("Email error: " . $mail->ErrorInfo);
+        return false; // thất bại
+    }
 }
