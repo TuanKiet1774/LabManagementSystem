@@ -70,7 +70,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="./lab_week_sched.php">
                                 <i class="fa-solid fa-calendar"></i>
                                 Lịch phòng
                             </a>

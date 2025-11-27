@@ -145,7 +145,9 @@
 
                 <div class="col-md-4">
                     <div class="p-4 text-center shadow rounded feature-card">
-                        <img src="./Image/icon_calendar.jpg" width="60" class="mb-3">
+                        <a href="./lab_week_sched.php">
+                            <img src="./Image/icon_calendar.jpg" width="60" class="mb-3">
+                        </a>
                         <h5 class="fw-bold">Lịch trình</h5>
                         <p>Xem lịch thực hành của phòng máy theo ngày/tuần/tháng.</p>
                     </div>
