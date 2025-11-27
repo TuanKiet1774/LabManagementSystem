@@ -142,7 +142,7 @@
 
             if ($ok) {
                 echo "<p style='text-align:center; color:green;'>Cập nhật thành công!</p>";
-                $fromEmail = 'thanhbinhngh@gmail.com'; 
+                $fromEmail = $_SESSION['Email'];
                 $toEmail = 'binh.nht.64cntt@ntu.edu.vn';
                 $mailSent = labSendMailNotification($fromEmail, $toEmail, $tenPhong, $maPhong, $trangThai);
                 if ($mailSent) {
