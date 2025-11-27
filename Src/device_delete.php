@@ -1,14 +1,14 @@
 <?php
-        include("../Database/config.php");
-        include_once('./Controller/controller.php');
-        include_once('./Controller/deviceController.php');
-        include_once('./Controller/loginController.php');
-        $user = checkLogin();
-        $vaiTro = $user['MaVT'] ?? '';
-        if ($vaiTro !== 'QTV') {
-            header("Location: device.php?error=permission");
-            exit();
-        }
+include("../Database/config.php");
+include_once('./Controller/controller.php');
+include_once('./Controller/deviceController.php');
+include_once('./Controller/loginController.php');
+$user = checkLogin();
+$vaiTro = $user['MaVT'] ?? '';
+if ($vaiTro !== 'QTV') {
+    header("Location: device.php?error=permission");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -111,20 +111,21 @@
         }
     </style>
 </head>
+
 <body>
     <?php
-        include("./header.php");
-        if (!isset($_GET['maThietBi'])) {
-            echo "<p style='text-align:center; color:red;'>Không xác định được phòng!</p>";
-            exit;
-        }
+    include("./header.php");
+    if (!isset($_GET['maThietBi'])) {
+        echo "<p style='text-align:center; color:red;'>Không xác định được phòng!</p>";
+        exit;
+    }
 
-        $maThietBi = $_GET['maThietBi'];
-        // Lấy thông tin phòng để hiển thị
-        $row = deviceDelete($con, $maThietBi);
+    $maThietBi = $_GET['maThietBi'];
+    // Lấy thông tin phòng để hiển thị
+    $row = deviceDelete($con, $maThietBi);
 
-        if (!$row) {
-            echo "
+    if (!$row) {
+        echo "
                 <div class='container d-flex justify-content-center' 
                     style='min-height: calc(100vh - 200px);'>
                     <div class='text-center'>
@@ -133,25 +134,25 @@
                     </div>
                 </div>
                 ";
-            include("./footer.php");
-            exit;
-        }
+        include("./footer.php");
+        exit;
+    }
 
-        // Xử lý xóa khi submit
-        if (isset($_POST['confirm_delete'])) {
-            
+    // Xử lý xóa khi submit
+    if (isset($_POST['confirm_delete'])) {
 
-            $ok = deviceDeleteConfirm($con, $maThietBi);
 
-            if ($ok) {
-                echo "<p style='text-align:center; color:green;'>Xóa thiết bị thành công!</p>";
-                echo "<div style='text-align:center; margin-top:20px;'>
+        $ok = deviceDeleteConfirm($con, $maThietBi);
+
+        if ($ok) {
+            echo "<p style='text-align:center; color:green;'>Xóa thiết bị thành công!</p>";
+            echo "<div style='text-align:center; margin-top:20px;'>
                         <a class='btn btn-cancel' href='device.php' style='color: white;'>Quay lại danh sách</a>
                     </div>";
-            } else {
-                echo "<p style='text-align:center; color:red;'>Lỗi khi xóa: " . mysqli_error($con) . "</p>";
-            }
+        } else {
+            echo "<p style='text-align:center; color:red;'>Lỗi khi xóa: " . mysqli_error($con) . "</p>";
         }
+    }
     ?>
 
     <div class="container my-4">

@@ -1,14 +1,14 @@
 <?php
-        include("../Database/config.php");
-        include_once('./Controller/controller.php');
-        include_once('./Controller/labController.php');
-        include_once('./Controller/loginController.php');
-        $user = checkLogin();
-        $vaiTro = $user['MaVT'] ?? '';
-        if ($vaiTro !== 'QTV') {
-            header("Location: lab.php?error=permission");
-            exit();
-        }
+include("../Database/config.php");
+include_once('./Controller/controller.php');
+include_once('./Controller/labController.php');
+include_once('./Controller/loginController.php');
+$user = checkLogin();
+$vaiTro = $user['MaVT'] ?? '';
+if ($vaiTro !== 'QTV') {
+    header("Location: lab.php?error=permission");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -118,9 +118,10 @@
         }
     </style>
 </head>
+
 <body>
 
-    <?php include("./header.php"); 
+    <?php include("./header.php");
     // Lấy danh sách nhóm
     $nhom = mysqli_query($con, "SELECT * FROM nhomphong");
 

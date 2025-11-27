@@ -1,14 +1,14 @@
 <?php
-        include("../Database/config.php");
-        include_once('./Controller/controller.php');
-        include_once('./Controller/labController.php');
-        include_once('./Controller/loginController.php');
-        $user = checkLogin();
-        $vaiTro = $user['MaVT'] ?? '';
-        if ($vaiTro !== 'QTV') {
-            header("Location: lab.php?error=permission");
-            exit();
-        }
+include("../Database/config.php");
+include_once('./Controller/controller.php');
+include_once('./Controller/labController.php');
+include_once('./Controller/loginController.php');
+$user = checkLogin();
+$vaiTro = $user['MaVT'] ?? '';
+if ($vaiTro !== 'QTV') {
+    header("Location: lab.php?error=permission");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -117,18 +117,18 @@
 
     <?php
 
-        if (!isset($_GET['maPhong'])) {
-            echo "<p style='text-align:center; color:red;'>Không xác định được phòng!</p>";
-            exit;
-        }
-        $maPhong = $_GET['maPhong'];
+    if (!isset($_GET['maPhong'])) {
+        echo "<p style='text-align:center; color:red;'>Không xác định được phòng!</p>";
+        exit;
+    }
+    $maPhong = $_GET['maPhong'];
 
-        // Lấy thông tin phòng để hiển thị
-        
-        $row = labDelete($con, $maPhong);
+    // Lấy thông tin phòng để hiển thị
 
-        if (!$row) {
-            echo "
+    $row = labDelete($con, $maPhong);
+
+    if (!$row) {
+        echo "
                 <div class='container d-flex justify-content-center' 
                     style='min-height: calc(100vh - 200px);'>
                     <div class='text-center'>
@@ -137,22 +137,22 @@
                     </div>
                 </div>
                 ";
-            include("./footer.php");
-            exit;
-        }
+        include("./footer.php");
+        exit;
+    }
 
-        // Xử lý xóa khi submit
-        if (isset($_POST['confirm_delete'])) {
-            $ok = labDeleteConfirm($con, $maPhong);
-            if ($ok) {
-                echo "<p style='text-align:center; color:green;'>Xóa phòng thành công!</p>";
-                echo "<div style='text-align:center; margin-top:20px;'>
+    // Xử lý xóa khi submit
+    if (isset($_POST['confirm_delete'])) {
+        $ok = labDeleteConfirm($con, $maPhong);
+        if ($ok) {
+            echo "<p style='text-align:center; color:green;'>Xóa phòng thành công!</p>";
+            echo "<div style='text-align:center; margin-top:20px;'>
                             <a class='btn btn-cancel' href='phongmay.php' style='color: white;'>Quay lại danh sách</a>
                         </div>";
-            } else {
-                echo "<p style='text-align:center; color:red;'>Lỗi khi xóa: " . mysqli_error($con) . "</p>";
-            }
+        } else {
+            echo "<p style='text-align:center; color:red;'>Lỗi khi xóa: " . mysqli_error($con) . "</p>";
         }
+    }
     ?>
 
     <div class="container my-4">

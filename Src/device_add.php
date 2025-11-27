@@ -1,14 +1,14 @@
 <?php
-        include("../Database/config.php");
-        include_once('./Controller/controller.php');
-        include_once('./Controller/deviceController.php');
-        include_once('./Controller/loginController.php');
-        $user = checkLogin();
-        $vaiTro = $user['MaVT'] ?? '';
-        if ($vaiTro !== 'QTV') {
-            header("Location: device.php?error=permission");
-            exit();
-        }
+include("../Database/config.php");
+include_once('./Controller/controller.php');
+include_once('./Controller/deviceController.php');
+include_once('./Controller/loginController.php');
+$user = checkLogin();
+$vaiTro = $user['MaVT'] ?? '';
+if ($vaiTro !== 'QTV') {
+    header("Location: device.php?error=permission");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -117,31 +117,32 @@
         }
     </style>
 </head>
+
 <body>
     <?php
-        include_once("./header.php");
-        // Lấy danh sách loại
-        $loai = mysqli_query($con, "SELECT * FROM loai");
+    include_once("./header.php");
+    // Lấy danh sách loại
+    $loai = mysqli_query($con, "SELECT * FROM loai");
 
-        // Lấy danh sách trạng thái thiết bị
-        $tttb = mysqli_query($con, "SELECT * FROM trangthaithietbi");
-
-
-        // Xử lý thêm phòng
-        if (isset($_POST['submit'])) {
-            $tenThietBi = $_POST['tenThietBi'];
-            $maLoai = $_POST['maLoai'];
-            $maTTTB = $_POST['maTTTB'];
-
-            $result = deviceAdd($con, $tenThietBi, $maLoai, $maTTTB);
+    // Lấy danh sách trạng thái thiết bị
+    $tttb = mysqli_query($con, "SELECT * FROM trangthaithietbi");
 
 
-            if ($result['success']) {
-                echo "<p style='text-align:center; color:green;'>Thêm phòng thành công!</p>";
-            } else {
-                echo "<p style='text-align:center; color:red;'>Lỗi: " . mysqli_error($con) . "</p>";
-            }
+    // Xử lý thêm phòng
+    if (isset($_POST['submit'])) {
+        $tenThietBi = $_POST['tenThietBi'];
+        $maLoai = $_POST['maLoai'];
+        $maTTTB = $_POST['maTTTB'];
+
+        $result = deviceAdd($con, $tenThietBi, $maLoai, $maTTTB);
+
+
+        if ($result['success']) {
+            echo "<p style='text-align:center; color:green;'>Thêm phòng thành công!</p>";
+        } else {
+            echo "<p style='text-align:center; color:red;'>Lỗi: " . mysqli_error($con) . "</p>";
         }
+    }
     ?>
 
     <h2>Thêm thiết bị</h2>

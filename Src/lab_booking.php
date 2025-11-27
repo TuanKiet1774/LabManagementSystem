@@ -1,14 +1,14 @@
 <?php
-        include("../Database/config.php");
-        include_once('./Controller/controller.php');
-        include_once('./Controller/labBookingController.php');
-        include_once('./Controller/loginController.php');
-        $user = checkLogin();
-        $vaiTro = $user['MaVT'] ?? '';
-        if ($vaiTro !== 'QTV' && $vaiTro !== 'GV' && $vaiTro !== 'SV') {
-            header("Location: lab.php?error=permission");
-            exit();
-        }
+include("../Database/config.php");
+include_once('./Controller/controller.php');
+include_once('./Controller/labBookingController.php');
+include_once('./Controller/loginController.php');
+$user = checkLogin();
+$vaiTro = $user['MaVT'] ?? '';
+if ($vaiTro !== 'QTV' && $vaiTro !== 'GV' && $vaiTro !== 'SV') {
+    header("Location: lab.php?error=permission");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -123,41 +123,41 @@
 <body>
     <?php
 
-        // Lấy mã phòng từ URL
-        $maPhong = $_GET['maPhong'];
-        $sqlPhong = mysqli_query($con, "SELECT TenPhong FROM phong WHERE MaPhong = '$maPhong'");
-        $tenPhong = mysqli_fetch_assoc($sqlPhong)['TenPhong'];
+    // Lấy mã phòng từ URL
+    $maPhong = $_GET['maPhong'];
+    $sqlPhong = mysqli_query($con, "SELECT TenPhong FROM phong WHERE MaPhong = '$maPhong'");
+    $tenPhong = mysqli_fetch_assoc($sqlPhong)['TenPhong'];
 
 
-        // Lấy danh sách tiết học
-        $listTiet = mysqli_query($con, "SELECT * FROM tiethoc");
+    // Lấy danh sách tiết học
+    $listTiet = mysqli_query($con, "SELECT * FROM tiethoc");
 
-        // Lấy danh sách ngày trong tuần
-        $listNgay = mysqli_query($con, "SELECT * FROM ngaytuan");
+    // Lấy danh sách ngày trong tuần
+    $listNgay = mysqli_query($con, "SELECT * FROM ngaytuan");
 
-        $listTTT = mysqli_query($con, "SELECT * FROM trangthaituan");
+    $listTTT = mysqli_query($con, "SELECT * FROM trangthaituan");
 
-        // Khi submit
-        if (isset($_POST['submit'])) {
-            $data = [
-                'maPhong'   => $_POST['maPhong'],
-                'maND'      => $user['MaND'],   // lấy từ session người đăng nhập
-                'mucDich'   => $_POST['mucDich'],
-                'ngayBD'    => $_POST['ngayBD'],
-                'ngayKT'    => $_POST['ngayKT'],
-                'maNgay'    => $_POST['maNgay'],
-                'maTTT'     => $_POST['maTTT'],
-                'maTietArr' => isset($_POST['maTiet']) ? $_POST['maTiet'] : []
-            ];
+    // Khi submit
+    if (isset($_POST['submit'])) {
+        $data = [
+            'maPhong'   => $_POST['maPhong'],
+            'maND'      => $user['MaND'],   // lấy từ session người đăng nhập
+            'mucDich'   => $_POST['mucDich'],
+            'ngayBD'    => $_POST['ngayBD'],
+            'ngayKT'    => $_POST['ngayKT'],
+            'maNgay'    => $_POST['maNgay'],
+            'maTTT'     => $_POST['maTTT'],
+            'maTietArr' => isset($_POST['maTiet']) ? $_POST['maTiet'] : []
+        ];
 
-            $maPhieu = labBookingForm($con, $data);
+        $maPhieu = labBookingForm($con, $data);
 
-            if ($maPhieu) {
-                echo "<p style='text-align:center; color:green;'>Tạo phiếu mượn thành công!</p>";
-            } else {
-                echo "<p style='text-align:center; color:red;'>Lỗi khi tạo phiếu!</p>";
-            }
+        if ($maPhieu) {
+            echo "<p style='text-align:center; color:green;'>Tạo phiếu mượn thành công!</p>";
+        } else {
+            echo "<p style='text-align:center; color:red;'>Lỗi khi tạo phiếu!</p>";
         }
+    }
     ?>
     <?php include_once("./header.php"); ?>
     <form method="POST">
@@ -249,76 +249,76 @@
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
 
-        <script>
-            function updateForm() {
-                const ngayBD = document.querySelector("input[name='ngayBD']").value;
-                const ngayKT = document.querySelector("input[name='ngayKT']").value;
+    <script>
+        function updateForm() {
+            const ngayBD = document.querySelector("input[name='ngayBD']").value;
+            const ngayKT = document.querySelector("input[name='ngayKT']").value;
 
-                const rowNgay = document.getElementById("rowNgay");
-                const rowTuan = document.getElementById("rowTuan");
-                const maNgay = document.querySelector("select[name='maNgay']");
-                const maTTT = document.querySelector("select[name='maTTT']");
+            const rowNgay = document.getElementById("rowNgay");
+            const rowTuan = document.getElementById("rowTuan");
+            const maNgay = document.querySelector("select[name='maNgay']");
+            const maTTT = document.querySelector("select[name='maTTT']");
 
-                if (!ngayBD || !ngayKT) return;
+            if (!ngayBD || !ngayKT) return;
 
-                const d1 = new Date(ngayBD);
-                const d2 = new Date(ngayKT);
+            const d1 = new Date(ngayBD);
+            const d2 = new Date(ngayKT);
 
-                if (d1.getTime() === d2.getTime()) {
-                    // Mượn 1 ngày → ẩn ngày tuần + trạng thái tuần
-                    rowNgay.style.display = "none";
-                    rowTuan.style.display = "none";
-                    maNgay.required = false;
-                    maTTT.required = false;
-                } else {
-                    // Mượn nhiều ngày → hiện
-                    rowNgay.style.display = "";
-                    rowTuan.style.display = "";
-                    maNgay.required = true;
-                    maTTT.required = true;
+            if (d1.getTime() === d2.getTime()) {
+                // Mượn 1 ngày → ẩn ngày tuần + trạng thái tuần
+                rowNgay.style.display = "none";
+                rowTuan.style.display = "none";
+                maNgay.required = false;
+                maTTT.required = false;
+            } else {
+                // Mượn nhiều ngày → hiện
+                rowNgay.style.display = "";
+                rowTuan.style.display = "";
+                maNgay.required = true;
+                maTTT.required = true;
+            }
+        }
+
+        // Kiểm tra người dùng chọn thứ hợp lệ
+        function validateForm(event) {
+            const ngayBD = document.querySelector("input[name='ngayBD']").value;
+            const ngayKT = document.querySelector("input[name='ngayKT']").value;
+            const maNgay = document.querySelector("select[name='maNgay']").value;
+
+            if (!maNgay) return; // không kiểm tra nếu không cần thứ
+
+            const start = new Date(ngayBD);
+            const end = new Date(ngayKT);
+
+            let found = false;
+
+            // Lặp từ ngàyBD đến ngàyKT
+            for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+                const jsThu = d.getDay(); // 0=CN → 1=Thứ 2
+                const maNgayInt = parseInt(maNgay); // DB của bạn: 1=Thứ2, 7=CN
+
+                if (jsThu === (maNgayInt % 7)) {
+                    found = true;
+                    break;
                 }
             }
 
-            // Kiểm tra người dùng chọn thứ hợp lệ
-            function validateForm(event) {
-                const ngayBD = document.querySelector("input[name='ngayBD']").value;
-                const ngayKT = document.querySelector("input[name='ngayKT']").value;
-                const maNgay = document.querySelector("select[name='maNgay']").value;
-
-                if (!maNgay) return; // không kiểm tra nếu không cần thứ
-
-                const start = new Date(ngayBD);
-                const end = new Date(ngayKT);
-
-                let found = false;
-
-                // Lặp từ ngàyBD đến ngàyKT
-                for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
-                    const jsThu = d.getDay(); // 0=CN → 1=Thứ 2
-                    const maNgayInt = parseInt(maNgay); // DB của bạn: 1=Thứ2, 7=CN
-
-                    if (jsThu === (maNgayInt % 7)) {
-                        found = true;
-                        break;
-                    }
-                }
-
-                if (!found) {
-                    alert("Khoảng ngày không chứa ngày bạn đã chọn trong tuần!");
-                    event.preventDefault();
-                }
+            if (!found) {
+                alert("Khoảng ngày không chứa ngày bạn đã chọn trong tuần!");
+                event.preventDefault();
             }
+        }
 
-            // Gọi update khi đổi ngày
-            document.querySelector("input[name='ngayBD']").addEventListener("change", updateForm);
-            document.querySelector("input[name='ngayKT']").addEventListener("change", updateForm);
+        // Gọi update khi đổi ngày
+        document.querySelector("input[name='ngayBD']").addEventListener("change", updateForm);
+        document.querySelector("input[name='ngayKT']").addEventListener("change", updateForm);
 
-            // Bắt submit form
-            document.querySelector("form").addEventListener("submit", validateForm);
+        // Bắt submit form
+        document.querySelector("form").addEventListener("submit", validateForm);
 
-            // Khởi tạo ban đầu
-            updateForm();
-        </script>
+        // Khởi tạo ban đầu
+        updateForm();
+    </script>
 
 </body>
 

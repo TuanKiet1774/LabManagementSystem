@@ -1,9 +1,9 @@
 <?php
-        include("../Database/config.php");
-        include_once('./Controller/controller.php');
-        include_once('./Controller/labController.php');
-        include_once('./Controller/loginController.php');
-        $user = checkLogin();
+include("../Database/config.php");
+include_once('./Controller/controller.php');
+include_once('./Controller/labController.php');
+include_once('./Controller/loginController.php');
+$user = checkLogin();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -108,57 +108,57 @@
     <?php include("./header.php"); ?>
     <div class="container my-4">
         <?php
-            if (isset($_GET['maPhong'])) {
-                $maPhong = $_GET['maPhong'];
-                $row = labDetail($maPhong);
-                if ($row) {
-                    echo "<table>";
-                        echo "<thead>";
-                            echo "<tr>";
-                            echo "<th colspan='2' style='background: #c7d2fe; color: #3f3d56';>" . $row['TenPhong'] . " - " . $row['TenNhom'] . "</th>";
-                            echo "</tr>";
-                        echo "</thead>";
-                        echo "<tbody>";
-                            echo "<tr class='d-block d-md-table-row'>";
-                                echo "<td class='img-cell d-block d-md-table-cell text-center mb-3 mb-md-0'>";
-                                echo "<img src='" . $row['Image'] . "' alt='" . $row['TenPhong'] . "' width='300'>";
-                                echo "</td>";
+        if (isset($_GET['maPhong'])) {
+            $maPhong = $_GET['maPhong'];
+            $row = labDetail($maPhong);
+            if ($row) {
+                echo "<table>";
+                echo "<thead>";
+                echo "<tr>";
+                echo "<th colspan='2' style='background: #c7d2fe; color: #3f3d56';>" . $row['TenPhong'] . " - " . $row['TenNhom'] . "</th>";
+                echo "</tr>";
+                echo "</thead>";
+                echo "<tbody>";
+                echo "<tr class='d-block d-md-table-row'>";
+                echo "<td class='img-cell d-block d-md-table-cell text-center mb-3 mb-md-0'>";
+                echo "<img src='" . $row['Image'] . "' alt='" . $row['TenPhong'] . "' width='300'>";
+                echo "</td>";
 
-                                echo "<td class='info-cell d-block d-md-table-cell'>";
-                                echo "<i>Sức chứa:</i>";
-                                echo "<span>" . $row['SucChua'] . "</span><br>";
-                                echo "<i>Trạng thái phòng: </i>";
-                                echo "<span>" . $row['TenTTP'] . "</span><br>";
-                                $dsTB = "Không có thiết bị";
+                echo "<td class='info-cell d-block d-md-table-cell'>";
+                echo "<i>Sức chứa:</i>";
+                echo "<span>" . $row['SucChua'] . "</span><br>";
+                echo "<i>Trạng thái phòng: </i>";
+                echo "<span>" . $row['TenTTP'] . "</span><br>";
+                $dsTB = "Không có thiết bị";
 
-                                if (!empty($row['ThietBi'])) {
-                                    $countTB = [];
+                if (!empty($row['ThietBi'])) {
+                    $countTB = [];
 
-                                    foreach ($row['ThietBi'] as $tb) {
-                                        $ten = $tb['TenThietBi'];
-                                        if (!isset($countTB[$ten])) {
-                                            $countTB[$ten] = 0;
-                                        }
-                                        $countTB[$ten]++;
-                                    }
+                    foreach ($row['ThietBi'] as $tb) {
+                        $ten = $tb['TenThietBi'];
+                        if (!isset($countTB[$ten])) {
+                            $countTB[$ten] = 0;
+                        }
+                        $countTB[$ten]++;
+                    }
 
-                                    $dsTB_arr = [];
-                                    foreach ($countTB as $ten => $sl) {
-                                        $dsTB_arr[] = $sl . " " . $ten;  // Ví dụ: "1 Máy tính"
-                                    }
+                    $dsTB_arr = [];
+                    foreach ($countTB as $ten => $sl) {
+                        $dsTB_arr[] = $sl . " " . $ten;  // Ví dụ: "1 Máy tính"
+                    }
 
-                                    $dsTB = implode(", ", $dsTB_arr);
-                                }
-
-                                echo "<i>Thiết bị:</i> <span>$dsTB</span>";
-
-                                echo "</td>";
-                            echo "</tr>";
-                        echo "</tbody>";
-                    echo "</table>";
+                    $dsTB = implode(", ", $dsTB_arr);
                 }
+
+                echo "<i>Thiết bị:</i> <span>$dsTB</span>";
+
+                echo "</td>";
+                echo "</tr>";
+                echo "</tbody>";
+                echo "</table>";
             }
-            echo "<div style='text-align:center; class='text-center mt-4'>
+        }
+        echo "<div style='text-align:center; class='text-center mt-4'>
                     <a class='back-btn' href='lab.php'>Quay lại</a>
                 </div>";
         ?>
