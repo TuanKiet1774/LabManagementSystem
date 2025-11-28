@@ -129,7 +129,9 @@
 
                 <div class="col-md-4">
                     <div class="p-4 text-center shadow rounded feature-card">
-                        <img src="./Image/icon_room.png" width="60" class="mb-3">
+                        <a href="./lab.php">
+                            <img src="./Image/icon_room.png" width="60" class="mb-3">
+                        </a>
                         <h5 class="fw-bold">Phòng máy</h5>
                         <p>Theo dõi tình trạng, số lượng máy, lịch sử hoạt động…</p>
                     </div>
@@ -137,7 +139,9 @@
 
                 <div class="col-md-4">
                     <div class="p-4 text-center shadow rounded feature-card">
-                        <img src="./Image/icon_device.png" width="60" class="mb-3">
+                        <a href="./device.php">
+                            <img src="./Image/icon_device.png" width="60" class="mb-3">
+                        </a>
                         <h5 class="fw-bold">Thiết bị</h5>
                         <p>Kiểm kê thiết bị, cấu hình chi tiết, trạng thái và bảo trì.</p>
                     </div>

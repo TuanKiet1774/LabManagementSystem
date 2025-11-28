@@ -73,9 +73,13 @@ INSERT INTO `chitietttpm` (`MaPhieu`, `MaTTPM`) VALUES
 ('PH002', 'TTPM002'),
 ('PH003', 'TTPM001'),
 ('PH004', 'TTPM002'),
+<<<<<<< HEAD
 ('PH005', 'TTPM001'),
 ('PH006', 'TTPM001'),
 ('PH007', 'TTPM001');
+=======
+('PH005', 'TTPM001');
+>>>>>>> ThanhBinh
 
 -- --------------------------------------------------------
 

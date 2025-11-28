@@ -1,37 +1,37 @@
 <?php
-    include_once('../Database/config.php');
-    include_once('./Controller/loginController.php');
-    include_once('./Controller/paginationController.php');
-    include_once('./Controller/labschedController.php'); 
-    
-    $conn = new mysqli($host, $user, $pass, $db);
-    if ($conn->connect_error) die("Lỗi kết nối: " . $conn->connect_error);
+include_once('../Database/config.php');
+include_once('./Controller/loginController.php');
+include_once('./Controller/paginationController.php');
+include_once('./Controller/labschedController.php');
 
-    $user = checkLogin();
+$conn = new mysqli($host, $user, $pass, $db);
+if ($conn->connect_error) die("Lỗi kết nối: " . $conn->connect_error);
 
-    $data = get_schedule_data($conn); 
-    extract($data);
-    
-    $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-        
-    $pagination_result = paginate_rooms($all_rooms, $page); 
-    
-    $rooms_to_display_paginated = $pagination_result['rooms_to_display'];
-    $maxPage = $pagination_result['maxPage'];
-    $currentPage = $pagination_result['currentPage'];
-    $lessons_map = array_column($lessons, 'TenTiet', 'MaTiet');
-    
-    $timetable_data = get_full_busy_schedule_data(
-        $conn,
-        $selected_year,
-        $selected_week,
-        $selected_group,
-        $selected_room,
-        $lessons_map,
-        $rooms_to_display_paginated
-    );   
+$user = checkLogin();
 
-    $conn->close();    
+$data = get_schedule_data($conn);
+extract($data);
+
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+
+$pagination_result = paginate_rooms($all_rooms, $page);
+
+$rooms_to_display_paginated = $pagination_result['rooms_to_display'];
+$maxPage = $pagination_result['maxPage'];
+$currentPage = $pagination_result['currentPage'];
+$lessons_map = array_column($lessons, 'TenTiet', 'MaTiet');
+
+$timetable_data = get_full_busy_schedule_data(
+    $conn,
+    $selected_year,
+    $selected_week,
+    $selected_group,
+    $selected_room,
+    $lessons_map,
+    $rooms_to_display_paginated
+);
+
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -42,7 +42,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <link rel="icon" href="./Image/Logo.png" type="image/png">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.2.0/css/all.css" />
-    <title>Lịch Phòng Máy</title>    
+    <title>Lịch Phòng Máy</title>
 </head>
 
 <style>
@@ -378,6 +378,10 @@
 
                             <button type="submit" name="action" value="view" class="btn btn-primary">Xem Lịch</button>
 
+                            <a href="./lab_booking.php?phong=<?php echo isset($selected_room) ? $selected_room : "" ?>" class="btn btn-success">
+                                Mượn Phòng
+                            </a>
+
                             <a href="?week=<?php echo $prev_week_info['week']; ?>&year=<?php echo $prev_week_info['year']; ?>&nhomphong=<?php echo $selected_group; ?>&phong=<?php echo $selected_room; ?>" class="btn btn-secondary">
                                 ← Tuần Trước
                             </a>
@@ -414,7 +418,7 @@
                     </div>
 
                     <?php
-                    $rooms_to_display = $rooms_to_display_paginated;                 
+                    $rooms_to_display = $rooms_to_display_paginated;
 
                     if (empty($rooms_to_display)):
                     ?>
@@ -525,21 +529,21 @@
                         <div class="text-center my-4">
                             <nav aria-label="Room Page navigation">
                                 <ul class="pagination justify-content-center">
-                                    
+
                                     <?php if ($currentPage > 1): ?>
                                         <li class="page-item">
-                                            <a class="page-link" 
-                                            href="?page=<?php echo $currentPage - 1; ?>&year=<?php echo $selected_year; ?>&week=<?php echo $selected_week; ?>&nhomphong=<?php echo $selected_group; ?>&phong=<?php echo $selected_room; ?>&action=view" 
-                                            aria-label="Previous">
-                                                <span aria-hidden="true">←</span> 
+                                            <a class="page-link"
+                                                href="?page=<?php echo $currentPage - 1; ?>&year=<?php echo $selected_year; ?>&week=<?php echo $selected_week; ?>&nhomphong=<?php echo $selected_group; ?>&phong=<?php echo $selected_room; ?>&action=view"
+                                                aria-label="Previous">
+                                                <span aria-hidden="true">←</span>
                                             </a>
                                         </li>
                                     <?php endif; ?>
-                                    
+
                                     <?php for ($i = 1; $i <= $maxPage; $i++): ?>
                                         <li class="page-item <?php echo ($i == $currentPage) ? 'active' : ''; ?>">
-                                            <a class="page-link" 
-                                            href="?page=<?php echo $i; ?>&year=<?php echo $selected_year; ?>&week=<?php echo $selected_week; ?>&nhomphong=<?php echo $selected_group; ?>&phong=<?php echo $selected_room; ?>&action=view">
+                                            <a class="page-link"
+                                                href="?page=<?php echo $i; ?>&year=<?php echo $selected_year; ?>&week=<?php echo $selected_week; ?>&nhomphong=<?php echo $selected_group; ?>&phong=<?php echo $selected_room; ?>&action=view">
                                                 <?php echo $i; ?>
                                             </a>
                                         </li>
@@ -547,14 +551,14 @@
 
                                     <?php if ($currentPage < $maxPage): ?>
                                         <li class="page-item">
-                                            <a class="page-link" 
-                                            href="?page=<?php echo $currentPage + 1; ?>&year=<?php echo $selected_year; ?>&week=<?php echo $selected_week; ?>&nhomphong=<?php echo $selected_group; ?>&phong=<?php echo $selected_room; ?>&action=view" 
-                                            aria-label="Next">
+                                            <a class="page-link"
+                                                href="?page=<?php echo $currentPage + 1; ?>&year=<?php echo $selected_year; ?>&week=<?php echo $selected_week; ?>&nhomphong=<?php echo $selected_group; ?>&phong=<?php echo $selected_room; ?>&action=view"
+                                                aria-label="Next">
                                                 <span aria-hidden="true">→</span>
                                             </a>
                                         </li>
                                     <?php endif; ?>
-            
+
                                 </ul>
                             </nav>
                         </div>
@@ -562,7 +566,7 @@
                 </div>
             </div>
         </div>
-    </main>    
+    </main>
 
     <?php include './footer.php'; ?>
 

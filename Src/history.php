@@ -160,6 +160,7 @@
                 <tr align="center">
                     <th>Mã phiếu</th>
                     <th>Người dùng</th>
+                    <th>Phòng</th>
                     <th>Mục đích</th>
                     <th class="d-none d-md-table-cell">Bắt đầu</th>
                     <th class="d-none d-md-table-cell">Kết thúc</th>
@@ -174,6 +175,7 @@
                     echo "<tr>";
                     echo "<td align='center'>" . $col['MaPhieu'] . "</td>";
                     echo "<td align='center'>" . $col['Ho'] . " " . $col['Ten'] . "</td>";
+                    echo "<td>" . $col['TenPhong'] . "</td>";
                     echo "<td>" . $col['MucDich'] . "</td>";
                     echo "<td class='d-none d-md-table-cell' align='center'>" . date("d/m/Y", strtotime($col['NgayBD'])) . "</td>";
                     echo "<td class='d-none d-md-table-cell' align='center'>" . date("d/m/Y", strtotime($col['NgayKT'])) . "</td>";

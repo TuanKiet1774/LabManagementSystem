@@ -91,20 +91,27 @@
 
     if (isset($_POST['btnSave'])) {
         $mattpm = $_POST['mattpm'];
-        editHistory($con, $col1['MaPhieu'], $mattpm);
-        $trangthai = ($mattpm == "TTPM002") ? "Đã duyệt" : "Không chấp nhận";
+        if (editHistory($con, $col1['MaPhieu'], $mattpm)) {
+            $trangthai = ($mattpm == "TTPM002") ? "Đã duyệt" : "Không chấp nhận";
 
-        sendMailNotification(
-            $_SESSION['Email'],
-            $col1['Email'],
-            $col1['TenPhong'],
-            $col1['MaPhieu'],
-            $col1['MucDich'],
-            $trangthai
-        );
-
-        header("Location: history.php");
-        exit();
+            sendMailNotification(
+                $_SESSION['Email'],
+                $col1['Email'],
+                $col1['TenPhong'],
+                $col1['MaPhieu'],
+                $col1['MucDich'],
+                $trangthai
+            );
+            echo "<script>
+            alert('Cập nhật thành công!');
+            window.location.href = 'history.php';
+          </script>";;
+            exit();
+        } else {
+            echo "<script>
+            alert('Lỗi cập nhật: " . mysqli_error($con) . "');
+          </script>";
+        }
     }
 
 

@@ -75,33 +75,43 @@
                                 Lịch phòng
                             </a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                <i class="fa-solid fa-book"></i>
-                                Quản lý
+                        <?php if (isset($_SESSION['MaVT']) && $_SESSION['MaVT'] !== 'QTV'): ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./lab.php">
+                                <i class="fa-solid fa-house-laptop"></i>
+                                Phòng máy
                             </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa-solid fa-house-laptop"></i>
-                                        Phòng máy
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa-solid fa-computer"></i>
-                                        Thiết bị
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="./history.php">
-                                        <i class="fa-solid fa-clock-rotate-left"></i>
-                                        Lịch sử
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
+                        <?php endif; ?>
+                        <?php if (isset($_SESSION['MaVT']) && $_SESSION['MaVT'] === 'QTV'): ?>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <i class="fa-solid fa-book"></i>
+                                    Quản lý
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" href="./lab.php">
+                                            <i class="fa-solid fa-house-laptop"></i>
+                                            Phòng máy
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="./device.php">
+                                            <i class="fa-solid fa-computer"></i>
+                                            Thiết bị
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="./history.php">
+                                            <i class="fa-solid fa-clock-rotate-left"></i>
+                                            Lịch sử
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        <?php endif; ?>
                         <?php if (isset($_SESSION['MaVT']) && $_SESSION['MaVT'] === 'QTV'): ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="./statistic.php">
@@ -133,12 +143,14 @@
                                 </span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa-solid fa-window-restore"></i>
-                                        Phòng mượn
-                                    </a>
-                                </li>
+                                <?php if (isset($_SESSION['MaVT']) && $_SESSION['MaVT'] !== 'QTV'): ?>
+                                    <li>
+                                        <a class="dropdown-item" href="./history.php">
+                                            <i class="fa-solid fa-window-restore"></i>
+                                            Phòng mượn
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
                                 <li>
                                     <a class="dropdown-item" href="./profile.php">
                                         <i class="fa-solid fa-address-card"></i>

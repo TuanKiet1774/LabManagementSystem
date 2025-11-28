@@ -4,8 +4,10 @@ function infoHistory($search, $user)
 {
     $sql = "SELECT pm.MaPhieu, pm.MucDich, pm.NgayBD, pm.NgayKT, pm.NgayTao,
                     ttpm.MaTTPM, ttpm.TenTTPM,
-                    nd.Ho, nd.Ten
+                    nd.Ho, nd.Ten,
+                    p.TenPhong
             FROM phieumuon pm
+            INNER JOIN phong p ON pm.MaPhong = p.MaPhong
             INNER JOIN chitietttpm ctpm ON pm.MaPhieu = ctpm.MaPhieu
             INNER JOIN trangthaiphieumuon ttpm ON ctpm.MaTTPM = ttpm.MaTTPM
             INNER JOIN nguoidung nd ON pm.MaND = nd.MaND";
@@ -62,21 +64,20 @@ function editHistory($con, $maphieu, $mattpm)
     $sql = "UPDATE chitietttpm 
             SET MaTTPM = '$mattpm' 
             WHERE MaPhieu = '$maphieu'";
-    mysqli_query($con, $sql);
+    $ok = mysqli_query($con, $sql);
+    return $ok;
 }
 
 ### Delete
 function deleteHistory($con, $maphieu)
 {
-    $sqlDeleteTG = "DELETE FROM thoigianmuon WHERE MaPhieu = '$maphieu'";
-    mysqli_query($con, $sqlDeleteTG);
+    $ok1 = mysqli_query($con, "DELETE FROM thoigianmuon WHERE MaPhieu = '$maphieu'");
+    $ok2 = mysqli_query($con, "DELETE FROM chitietttpm WHERE MaPhieu = '$maphieu'");
+    $ok3 = mysqli_query($con, "DELETE FROM phieumuon WHERE MaPhieu = '$maphieu'");
 
-    $sqlDeleteCTTPM = "DELETE FROM chitietttpm WHERE MaPhieu = '$maphieu'";
-    mysqli_query($con, $sqlDeleteCTTPM);
-
-    $sqlDeletePM = "DELETE FROM phieumuon WHERE MaPhieu = '$maphieu'";
-    mysqli_query($con, $sqlDeletePM);
+    return $ok1 && $ok2 && $ok3;
 }
+
 
 ### Send Email on Edit
 

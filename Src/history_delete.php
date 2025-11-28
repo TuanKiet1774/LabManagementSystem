@@ -83,8 +83,18 @@
     $col1 = mysqli_fetch_assoc($db1);
     $col2 = mysqli_fetch_assoc($db2);
     if (isset($_GET['btnDelete'])) {
-        deleteHistory($con, $maphieu);
+        if (deleteHistory($con, $maphieu)) {
+            echo "<script>
+                alert('Xoá phiếu mượn thành công!');
+                window.location.href = 'history.php';
+              </script>";
+        } else {
+            echo "<script>alert('Không thể xoá phiếu!');</script>";
+        }
+        exit();
     }
+
+
     ?>
     <?php include './header.php'; ?>
     <main>
@@ -166,8 +176,12 @@
 
                     <div class="row mt-4 pt-3 border-top">
                         <form method="GET" class="col-12 text-center">
+                            <input type="hidden" name="maphieu" value="<?php echo $maphieu; ?>">
+
                             <a href="javascript:window.history.back();" class="btnBack btn ms-2 me-2">Quay lại</a>
-                            <a href="#" id="btnDelete" class="btnDelete btn ms-2 me-2">Xác nhận</a>
+                            <button type="submit" name="btnDelete" class="btnDelete btn ms-2 me-2">
+                                Xác nhận
+                            </button>
                         </form>
                     </div>
 
