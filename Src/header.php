@@ -83,6 +83,14 @@
                             </a>
                         </li>
                         <?php endif; ?>
+                        <?php if (isset($_SESSION['MaVT']) && $_SESSION['MaVT'] !== 'QTV'): ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./device.php">
+                                <i class="fa-solid fa-computer"></i>
+                                Thiết bị
+                            </a>
+                        </li>
+                        <?php endif; ?>
                         <?php if (isset($_SESSION['MaVT']) && $_SESSION['MaVT'] === 'QTV'): ?>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"

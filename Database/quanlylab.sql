@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 26, 2025 at 02:21 AM
+-- Generation Time: Nov 28, 2025 at 04:47 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -69,17 +69,12 @@ CREATE TABLE `chitietttpm` (
 --
 
 INSERT INTO `chitietttpm` (`MaPhieu`, `MaTTPM`) VALUES
-('PH001', 'TTPM001'),
+('PH001', 'TTPM002'),
 ('PH002', 'TTPM002'),
 ('PH003', 'TTPM001'),
 ('PH004', 'TTPM002'),
-<<<<<<< HEAD
 ('PH005', 'TTPM001'),
-('PH006', 'TTPM001'),
-('PH007', 'TTPM001');
-=======
-('PH005', 'TTPM001');
->>>>>>> ThanhBinh
+('PH006', 'TTPM001');
 
 -- --------------------------------------------------------
 
@@ -213,19 +208,19 @@ CREATE TABLE `nguoidung` (
 --
 
 INSERT INTO `nguoidung` (`MaND`, `MaVT`, `Ho`, `Ten`, `Email`, `MatKhau`, `Anh`, `Sdt`, `NgaySinh`, `GioiTinh`, `DiaChi`, `MaKhoa`, `Lop`, `NgayTao`) VALUES
-('ND001', 'GV', 'Nguyễn', 'Hiếu', 'hieu@ntu.edu.vn', '$2y$10$N/IBmFfak52udQo86yT1jOAGwikJyJfvDjnqf4ZGDNHocM39TTAoG', 'hieu.jpg', '0985904921', '1990-05-10', 1, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
+('ND001', 'GV', 'Nguyễn', 'Hiếu', 'hieu@ntu.edu.vn', '$2y$10$N/IBmFfak52udQo86yT1jOAGwikJyJfvDjnqf4ZGDNHocM39TTAoG', 'hieu.jpg', '0985904921', '1990-05-10', 1, 'Nha Trang', 'CNTT', '', '2025-11-14 08:03:10'),
 ('ND002', 'GV', 'Phạm ', 'Thị Thu Thuý', 'thuthuypt@ntu.edu.vn', '$2y$10$P9QqlwHjNtiBWUMY0QGEIOfeQtSk6r2OcCt8b00K/3QZ9g3VjUVuq', 'thuy.jpg', '0997256141', '1981-11-12', 0, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
 ('ND003', 'GV', 'Bùi', 'Chí Thành', 'thanhbuic@ntu.edu.vn', '$2y$10$TH5tHCkus8Bwb5W6efXUUOyicU.0zN5XbCPpzw8chG4UJf78mPOgm', 'thanh.jpg', '0836825785', '1983-08-22', 1, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
 ('ND004', 'GV', 'Nguyễn', 'Hải Triều', 'trieu.nh.@ntu.edu.vn', '$2y$10$CBFlipyDSHLsEnMm4PCCxe2jEaV.3HK8DsiftGGtuoz1xFjoRXoqm', 'trieu.jpg', '0992682518', '1995-03-09', 1, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
 ('ND005', 'GV', 'Nguyễn', 'Đình Hưng', 'ndhung@ntu.edu.vn', '$2y$10$oqd8N.G3Tf6JyfBmcqrcpe3qH.EYGmQ28P0hCrpRjlyamgCv6Z4vO', 'hung.jpg', '0987656787', '1980-10-10', 1, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
 ('ND006', 'GV', 'Nguyễn', 'Thị Hương Lý', 'lyngth@ntu.edu.vn', '$2y$10$au.04JDfwkrAWLBryaDGJusR4AnKJL06j7lTekVUsoRSMYJ9cDdx2', 'ly.jpg', '0987789789', '1987-12-01', 0, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
 ('ND007', 'GV', 'Phạm', 'Thị Kim Ngoan', 'ptkngoan@ntu.edu.vn', '$2y$10$Pb6oQqEWXcQaTTjRnypvpu2Qnu29W9j8/2cjUUUeMpw4vVrhQqXmC', 'ngoan.jpg', '0898531219', '1985-09-04', 0, 'Nha Trang', 'CNTT', NULL, '2025-11-14 08:03:10'),
-('ND008', 'SV', 'Phạm', 'Tuấn Kiệt', 'kiet.pt.64cntt@ntu.edu.vn', '$2y$10$hcUR9f0ARPBC1gGlINwekuHjVNTy7WjgRw2fjRmhqV89CI8JHNXqG', 'kiet.jpg', '0987654671', '2004-07-17', 1, 'Diên Khánh', 'CNTT', '64.CNTT-1', '2025-11-14 08:03:10'),
-('ND009', 'SV', 'Cao', 'Linh Hà', 'ha.cl.64cntt@ntu.edu.vn', '$2y$10$HANCTWaf9XLH5mTSSAnkCe5YVHfEQRF21itAfULOcMjSAeXMZVSdO', 'ha.jpg', '0828635809', '2004-12-17', 0, 'Ninh Hoà', 'CNTT', '64.CNTT-2', '2025-11-14 08:03:10'),
+('ND008', 'SV', 'Phạm', 'Tuấn Kiệt', 'kiet.pt.64cntt@ntu.edu.vn', '$2y$10$OY4gSxRIqKILH1BGYeVWgON4m0vhUsDu2r2SyKUlUjnRAgyaagerm', 'kiet.jpg', '0987654671', '2004-07-17', 1, 'Diên Khánh', 'CNTT', '64.CNTT-1', '2025-11-14 08:03:10'),
+('ND009', 'SV', 'Cao', 'Linh Hà', 'ha.cl.64cntt@ntu.edu.vn', '$2y$10$gDoDwFss9Sy7iMofTss.I.jWQhyNvmG/KtziM50NeUhZtJu87b61y', 'ha.jpg', '0828635809', '2004-12-17', 0, 'Ninh Hoà', 'CNTT', '64.CNTT-2', '2025-11-14 08:03:10'),
 ('ND010', 'SV', 'Huỳnh', 'Minh Bảo', 'bao.hm.64nna@ntu.edu.vn', '$2y$10$Wf7K9D0WfQF5hJuJyp3hkuVcB2lrHCW2NyaaAjiSK27fGfQcdUtoC', 'bao.jpg', '0987654653', '2000-06-30', 1, 'DienKhanh', 'NN', '64.NNA-1', '2025-11-14 08:03:10'),
 ('ND011', 'SV', 'Nguyễn ', 'Hồ Thanh Bình', 'binh.nht.64cntt@ntu.edu.vn', '$2y$10$qzT5WWBcn5xCgILMkyGLA.1dSF233IpYsJpOWruNOlNIsny8D.pJe', 'binh.jpg', '0987654453', '2004-04-02', 0, 'Ninh Hoà', 'NTTS', '64.NTTS-2', '2025-11-14 08:03:10'),
 ('ND012', 'SV', 'Nguyễn ', 'Hiểu Quyên', 'quyen.nh.64cntt@ntu.edu.vn', '$2y$10$FwNYMIOibKKTGVPAJS1EiOCl/Lu0OTBEfy3MvR/rjU11DtNViriCu', 'quyen.jpg', '0828635784', '2004-10-17', 0, 'Diên Sơn', 'CNTP', '64.CNTP-3', '2025-11-14 08:03:10'),
-('ND013', 'SV', 'Phùng', 'Mai Linh', 'Linh.pm.cntt@gmail.com', '$2y$10$YtpMEJeY.YAarZfmYLKV7uAkQ3EQuvK.5a0s1GhZNS4/9ZWiXh1mq', 'female.jpg', '0123456789', '2004-01-12', 0, 'Hà Nội', 'CNTT', '', '2025-11-16 11:27:04'),
+('ND013', 'SV', 'Phùng', 'Mai Linh', 'Linh.pm.cntt@gmail.com', '$2y$10$8gBYmXTiPGQRbivfxz/T6eUNx3BVTmubvaLL4NL7nV7XOnvgh2qtG', 'linh.jpg', '0992682518', '2004-01-12', 0, 'Hà Nội', 'CNTT', '', '2025-11-28 19:27:14'),
 ('ND014', 'QTV', 'Phạm', 'Tuấn', 'kelvinkai6804@gmail.com', '$2y$10$bmtMlNvG2Aw24hM13GWGEeBO1Ci/.5qNm3qoOivUTyNMKDRwMloyC', 'male.jpg', '0123456789', '2004-07-07', 1, 'Nha Trang', 'CNTT', '', '2025-11-26 03:18:31');
 
 -- --------------------------------------------------------
@@ -274,8 +269,7 @@ INSERT INTO `phieumuon` (`MaPhieu`, `MaPhong`, `MaND`, `MucDich`, `NgayBD`, `Nga
 ('PH003', 'P008', 'ND002', 'Thực hành hệ quản trị cơ sở dữ liệu', '2025-11-15', '2025-12-26', '2025-11-14 08:33:38'),
 ('PH004', 'P002', 'ND006', 'Thực hành thiết kế giao diện Web', '2025-11-15', '2025-12-26', '2025-11-14 08:33:38'),
 ('PH005', 'P004', 'ND005', 'Thực hành lập trình hướng đối tượng', '2025-11-15', '2025-12-26', '2025-11-14 08:33:38'),
-('PH006', 'P011', 'ND008', 'Sinh hoạt câu lạc bộ Tin Học', '2025-11-30', '2025-11-30', '2025-11-26 08:19:53'),
-('PH007', 'P009', 'ND011', 'Sinh nhật Đội tình nguyện khoa công nghệ thông tin', '2025-12-10', '2025-12-10', '2025-11-26 08:19:53');
+('PH006', 'P011', 'ND008', 'Sinh hoạt câu lạc bộ Tin Học', '2025-11-01', '2025-11-30', '2025-11-26 08:19:53');
 
 -- --------------------------------------------------------
 
@@ -295,7 +289,7 @@ CREATE TABLE `phong` (
 --
 
 INSERT INTO `phong` (`MaPhong`, `TenPhong`, `MaNhom`, `SucChua`) VALUES
-('P001', 'NĐN.201', 'NDN', 27),
+('P001', 'NĐN.201', 'NDN', 28),
 ('P002', 'NĐN.204', 'NDN', 28),
 ('P003', 'NĐN.205', 'NDN', 28),
 ('P004', 'NĐN.206', 'NDN', 29),
@@ -328,7 +322,7 @@ CREATE TABLE `thietbi` (
 --
 
 INSERT INTO `thietbi` (`MaThietBi`, `TenThietBi`, `MaLoai`) VALUES
-('BAN001', 'Bàn ', 'BAN'),
+('BAN001', 'Bàn', 'BAN'),
 ('BP001', 'Bán phím', 'BP'),
 ('CH001', 'Chuột có dây', 'CH'),
 ('DC001', 'Dây cáp', 'DC'),
@@ -392,7 +386,10 @@ INSERT INTO `thoigianmuon` (`MaTGM`, `MaPhieu`, `MaTiet`, `MaTTT`, `MaNgay`) VAL
 (12, 'PH003', 'T007', 'TUANXS', 'THUNAM'),
 (13, 'PH003', 'T008', 'TUANXS', 'THUNAM'),
 (14, 'PH003', 'T009', 'TUANXS', 'THUNAM'),
-(15, 'PH003', 'T010', 'TUANXS', 'THUNAM');
+(15, 'PH003', 'T010', 'TUANXS', 'THUNAM'),
+(16, 'PH006', 'T011', 'TUANCHAN', 'CHUNHAT'),
+(17, 'PH006', 'T012', 'TUANCHAN', 'CHUNHAT'),
+(18, 'PH006', 'T013', 'TUANCHAN', 'CHUNHAT');
 
 -- --------------------------------------------------------
 
@@ -413,17 +410,17 @@ CREATE TABLE `tiethoc` (
 
 INSERT INTO `tiethoc` (`MaTiet`, `TenTiet`, `GioBG`, `GioKT`) VALUES
 ('T001', 'Tiết 1', '07:00:00', '07:50:00'),
-('T002', 'Tiết 2', '07:55:00', '08:45:00'),
+('T002', 'Tiết 2', '07:50:00', '08:40:00'),
 ('T003', 'Tiết 3', '08:50:00', '09:40:00'),
 ('T004', 'Tiết 4', '09:50:00', '10:40:00'),
-('T005', 'Tiết 5', '10:45:00', '11:35:00'),
+('T005', 'Tiết 5', '10:40:00', '11:30:00'),
 ('T006', 'Tiết 6', '13:00:00', '13:50:00'),
-('T007', 'Tiết 7', '13:55:00', '14:45:00'),
+('T007', 'Tiết 7', '13:50:00', '14:40:00'),
 ('T008', 'Tiết 8', '14:50:00', '15:40:00'),
 ('T009', 'Tiết 9', '15:50:00', '16:40:00'),
-('T010', 'Tiết 10', '16:45:00', '17:35:00'),
-('T011', 'Tiết 11', '18:30:00', '19:15:00'),
-('T012', 'Tiết 12', '19:20:00', '20:15:00'),
+('T010', 'Tiết 10', '16:40:00', '17:30:00'),
+('T011', 'Tiết 11', '18:30:00', '19:20:00'),
+('T012', 'Tiết 12', '19:20:00', '20:10:00'),
 ('T013', 'Tiết 13', '20:20:00', '21:10:00');
 
 -- --------------------------------------------------------
@@ -667,7 +664,7 @@ ALTER TABLE `vaitro`
 -- AUTO_INCREMENT for table `thoigianmuon`
 --
 ALTER TABLE `thoigianmuon`
-  MODIFY `MaTGM` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `MaTGM` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- Constraints for dumped tables

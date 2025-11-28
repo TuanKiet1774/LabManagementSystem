@@ -147,8 +147,7 @@ $vaiTro = $user['MaVT'] ?? '';
         color: white;
     }
 
-    /* Responsive pagination */
-    .pagination-wrapper {
+    .pagination {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
@@ -156,8 +155,8 @@ $vaiTro = $user['MaVT'] ?? '';
         margin-top: 20px;
     }
 
-    .pagination-wrapper a,
-    .pagination-wrapper span {
+    .pagination a,
+    .pagination span {
         padding: 8px 12px;
         background: #e0e7ff;
         color: #4338ca;
@@ -168,7 +167,7 @@ $vaiTro = $user['MaVT'] ?? '';
         text-decoration: none;
     }
 
-    .pagination-wrapper .current {
+    .pagination .current {
         background: #6366f1;
         color: white;
     }
@@ -284,7 +283,7 @@ $vaiTro = $user['MaVT'] ?? '';
                 echo "</div>"; // table-responsive
 
                 // Pagination
-                echo '<div class="pagination-wrapper">';
+                echo '<div class="pagination">';
                 // Nút Prev
                 if ($_GET['page'] > 1) {
                     echo "<a href='?page=" . ($_GET['page'] - 1) . "&keyword=" . ($keyword) . "'>«</a>";

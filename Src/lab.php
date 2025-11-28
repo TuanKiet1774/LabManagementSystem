@@ -153,13 +153,14 @@ $vaiTro = $user['MaVT'] ?? '';
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-wrap: wrap;
+        gap: 5px;
     }
 
     .pagination a,
     .pagination span {
         display: inline-block;
         padding: 8px 12px;
-        margin: 2px;
         text-decoration: none;
         background: #e0e7ff;
         color: #4338ca;
@@ -173,31 +174,6 @@ $vaiTro = $user['MaVT'] ?? '';
     }
 
     .pagination .current {
-        background: #6366f1;
-        color: white;
-    }
-
-    .pagination-wrapper {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 5px;
-        margin-top: 20px;
-    }
-
-    .pagination-wrapper a,
-    .pagination-wrapper span {
-        padding: 8px 12px;
-        background: #e0e7ff;
-        color: #4338ca;
-        border-radius: 6px;
-        min-width: 35px;
-        display: inline-block;
-        text-align: center;
-        text-decoration: none;
-    }
-
-    .pagination-wrapper .current {
         background: #6366f1;
         color: white;
     }

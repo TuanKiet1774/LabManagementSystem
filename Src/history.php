@@ -121,6 +121,11 @@
         background-color: white;
         color: orange;
     }
+
+    .pagination {
+        flex-wrap: wrap;
+        gap: 5px;
+    }
 </style>
 
 <body>
@@ -166,9 +171,7 @@
                     <th class="d-none d-md-table-cell">Kết thúc</th>
                     <th class="d-none d-md-table-cell">Thời gian tạo</th>
                     <th class="d-none d-md-table-cell">Trạng thái</th>
-                    <?php if ($user['MaVT'] == 'QTV'): ?>
-                        <th>Chức năng</th>
-                    <?php endif; ?>
+                    <th>Chức năng</th>
                 </tr>
                 <?php
                 while ($col = mysqli_fetch_assoc($db)) {
@@ -181,9 +184,10 @@
                     echo "<td class='d-none d-md-table-cell' align='center'>" . date("d/m/Y", strtotime($col['NgayKT'])) . "</td>";
                     echo "<td class='d-none d-md-table-cell' align='center'>" . date("d/m/Y H:i", strtotime($col['NgayTao'])) . "</td>";
                     echo "<td class='d-none d-md-table-cell' align='center'>" . $col['TenTTPM'] . "</td>";
+                    echo "<td align='center'>";
+                    echo "<a class='detail' href='history_detail.php?maphieu=" . $col['MaPhieu'] . "'>Xem</a><br class='d-md-none'>";
                     if ($user['MaVT'] === 'QTV') {
-                        echo "<td align='center'>";
-                        echo "<a class='detail' href='history_detail.php?maphieu=" . $col['MaPhieu'] . "'>Xem</a><br class='d-md-none'>";
+
 
                         if ($col['MaTTPM'] == "TTPM001") {
                             echo "<a class='edit' href='history_edit.php?maphieu=" . $col['MaPhieu'] . "'>Sửa</a>";
@@ -193,9 +197,8 @@
 
                         echo "<br class='d-md-none'>";
                         echo "<a class='delete' href='history_delete.php?maphieu=" . $col['MaPhieu'] . "'>Xóa</a>";
-                        echo "</td>";
                     }
-
+                    echo "</td>";
                     echo "</tr>";
                 }
                 ?>
