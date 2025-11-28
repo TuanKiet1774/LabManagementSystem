@@ -144,12 +144,14 @@ if ($vaiTro !== 'QTV') {
     if (isset($_POST['confirm_delete'])) {
         $ok = labDeleteConfirm($con, $maPhong);
         if ($ok) {
-            echo "<p style='text-align:center; color:green;'>Xóa phòng thành công!</p>";
-            echo "<div style='text-align:center; margin-top:20px;'>
-                            <a class='btn btn-cancel' href='phongmay.php' style='color: white;'>Quay lại danh sách</a>
-                        </div>";
+            echo "<script>
+            alert('Xoá phòng thành công!');
+            window.location.href = 'lab.php';
+          </script>";
         } else {
-            echo "<p style='text-align:center; color:red;'>Lỗi khi xóa: " . mysqli_error($con) . "</p>";
+            echo "<script>
+            alert('Lỗi cập nhật: " . mysqli_error($con) . "');
+          </script>";
         }
     }
     ?>

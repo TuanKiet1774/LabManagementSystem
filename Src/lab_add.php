@@ -137,9 +137,14 @@ if ($vaiTro !== 'QTV') {
 
         $result = labAdd($con, $tenPhong, $sucChua, $maNhom, $maTTP);
         if ($result['success']) {
-            echo "<p style='text-align:center; color:green;'>Thêm phòng thành công!</p>";
+            echo "<script>
+            alert('thêm phòng thành công!');
+            window.location.href = 'lab.php';
+          </script>";
         } else {
-            echo "<p style='text-align:center; color:red;'>Lỗi: " . mysqli_error($con) . "</p>";
+            echo "<script>
+            alert('Lỗi cập nhật: " . mysqli_error($con) . "');
+          </script>";
         }
     }
     ?>

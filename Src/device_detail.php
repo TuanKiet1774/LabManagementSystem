@@ -50,7 +50,6 @@ $user = checkLogin();
         border: 1px solid #eee;
         vertical-align: top;
         font-size: 16px;
-        color: #333;
     }
 
     .img-cell {
@@ -79,8 +78,6 @@ $user = checkLogin();
     }
 
     span {
-        color: #333;
-        font-size: 17px;
         margin-left: 5px;
     }
 

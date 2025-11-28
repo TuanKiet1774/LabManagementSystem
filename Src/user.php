@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Lịch sử phiểu mượn</title>
+    <title>Danh sách người dùng</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
@@ -107,19 +107,36 @@
         width: 100%;
     }
 
-    .btnSearch {
-        width: 50%;
+    .btnSearch,
+    .btnAdd {
         color: white;
         padding: 5px;
         border-radius: 10px;
         border: none;
         text-decoration: none;
+    }
+
+    .btnSearch {
+        width: 60%;
         background-color: orange;
+    }
+
+    .btnAdd {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 50%;
+        background-color: green;
     }
 
     .btnSearch:hover {
         background-color: white;
         color: orange;
+    }
+
+    .btnAdd:hover {
+        background-color: white;
+        color: green;
     }
 </style>
 
@@ -128,13 +145,13 @@
     include_once('../Database/config.php');
     include_once('./Controller/controller.php');
     include_once('./Controller/loginController.php');
-    include_once('./Controller/historyController.php');
+    include_once('./Controller/userController.php');
 
     $user = checkLogin();
 
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
     $search = isset($_GET['search']) ? mysqli_real_escape_string($con, $_GET['search']) : '';
-    $sql = infoHistory($search, $user);
+    $sql = infoUser($search);
     $pagination = pagination($con, 10, $sql, $page);
     $db = $pagination['data'];
     $maxPage = $pagination['maxPage'];
@@ -145,57 +162,47 @@
         <div class="container-fluid">
             <form method="GET" class="search-box mb-3">
                 <h3 class="me-auto d-md-block d-none">
-                    <b>Lịch sử phiếu mượn</b>
+                    <b>Danh sách người dùng</b>
                 </h3>
                 <div class="d-flex justify-content-between">
-                    <input type="text" name="search" placeholder="Mục đích, trạng thái, tên..." value="<?= isset($_GET['search']) ? $_GET['search'] : '' ?>">
+                    <input type="text" name="search" placeholder="Mã số, họ tên, vai trò,..." value="<?= isset($_GET['search']) ? $_GET['search'] : '' ?>">
                     <button type="submit" class="btnSearch ms-3">
                         Tìm kiếm
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
+                    <a href="./user_add.php" class="btnAdd ms-3">
+                        Thêm
+                        <i class="fa-solid fa-user-plus"></i>
+                    </a>
                 </div>
             </form>
 
             <table>
                 <tr align="center">
-                    <th>Mã phiếu</th>
-                    <th>Người dùng</th>
-                    <th>Phòng</th>
-                    <th>Mục đích</th>
-                    <th class="d-none d-md-table-cell">Bắt đầu</th>
-                    <th class="d-none d-md-table-cell">Kết thúc</th>
-                    <th class="d-none d-md-table-cell">Thời gian tạo</th>
-                    <th class="d-none d-md-table-cell">Trạng thái</th>
-                    <?php if ($user['MaVT'] == 'QTV'): ?>
-                        <th>Chức năng</th>
-                    <?php endif; ?>
+                    <th>Mã số</th>
+                    <th>Họ tên</th>
+                    <th class="d-none d-md-table-cell">Ngày sinh</th>
+                    <th class="d-none d-md-table-cell">Email</th>
+                    <th>Vai trò</th>
+                    <th>Chức năng</th>
                 </tr>
                 <?php
                 while ($col = mysqli_fetch_assoc($db)) {
                     echo "<tr>";
-                    echo "<td align='center'>" . $col['MaPhieu'] . "</td>";
+                    echo "<td align='center'>" . $col['MaND'] . "</td>";
                     echo "<td align='center'>" . $col['Ho'] . " " . $col['Ten'] . "</td>";
-                    echo "<td>" . $col['TenPhong'] . "</td>";
-                    echo "<td>" . $col['MucDich'] . "</td>";
-                    echo "<td class='d-none d-md-table-cell' align='center'>" . date("d/m/Y", strtotime($col['NgayBD'])) . "</td>";
-                    echo "<td class='d-none d-md-table-cell' align='center'>" . date("d/m/Y", strtotime($col['NgayKT'])) . "</td>";
-                    echo "<td class='d-none d-md-table-cell' align='center'>" . date("d/m/Y H:i", strtotime($col['NgayTao'])) . "</td>";
-                    echo "<td class='d-none d-md-table-cell' align='center'>" . $col['TenTTPM'] . "</td>";
+                    echo "<td class='d-none d-md-table-cell' align='center'>" . date("d/m/Y", strtotime($col['NgaySinh'])) . "</td>";
+                    echo "<td class='d-none d-md-table-cell' >" . $col['Email'] . "</td>";
+                    echo "<td align='center'>" . $col['TenVT'] . "</td>";
                     if ($user['MaVT'] === 'QTV') {
                         echo "<td align='center'>";
-                        echo "<a class='detail' href='history_detail.php?maphieu=" . $col['MaPhieu'] . "'>Xem</a><br class='d-md-none'>";
-
-                        if ($col['MaTTPM'] == "TTPM001") {
-                            echo "<a class='edit' href='history_edit.php?maphieu=" . $col['MaPhieu'] . "'>Sửa</a>";
-                        } else {
-                            echo "<a class='edit' href='#' onclick=\"alert('Phiếu này không được phép chỉnh sửa vì trạng thái không hợp lệ!'); return false;\" style='opacity:0.6; cursor:not-allowed;'>Sửa</a>";
-                        }
-
+                        echo "<a class='detail' href='user_detail.php?maND=" . $col['MaND'] . "'>Xem</a><br class='d-md-none'>";
                         echo "<br class='d-md-none'>";
-                        echo "<a class='delete' href='history_delete.php?maphieu=" . $col['MaPhieu'] . "'>Xóa</a>";
+                        echo "<a class='edit' href='user_edit.php?maND=" . $col['MaND'] . "'>Sửa</a>";
+                        echo "<br class='d-md-none'>";
+                        echo "<a class='delete' href='user_delete.php?maND=" . $col['MaND'] . "'>Xóa</a>";
                         echo "</td>";
                     }
-
                     echo "</tr>";
                 }
                 ?>

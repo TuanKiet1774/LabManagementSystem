@@ -139,7 +139,7 @@
                         <td><b>Trạng thái:</b></td>
                         <td>
                             <select name="mattpm" id="mattpm" required>
-                                <option value="" disabled>-- Chọn vai trò --</option>
+                                <option value="" disabled>-- Chọn trạng thái --</option>
                                 <option value="TTPM002" <?php echo isset($mattpm) && $mattpm == "TTPM002" ? "selected" : ""; ?>>Đã duyệt</option>
                                 <option value="TTPM003" <?php echo isset($mattpm) && $mattpm == "TTPM003" ? "selected" : ""; ?>>Không chấp nhận</option>
                             </select>

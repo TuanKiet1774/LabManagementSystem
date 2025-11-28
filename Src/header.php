@@ -104,6 +104,12 @@
                                         </a>
                                     </li>
                                     <li>
+                                        <a class="dropdown-item" href="./user.php">
+                                            <i class="fa-solid fa-user"></i>
+                                            Người dùng
+                                        </a>
+                                    </li>
+                                    <li>
                                         <a class="dropdown-item" href="./history.php">
                                             <i class="fa-solid fa-clock-rotate-left"></i>
                                             Lịch sử

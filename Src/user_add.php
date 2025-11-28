@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Đăng ký</title>
+    <title>Thêm người dùng</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
@@ -109,25 +109,20 @@
 </style>
 
 <body>
-    <div class="background"></div>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark w-100">
-            <div class="container-fluid">
-                <a class="navbar-brand fs-6 mt-1" href="#">
-                    <img src="./Image/Logo.png" class="logo-header" alt="Logo LAB MANAGEMENT">
-                    HỆ THỐNG QUẢN LÝ PHÒNG THỰC HÀNH
-                </a>
-            </div>
-        </nav>
-    </header>
+
     <main>
         <?php
         include_once('../Database/config.php');
         include_once('./Controller/signupController.php');
+        include_once('./Controller/loginController.php');
+        include_once('./Controller/statisticController.php');
+        $user = checkLogin();
         insertUser($con);
         ?>
+
+        <?php include './header.php'; ?>
         <div class="signup">
-            <h4 class="welcome text-center mb-4"><b>HÃY ĐĂNG KÝ ĐỂ SỬ DỤNG HỆ THỐNG</b></h4>
+            <h4 class="welcome text-center mb-4"><b>Thêm người dùng</b></h4>
             <form action="" method="post">
                 <!-- Họ và tên -->
                 <div class="row mb-3">
@@ -220,7 +215,7 @@
 
                 <!-- Nút -->
                 <div class="text-center">
-                    <a href="./login.php" class="btnBack me-3">Quay lại</a>
+                    <a href="./user.php" class="btnBack me-3">Quay lại</a>
                     <button type="submit" name="btnDK" class="btnDK">Đăng ký</button>
                 </div>
             </form>

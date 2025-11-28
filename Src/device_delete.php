@@ -110,6 +110,7 @@ if ($vaiTro !== 'QTV') {
         border-right: 4px solid #667eea;
     }
 </style>
+
 <body>
     <?php
     include("./header.php");
@@ -143,12 +144,14 @@ if ($vaiTro !== 'QTV') {
         $ok = deviceDeleteConfirm($con, $maThietBi);
 
         if ($ok) {
-            echo "<p style='text-align:center; color:green;'>Xóa thiết bị thành công!</p>";
-            echo "<div style='text-align:center; margin-top:20px;'>
-                        <a class='btn btn-cancel' href='device.php' style='color: white;'>Quay lại danh sách</a>
-                    </div>";
+            echo "<script>
+            alert('Xoá thiết bị thành công!');
+            window.location.href = 'device.php';
+          </script>";
         } else {
-            echo "<p style='text-align:center; color:red;'>Lỗi khi xóa: " . mysqli_error($con) . "</p>";
+            echo "<script>
+            alert('Lỗi cập nhật: " . mysqli_error($con) . "');
+          </script>";
         }
     }
     ?>

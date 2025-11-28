@@ -2,7 +2,7 @@
 <html lang="vi">
 
 <head>
-    <title>Chỉnh sửa thông tin cá nhân</title>
+    <title>Chỉnh sửa thông tin người dùng</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
@@ -55,43 +55,19 @@
 
 <body>
     <?php
+    include_once('../Database/config.php');
     include './Controller/loginController.php';
-    include './Controller/profileController.php';
+    include './Controller/userController.php';
     $user = checkLogin();
-    $maND = $_SESSION['MaND'];
-    $message = '';
-
-    // Lấy dữ liệu user
     $row = getUserInfo($con, $maND);
     $avatarPath = !empty($row['Anh']) ? './Image/' . $row['Anh'] : './Image/default_avatar.png';
 
     if (isset($_POST['btn-submit'])) {
-        $hoTen = $_POST['hoTen'];
-        $parts = explode(' ', $hoTen, 2);
-        $Ho = $parts[0] ?? '';
-        $Ten = $parts[1] ?? '';
-
-        $avatarFile = uploadAvatar($_FILES['avatar']) ?? $row['Anh'] ?? 'default_avatar.png';
-
-        $data = [
-            'Ho' => $Ho,
-            'Ten' => $Ten,
-            'Email' => $_POST['email'] ?? '',
-            'Sdt' => $_POST['sdt'] ?? '',
-            'GioiTinh' => $_POST['gioiTinh'] ?? '',
-            'NgaySinh' => $_POST['ngaySinh'] ?? '',
-            'DiaChi' => $_POST['diaChi'] ?? '',
-            'Anh' => $avatarFile,
-            'MaKhoa' => $_POST['khoa'] ?? '',
-            'Lop' => $_POST['lop'] ?? ''
-        ];
-
+        $data = $_POST;
         if (updateUserInfo($con, $maND, $data)) {
-            $newInfo = getUserInfo($con, $maND);
-            updateSession($newInfo);
             echo "<script>
                 alert('Cập nhật thành công!');
-                window.location.href = 'profile.php';
+                window.location.href = 'user.php';
               </script>";
         } else {
             echo "<script>alert('Lỗi cập nhật: " . mysqli_error($con) . "');</script>";
@@ -101,7 +77,7 @@
     ?>
     <?php include './header.php'; ?>
     <div class="edit-box">
-        <div class="edit-header text-center">CHỈNH SỬA THÔNG TIN CÁ NHÂN</div>
+        <div class="edit-header text-center">CHỈNH SỬA THÔNG TIN NGƯỜI DÙNG</div>
         <form method="POST" enctype="multipart/form-data" class="p-4">
             <div class="row">
                 <div class="col-md-4 d-flex flex-column align-items-center text-center mb-4">
@@ -129,7 +105,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="fw-bold">Số điện thoại</label>
-                            <input type="text" name="sdt" class="form-control" value="<?= $row['Sdt'] ?? '' ?>">
+                            <input type="text" name="sdt" class="form-control" value="<?= $row['sdt'] ?? '' ?>">
                         </div>
                     </div>
                     <div class="row">
@@ -175,7 +151,7 @@
                             </select>
 
                         </div>
-                        <?php if ($user['MaVT'] !== 'QTV' && $user['MaVT'] !== 'GV'): ?>
+                        <?php if ($row['MaVT'] !== 'GV'): ?>
                             <div class="col-md-6 mb-3">
                                 <label class="fw-bold">Lớp</label>
                                 <input type="text" name="lop" class="form-control" value="<?= htmlspecialchars($row['Lop'] ?? '') ?>">
@@ -185,7 +161,7 @@
                 </div>
             </div>
             <div class="text-end mt-3">
-                <a href="profile.php" class="btn btn-primary px-4">Quay lại</a>
+                <a href="javascript:window.history.back();" class="btn btn-primary px-4">Quay lại</a>
                 <button type="submit" class="btn btn-save px-4" name="btn-submit">Lưu thay đổi</button>
             </div>
         </form>

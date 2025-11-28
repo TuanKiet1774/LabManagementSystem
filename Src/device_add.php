@@ -132,9 +132,14 @@ if ($vaiTro !== 'QTV') {
 
 
         if ($result['success']) {
-            echo "<p style='text-align:center; color:green;'>Thêm phòng thành công!</p>";
+            echo "<script>
+            alert('Thêm thiết bị thành công!');
+            window.location.href = 'device.php';
+          </script>";
         } else {
-            echo "<p style='text-align:center; color:red;'>Lỗi: " . mysqli_error($con) . "</p>";
+            echo "<script>
+            alert('Lỗi cập nhật: " . mysqli_error($con) . "');
+          </script>";
         }
     }
     ?>

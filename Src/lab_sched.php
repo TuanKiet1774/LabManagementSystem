@@ -24,7 +24,6 @@
     $days_of_week = $data['days_of_week'];
     $all_rooms = $data['all_rooms'];
     $temp_rooms = $data['temp_rooms'];
-    // $empty_slots_by_room = $data['empty_slots_by_room'];
     
     //Phân trang
     $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
