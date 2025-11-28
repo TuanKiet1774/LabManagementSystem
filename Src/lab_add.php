@@ -20,104 +20,104 @@ if ($vaiTro !== 'QTV') {
     <link rel="icon" href="./Image/Logo.png" type="image/png">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.2.0/css/all.css" />
     <title>Thêm phòng máy</title>
-    <style>
-        body {
-            font-family: "Segoe UI", Arial, sans-serif;
-            background: #f7f5ff;
-        }
-
-        h2 {
-            text-align: center;
-            color: #6a5acd;
-            font-size: 28px;
-            margin-bottom: 20px;
-            text-align: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-size: 32px;
-            font-weight: 700;
-            margin: 30px 0;
-            letter-spacing: 1px;
-        }
-
-        table {
-            width: 55%;
-            margin: 10px auto;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 14px;
-            overflow: hidden;
-            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
-        }
-
-        th {
-            background: #feffddff;
-            padding: 14px;
-            font-size: 18px;
-            color: #3f3d56;
-        }
-
-        td {
-            padding: 15px;
-            border: 1px solid #eee;
-            font-size: 16px;
-        }
-
-        input[type="text"],
-        input[type="number"],
-        select {
-            width: 100%;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #c7d2fe;
-            background: #f0f5ff;
-            font-size: 15px;
-            transition: 0.25s;
-        }
-
-        input[type="text"]:focus,
-        input[type="number"]:focus,
-        select:focus {
-            background: #e6f0ff;
-            border-color: #93c5fd;
-            outline: none;
-        }
-
-        .btn-add {
-            display: inline-block;
-            padding: 8px;
-            font-size: 16px;
-            background-color: #60a5fa;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.25s;
-        }
-
-        .btn-add:hover {
-            background: #048ff9ff;
-        }
-
-        .back-btn {
-            display: block;
-            width: 140px;
-            margin: 20px auto;
-            padding: 12px;
-            background: #a5b4fc;
-            color: white;
-            border-radius: 8px;
-            text-align: center;
-            text-decoration: none;
-        }
-
-        .back-btn:hover {
-            background: #818cf8;
-        }
-    </style>
 </head>
+<style>
+    body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: #f7f5ff;
+    }
+
+    h2 {
+        text-align: center;
+        color: #6a5acd;
+        font-size: 28px;
+        margin-bottom: 20px;
+        text-align: center;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-size: 32px;
+        font-weight: 700;
+        margin: 30px 0;
+        letter-spacing: 1px;
+    }
+
+    table {
+        width: 55%;
+        margin: 10px auto;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+    }
+
+    th {
+        background: #feffddff;
+        padding: 14px;
+        font-size: 18px;
+        color: #3f3d56;
+    }
+
+    td {
+        padding: 15px;
+        border: 1px solid #eee;
+        font-size: 16px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #c7d2fe;
+        background: #f0f5ff;
+        font-size: 15px;
+        transition: 0.25s;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    select:focus {
+        background: #e6f0ff;
+        border-color: #93c5fd;
+        outline: none;
+    }
+
+    .btn-add {
+        display: inline-block;
+        padding: 8px;
+        font-size: 16px;
+        background-color: #60a5fa;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.25s;
+    }
+
+    .btn-add:hover {
+        background: #048ff9ff;
+    }
+
+    .back-btn {
+        display: block;
+        width: 140px;
+        margin: 20px auto;
+        padding: 12px;
+        background: #a5b4fc;
+        color: white;
+        border-radius: 8px;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    .back-btn:hover {
+        background: #818cf8;
+    }
+</style>
 
 <body>
 

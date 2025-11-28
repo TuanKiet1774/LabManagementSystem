@@ -16,212 +16,210 @@ $vaiTro = $user['MaVT'] ?? '';
     <link rel="icon" href="./Image/Logo.png" type="image/png">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.2.0/css/all.css" />
     <title>Danh sách phòng máy</title>
-
-    <style>
-        body {
-            font-family: "Segoe UI", Arial, sans-serif;
-            background: #f7f5ff;
-        }
-
-        h2 {
-            text-align: center;
-            color: #6a5acd;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: clamp(24px, 5vw, 32px);
-            font-weight: 700;
-            margin: 20px 0;
-        }
-
-        table {
-            width: 55%;
-            margin: 10px auto;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 14px;
-            overflow: hidden;
-        }
-
-        thead th {
-            background: #c7d2fe !important;
-            color: #3f3d56 !important;
-            padding: 12px;
-            font-size: 18px;
-            text-align: center;
-        }
-
-        td {
-            padding: 15px;
-            border: 1px solid #eee;
-            vertical-align: top;
-            font-size: 16px;
-            color: #333;
-        }
-
-        .stripe td,
-        .stripe th {
-            padding-top: 14px !important;
-            padding-bottom: 14px !important;
-            line-height: 1.6;
-        }
-
-        .stripe tbody tr:nth-child(even) td {
-            background-color: #f0f5ff !important;
-        }
-
-        .stripe tbody tr:hover td {
-            background-color: #e6f0ff !important;
-        }
-
-        /* Responsive table actions */
-        .action-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            justify-content: center;
-        }
-
-        .action-links a {
-            display: inline-block;
-            padding: 6px 12px;
-            text-decoration: none;
-            border-radius: 8px;
-            color: white;
-            font-size: 14px;
-            white-space: nowrap;
-        }
-
-        .action-links a:first-child {
-            background: #93c5fd;
-        }
-
-        .action-links a:first-child:hover {
-            background: #60a5fa;
-        }
-
-        .action-links a:nth-child(2) {
-            background: #fbbf24;
-        }
-
-        .action-links a:nth-child(2):hover {
-            background: #f59e0b;
-        }
-
-        .action-links a:nth-child(3) {
-            background: #fda4af;
-        }
-
-        .action-links a:nth-child(3):hover {
-            background: #fb7185;
-        }
-
-        button.btn-search {
-            background: #6a5acd;
-            color: white;
-        }
-
-        button.btn-search:hover {
-            background: #6366f1;
-            color: white;
-        }
-
-        .btn-add {
-            padding: 10px 20px;
-            background: #67c5ffff;
-            color: white;
-            width: 40%;
-            text-align: center;
-            font-size: 16px;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: 0.25s;
-            white-space: nowrap;
-            display: inline-block;
-        }
-
-        .btn-add:hover {
-            background: #1096fd;
-            color: white;
-        }
-
-        /* Responsive pagination */
-        /* page */
-        .pagination {
-            margin: 20px 0;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .pagination a,
-        .pagination span {
-            display: inline-block;
-            padding: 8px 12px;
-            margin: 2px;
-            text-decoration: none;
-            background: #e0e7ff;
-            color: #4338ca;
-            border-radius: 6px;
-            font-size: 15px;
-            min-width: 35px;
-        }
-
-        .pagination a:hover {
-            background: #c7d2fe;
-        }
-
-        .pagination .current {
-            background: #6366f1;
-            color: white;
-        }
-
-        .pagination-wrapper {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-top: 20px;
-        }
-
-        .pagination-wrapper a,
-        .pagination-wrapper span {
-            padding: 8px 12px;
-            background: #e0e7ff;
-            color: #4338ca;
-            border-radius: 6px;
-            min-width: 35px;
-            display: inline-block;
-            text-align: center;
-            text-decoration: none;
-        }
-
-        .pagination-wrapper .current {
-            background: #6366f1;
-            color: white;
-        }
-
-        .action-links a.muon-phong {
-            background-color: #4aa8ffff;
-            color: white;
-            pointer-events: auto;
-            transition: 0.3s;
-        }
-
-        .action-links a.muon-phong:hover {
-            background-color: #259dffff;
-        }
-
-        .action-links a.muon-phong.disabled {
-            background-color: #d1d5db;
-            color: #6b7280;
-            pointer-events: none;
-            opacity: 0.6;
-        }
-    </style>
 </head>
+<style>
+    body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: #f7f5ff;
+    }
 
+    h2 {
+        text-align: center;
+        color: #6a5acd;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: clamp(24px, 5vw, 32px);
+        font-weight: 700;
+        margin: 20px 0;
+    }
+
+    table {
+        width: 55%;
+        margin: 10px auto;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 14px;
+        overflow: hidden;
+    }
+
+    thead th {
+        background: #c7d2fe !important;
+        color: #3f3d56 !important;
+        padding: 12px;
+        font-size: 18px;
+        text-align: center;
+    }
+
+    td {
+        padding: 15px;
+        border: 1px solid #eee;
+        vertical-align: top;
+        font-size: 16px;
+        color: #333;
+    }
+
+    .stripe td,
+    .stripe th {
+        padding-top: 14px !important;
+        padding-bottom: 14px !important;
+        line-height: 1.6;
+    }
+
+    .stripe tbody tr:nth-child(even) td {
+        background-color: #f0f5ff !important;
+    }
+
+    .stripe tbody tr:hover td {
+        background-color: #e6f0ff !important;
+    }
+
+    /* Responsive table actions */
+    .action-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        justify-content: center;
+    }
+
+    .action-links a {
+        display: inline-block;
+        padding: 6px 12px;
+        text-decoration: none;
+        border-radius: 8px;
+        color: white;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    .action-links a:first-child {
+        background: #93c5fd;
+    }
+
+    .action-links a:first-child:hover {
+        background: #60a5fa;
+    }
+
+    .action-links a:nth-child(2) {
+        background: #fbbf24;
+    }
+
+    .action-links a:nth-child(2):hover {
+        background: #f59e0b;
+    }
+
+    .action-links a:nth-child(3) {
+        background: #fda4af;
+    }
+
+    .action-links a:nth-child(3):hover {
+        background: #fb7185;
+    }
+
+    button.btn-search {
+        background: #6a5acd;
+        color: white;
+    }
+
+    button.btn-search:hover {
+        background: #6366f1;
+        color: white;
+    }
+
+    .btn-add {
+        padding: 10px 20px;
+        background: #67c5ffff;
+        color: white;
+        width: 40%;
+        text-align: center;
+        font-size: 16px;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: 0.25s;
+        white-space: nowrap;
+        display: inline-block;
+    }
+
+    .btn-add:hover {
+        background: #1096fd;
+        color: white;
+    }
+
+    /* Responsive pagination */
+    /* page */
+    .pagination {
+        margin: 20px 0;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .pagination a,
+    .pagination span {
+        display: inline-block;
+        padding: 8px 12px;
+        margin: 2px;
+        text-decoration: none;
+        background: #e0e7ff;
+        color: #4338ca;
+        border-radius: 6px;
+        font-size: 15px;
+        min-width: 35px;
+    }
+
+    .pagination a:hover {
+        background: #c7d2fe;
+    }
+
+    .pagination .current {
+        background: #6366f1;
+        color: white;
+    }
+
+    .pagination-wrapper {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-top: 20px;
+    }
+
+    .pagination-wrapper a,
+    .pagination-wrapper span {
+        padding: 8px 12px;
+        background: #e0e7ff;
+        color: #4338ca;
+        border-radius: 6px;
+        min-width: 35px;
+        display: inline-block;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    .pagination-wrapper .current {
+        background: #6366f1;
+        color: white;
+    }
+
+    .action-links a.muon-phong {
+        background-color: #4aa8ffff;
+        color: white;
+        pointer-events: auto;
+        transition: 0.3s;
+    }
+
+    .action-links a.muon-phong:hover {
+        background-color: #259dffff;
+    }
+
+    .action-links a.muon-phong.disabled {
+        background-color: #d1d5db;
+        color: #6b7280;
+        pointer-events: none;
+        opacity: 0.6;
+    }
+</style>
 
 <body>
     <?php
@@ -233,7 +231,6 @@ $vaiTro = $user['MaVT'] ?? '';
     $page = $_GET['page'] ?? 1;
     $rowPerPage = 10;
     $offset = ($_GET['page'] - 1) * $rowPerPage;
-    // $sqlCount = "SELECT COUNT(*) as total from phong";
     $sqlCount = "SELECT COUNT(*) as total
                 FROM phong p
                 JOIN nhomphong np ON np.MaNhom = p.MaNhom
@@ -253,7 +250,6 @@ $vaiTro = $user['MaVT'] ?? '';
             WHERE 1=1 $search
             Order by p.MaPhong asc";
 
-    // Gọi hàm pagination
     $pagination = pagination($con, $rowPerPage, $sqlData, $sqlCount, $page);
     $result = $pagination['data'];
     $maxPage = $pagination['maxPage'];

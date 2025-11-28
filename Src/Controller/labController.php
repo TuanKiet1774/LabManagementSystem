@@ -130,49 +130,49 @@ function getEdit_Detail_Lab($con, $maPhong)
 }
 
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+// use PHPMailer\PHPMailer\PHPMailer;
+// use PHPMailer\PHPMailer\Exception;
 
-function labSendMailNotification($fromEmail, $toEmail, $tenPhong, $maPhong, $trangThai)
-{
-    $mail = new PHPMailer(true);
-    $mail->CharSet = 'UTF-8';
-    $mail->Encoding = 'base64';
+// function labSendMailNotification($fromEmail, $toEmail, $tenPhong, $maPhong, $trangThai)
+// {
+//     $mail = new PHPMailer(true);
+//     $mail->CharSet = 'UTF-8';
+//     $mail->Encoding = 'base64';
 
-    try {
-        // Cấu hình SMTP Gmail
-        $mail->isSMTP();
-        $mail->Host       = 'smtp.gmail.com';
-        $mail->SMTPAuth   = true;
-        $mail->Username   = $fromEmail;
-        $mail->Password   = 'qefi dapq qqxp onpw';  // App password
-        $mail->SMTPSecure = 'ssl';
-        $mail->Port       = 465;
+//     try {
+//         // Cấu hình SMTP Gmail
+//         $mail->isSMTP();
+//         $mail->Host       = 'smtp.gmail.com';
+//         $mail->SMTPAuth   = true;
+//         $mail->Username   = $fromEmail;
+//         $mail->Password   = 'qefi dapq qqxp onpw';  // App password
+//         $mail->SMTPSecure = 'ssl';
+//         $mail->Port       = 465;
 
-        // Người gửi - người nhận
-        $mail->setFrom($fromEmail, 'Hệ thống Lab Management');
-        $mail->addAddress($toEmail);
+//         // Người gửi - người nhận
+//         $mail->setFrom($fromEmail, 'Hệ thống Lab Management');
+//         $mail->addAddress($toEmail);
 
-        // Nội dung email
-        $mail->isHTML(true);
-        $mail->Subject = "Cập nhật trạng thái phòng $tenPhong";
-        $mail->Body    = "
-                <h3>Thông báo cập nhật trạng thái phòng</h3>
-                <p><b>Mã phòng:</b> $maPhong</p>
-                <p><b>Tên phòng:</b> $tenPhong</p>
-                <p><b>Trạng thái mới:</b> 
-                    <span style='color:blue; font-weight:bold;'>$trangThai</span>
-                </p>
-            ";
+//         // Nội dung email
+//         $mail->isHTML(true);
+//         $mail->Subject = "Cập nhật trạng thái phòng $tenPhong";
+//         $mail->Body    = "
+//                 <h3>Thông báo cập nhật trạng thái phòng</h3>
+//                 <p><b>Mã phòng:</b> $maPhong</p>
+//                 <p><b>Tên phòng:</b> $tenPhong</p>
+//                 <p><b>Trạng thái mới:</b> 
+//                     <span style='color:blue; font-weight:bold;'>$trangThai</span>
+//                 </p>
+//             ";
 
-        $mail->send();
-        return true; // thành công
+//         $mail->send();
+//         return true; // thành công
 
-    } catch (Exception $e) {
-        error_log("Email error: " . $mail->ErrorInfo);
-        return false; // thất bại
-    }
-}
+//     } catch (Exception $e) {
+//         error_log("Email error: " . $mail->ErrorInfo);
+//         return false; // thất bại
+//     }
+// }
 
 //delete 
 function labDelete($con, $maPhong)
