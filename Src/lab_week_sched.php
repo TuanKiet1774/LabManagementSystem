@@ -259,10 +259,6 @@ $conn->close();
         background-color: #d4edda;
     }
 
-    .status-khong-chap-nhan {
-        background-color: #f8d7da;
-    }
-
     .lesson-info {
         line-height: 1.5;
     }
@@ -339,10 +335,8 @@ $conn->close();
                     <div class="filter-section">
                         <h3>🔍 Tìm kiếm</h3>
                         <form method="GET" action="lab_week_sched.php">
-                            <div class="form-group">
-                                <!-- Trường ẩn để đánh dấu đây là thao tác chỉ để tải lại phòng theo nhóm phòng chứ không xem lịch ngay-->
-                                <input type="hidden" name="mode" id="mode" value="view_schedule">
-
+                            <input type="hidden" name="submit_source" id="submit-source" value="">
+                            <div class="form-group">                            
                                 <label for="year">Năm</label>
                                 <input type="number" name="year" id="year" value="<?php echo $selected_year; ?>" min="2020" required>
                             </div>
@@ -354,7 +348,7 @@ $conn->close();
 
                             <div class="form-group">
                                 <label for="nhomphong">Nhóm Phòng</label>
-                                <select name="nhomphong" id="nhomphong" onchange="this.form.submit()">
+                                <select name="nhomphong" id="nhomphong" onchange="document.getElementById('submit-source').value = 'group-submit'; this.form.submit()">
                                     <option value="TATCA">Tất cả</option>
                                     <?php foreach ($groups as $group): ?>
                                         <option value="<?php echo $group['MaNhom']; ?>" <?php echo $selected_group === $group['MaNhom'] ? 'selected' : ''; ?>>
@@ -366,7 +360,7 @@ $conn->close();
 
                             <div class="form-group">
                                 <label for="phong">Phòng</label>
-                                <select name="phong" id="phong">
+                                <select name="phong" id="phong" onchange="document.getElementById('submit-source').value = 'room-submit'; this.form.submit()">
                                     <option value="TATCA">Tất cả</option>
                                     <?php foreach ($temp_rooms as $room): ?>
                                         <option value="<?php echo $room['MaPhong']; ?>" <?php echo $selected_room === $room['MaPhong'] ? 'selected' : ''; ?>>
@@ -375,9 +369,7 @@ $conn->close();
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-
-                            <button type="submit" name="action" value="view" class="btn btn-primary">Xem Lịch</button>
-
+                            
                             <a href="./lab_booking.php?phong=<?php echo isset($selected_room) ? $selected_room : "" ?>" class="btn btn-success">
                                 Mượn Phòng
                             </a>
@@ -394,11 +386,7 @@ $conn->close();
 
                     <!-- Legend -->
                     <div class="legend" style="flex-direction: column; margin-top: 15px;">
-                        <div style="font-weight: bold; margin-bottom: 8px; text-align: center;">Chú thích</div>
-                        <div class="legend-item">
-                            <div class="legend-color status-khong-chap-nhan"></div>
-                            <span>Không chấp nhận</span>
-                        </div>
+                        <div style="font-weight: bold; margin-bottom: 5px; text-align: center;">Chú thích</div>                     
                         <div class="legend-item">
                             <div class="legend-color status-da-duyet"></div>
                             <span>Đã duyệt</span>
@@ -493,9 +481,7 @@ $conn->close();
                                                                 $status_class = 'status-chua-duyet';
                                                             elseif ($found_event['TrangThaiPhieuMuon'] === 'Đã duyệt')
                                                                 $status_class = 'status-da-duyet';
-                                                            elseif ($found_event['TrangThaiPhieuMuon'] === 'Không chấp nhận')
-                                                                $status_class = 'status-khong-chap-nhan';
-
+                                                           
                                                             $borrower = ($found_event['MaVT'] === 'GV') ? 'GV' : (($found_event['MaVT'] === 'SV') ? 'SV' : 'QTV');
                                                     ?>
                                                             <td class="<?php echo $status_class; ?>" rowspan="<?php echo $rowspan_value; ?>">

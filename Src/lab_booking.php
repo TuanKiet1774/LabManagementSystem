@@ -151,7 +151,7 @@ if ($vaiTro !== 'QTV' && $vaiTro !== 'GV' && $vaiTro !== 'SV') {
             'ngayBD'    => $_POST['ngayBD'],
             'ngayKT'    => $_POST['ngayKT'],
             'maNgay'    => isset($_POST['maNgay']) ? $_POST['maNgay'] : [],
-            'maTTT'     => $_POST['maTTT'],
+            'maTTT'     => isset($_POST['maTTT']) ? $_POST['maTTT'] : "",
             'maTietArr' => isset($_POST['maTiet']) ? $_POST['maTiet'] : []
         ];
 
@@ -164,7 +164,7 @@ if ($vaiTro !== 'QTV' && $vaiTro !== 'GV' && $vaiTro !== 'SV') {
     </script>";
             exit();
         } else {
-            $msg = addslashes($result['message']); 
+            $msg = addslashes($result['message']);
             echo "<script>
         alert('Lỗi khi tạo phiếu: {$msg}');
     </script>";
@@ -301,7 +301,7 @@ if ($vaiTro !== 'QTV' && $vaiTro !== 'GV' && $vaiTro !== 'SV') {
                 });
 
                 // maTTT mặc định "Xuyên suốt"
-                maTTT.value = "3"; // ID thực tế trong DB
+                maTTT.value = "TUANXS"; // ID thực tế trong DB
             }
         }
 

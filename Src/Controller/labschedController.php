@@ -262,16 +262,15 @@ function get_schedule_data(mysqli $conn)
     $selected_year = isset($_GET['year']) ? intval($_GET['year']) : $default_year;
     $selected_week = isset($_GET['week']) ? intval($_GET['week']) : $default_week;
     $selected_group = isset($_GET['nhomphong']) && $_GET['nhomphong'] !== 'TATCA' ? $conn->real_escape_string($_GET['nhomphong']) : 'TATCA';
-    $selected_room = isset($_GET['phong']) && $_GET['phong'] !== 'TATCA' ? $conn->real_escape_string($_GET['phong']) : 'TATCA';
     
-    $is_full_submit = isset($_GET['action']) && $_GET['action'] === 'view';
-
-    if ($is_full_submit) {
-        // Nếu nhấn nút Xem Lịch Trống, lấy giá trị phòng đã chọn
-        $selected_room = isset($_GET['phong']) && $_GET['phong'] !== 'TATCA' ? $conn->real_escape_string($_GET['phong']) : 'TATCA';
-    } else {
-        // Nếu chỉ là onchange (thay đổi Nhóm Phòng), reset Phòng về TATCA
+    $selected_room = isset($_GET['phong']) && $_GET['phong'] !== 'TATCA' ? $conn->real_escape_string($_GET['phong']) : 'TATCA';
+   
+    $submit_source = $_GET['submit_source'] ?? '';
+    
+    if ($submit_source === 'group-submit') {        
         $selected_room = 'TATCA';
+    } else {        
+        $selected_room = $selected_room;
     }
 
     // Loại tuần (Chẵn/Lẻ)
