@@ -40,7 +40,7 @@ function labBookingForm($con, $data)
 
                 if (mysqli_num_rows($resCheck) > 0) {
                     $row = mysqli_fetch_assoc($resCheck);
-                    throw new Exception("Không thể tạo phiếu mượn! Phòng '{$maPhong}', Tiết '{$maTiet}', Ngày '{$maNgay}' đã được đặt từ {$row['NgayBD']} đến {$row['NgayKT']}.");
+                    throw new Exception("Không thể tạo phiếu mượn! Phòng '{$maPhong}' đã được đặt từ {$row['NgayBD']} đến {$row['NgayKT']}.");
                 }
             }
         }

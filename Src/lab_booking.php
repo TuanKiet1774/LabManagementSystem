@@ -267,7 +267,12 @@ if ($vaiTro !== 'QTV' && $vaiTro !== 'GV' && $vaiTro !== 'SV') {
             const maTTT = document.querySelector("select[name='maTTT']");
             const selectBox = document.getElementById("selectNgayTrongTuan");
 
-            if (!ngayBD || !ngayKT) return;
+            if (!ngayBD || !ngayKT) {
+                rowNgay.style.display = "none";
+                rowTuan.style.display = "none";
+                selectBox.required = false;
+                return;
+            }
 
             const d1 = new Date(ngayBD);
             const d2 = new Date(ngayKT);
@@ -275,38 +280,40 @@ if ($vaiTro !== 'QTV' && $vaiTro !== 'GV' && $vaiTro !== 'SV') {
             const dayCodes = ["CHUNHAT", "THUHAI", "THUBA", "THUTU", "THUNAM", "THUSAU", "THUBAY"];
             const dayNames = ["Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"];
 
-            rowNgay.style.display = "";
-            rowTuan.style.display = "";
-
-            selectBox.innerHTML = ""; // Xoá cũ
-
-            if (d1.getTime() === d2.getTime()) {
-                // Một ngày
-                const dayOfWeek = d1.getDay();
-                selectBox.innerHTML = `
-            <option value="${dayCodes[dayOfWeek]}" selected>${dayNames[dayOfWeek]}</option>
-        `;
-                maTTT.value = "TUANXS";
+            if (d1.getTime() > d2.getTime()) {
+                // Ngày bắt đầu > ngày kết thúc: ẩn các hàng và không yêu cầu chọn
+                rowNgay.style.display = "none";
+                rowTuan.style.display = "none";
+                selectBox.required = false;
+                selectBox.innerHTML = ""; // Xoá options
             } else {
-                // Nhiều ngày
-                const daysInRange = new Set();
-                for (let d = new Date(d1); d <= d2; d.setDate(d.getDate() + 1)) {
-                    daysInRange.add(d.getDay());
+                // Hiện các hàng và yêu cầu chọn
+                rowNgay.style.display = "";
+                rowTuan.style.display = "";
+                selectBox.required = false;
+                selectBox.innerHTML = ""; // Xoá options
+                if (d1.getTime() === d2.getTime()) {
+                    // Một ngày
+                    const dayOfWeek = d1.getDay();
+                    selectBox.innerHTML = `
+                <option value="${dayCodes[dayOfWeek]}" selected>${dayNames[dayOfWeek]}</option>`;
+                    maTTT.value = "TUANXS";
+                } else {
+                    // Nhiều ngày
+                    const daysInRange = new Set();
+                    for (let d = new Date(d1); d <= d2; d.setDate(d.getDate() + 1)) {
+                        daysInRange.add(d.getDay());
+                    }
+                    daysInRange.forEach(day => {
+                        const opt = document.createElement("option");
+                        opt.value = dayCodes[day];
+                        opt.textContent = dayNames[day];
+                        selectBox.appendChild(opt);
+                    });
+                    maTTT.value = "TUANXS";
                 }
-
-                daysInRange.forEach(day => {
-                    const opt = document.createElement("option");
-                    opt.value = dayCodes[day];
-                    opt.textContent = dayNames[day];
-                    selectBox.appendChild(opt);
-                });
-
-                maTTT.value = "TUANXS";
             }
         }
-
-
-
 
         function validateForm(event) {
             const ngayBD = document.querySelector("input[name='ngayBD']").value;
