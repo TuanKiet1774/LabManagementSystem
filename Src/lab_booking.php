@@ -89,7 +89,7 @@ if ($vaiTro !== 'QTV' && $vaiTro !== 'GV' && $vaiTro !== 'SV') {
         display: inline-block;
         padding: 8px;
         font-size: 16px;
-        background-color: #60a5fa;
+        background-color: #60a5fa !important;
         color: white;
         border: none;
         border-radius: 8px;
@@ -98,7 +98,7 @@ if ($vaiTro !== 'QTV' && $vaiTro !== 'GV' && $vaiTro !== 'SV') {
     }
 
     .btn-add:hover {
-        background: #048ff9ff;
+        background: #048ff9ff !important;
     }
 
     .back-btn {
@@ -139,7 +139,6 @@ if ($vaiTro !== 'QTV' && $vaiTro !== 'GV' && $vaiTro !== 'SV') {
         $tenPhong = 'Chưa chọn phòng';
     }
 
-
     $listTiet = mysqli_query($con, "SELECT * FROM tiethoc");
     $listNgay = mysqli_query($con, "SELECT * FROM ngaytuan");
     $listTTT = mysqli_query($con, "SELECT * FROM trangthaituan");
@@ -151,23 +150,24 @@ if ($vaiTro !== 'QTV' && $vaiTro !== 'GV' && $vaiTro !== 'SV') {
             'mucDich'   => $_POST['mucDich'],
             'ngayBD'    => $_POST['ngayBD'],
             'ngayKT'    => $_POST['ngayKT'],
-            'maNgay'    => $_POST['maNgay'],
+            'maNgay'    => isset($_POST['maNgay']) ? $_POST['maNgay'] : [],
             'maTTT'     => $_POST['maTTT'],
             'maTietArr' => isset($_POST['maTiet']) ? $_POST['maTiet'] : []
         ];
 
-        $maPhieu = labBookingForm($con, $data);
+        $result = labBookingForm($con, $data);
 
-        if ($maPhieu) {
+        if ($result['success']) {
             echo "<script>
-            alert('Tạo phiếu mượn thành công!');
-            window.location.href = 'lab.php';
-          </script>";
+        alert('Tạo phiếu mượn thành công!');
+        window.location.href = 'history.php';
+    </script>";
             exit();
         } else {
+            $msg = addslashes($result['message']); 
             echo "<script>
-            alert('Lỗi khi tạo phiếu!');
-          </script>";
+        alert('Lỗi khi tạo phiếu: {$msg}');
+    </script>";
         }
     }
     ?>
@@ -183,7 +183,6 @@ if ($vaiTro !== 'QTV' && $vaiTro !== 'GV' && $vaiTro !== 'SV') {
                         <input type="hidden" name="maPhong" value="<?= $maPhong ?>">
                     </td>
                 </tr>
-
 
                 <tr>
                     <td>Mục đích:</td>
@@ -202,13 +201,7 @@ if ($vaiTro !== 'QTV' && $vaiTro !== 'GV' && $vaiTro !== 'SV') {
 
                 <tr id="rowNgay">
                     <td>Ngày trong tuần:</td>
-                    <td>
-                        <select class="form-control" name="maNgay" required>
-                            <option value="">-- Chọn ngày --</option>
-                            <?php while ($n = mysqli_fetch_assoc($listNgay)) { ?>
-                                <option value="<?= $n['MaNgay'] ?>"><?= $n['TenNgay'] ?></option>
-                            <?php } ?>
-                        </select>
+                    <td id="checkboxContainer">
                     </td>
                 </tr>
 
@@ -216,15 +209,16 @@ if ($vaiTro !== 'QTV' && $vaiTro !== 'GV' && $vaiTro !== 'SV') {
                     <td>Trạng thái tuần:</td>
                     <td>
                         <select class="form-control" name="maTTT">
-                            <option value="">-- Chọn trạng thái --</option>
                             <?php while ($ttt = mysqli_fetch_assoc($listTTT)) { ?>
-                                <option value="<?= $ttt['MaTTT'] ?>">
+                                <option value="<?= $ttt['MaTTT'] ?>"
+                                    <?= ($ttt['MaTTT'] == 'TUANXS') ? 'selected' : '' ?>>
                                     <?= $ttt['TenTTT'] ?>
                                 </option>
                             <?php } ?>
                         </select>
                     </td>
                 </tr>
+
 
                 <tr>
                     <td>Tiết học:</td>
@@ -237,7 +231,6 @@ if ($vaiTro !== 'QTV' && $vaiTro !== 'GV' && $vaiTro !== 'SV') {
                         <?php } ?>
                     </td>
                 </tr>
-
 
                 <tr>
                     <td colspan="2" align="center" style="background:#feffddff;">
@@ -262,75 +255,108 @@ if ($vaiTro !== 'QTV' && $vaiTro !== 'GV' && $vaiTro !== 'SV') {
         crossorigin="anonymous"></script>
 
     <script>
+        let savedNgayChecks = {}; // Lưu trạng thái checkboxes
+
         function updateForm() {
             const ngayBD = document.querySelector("input[name='ngayBD']").value;
             const ngayKT = document.querySelector("input[name='ngayKT']").value;
-
             const rowNgay = document.getElementById("rowNgay");
             const rowTuan = document.getElementById("rowTuan");
-            const maNgay = document.querySelector("select[name='maNgay']");
             const maTTT = document.querySelector("select[name='maTTT']");
+            const checkboxContainer = document.getElementById("checkboxContainer");
 
             if (!ngayBD || !ngayKT) return;
 
             const d1 = new Date(ngayBD);
             const d2 = new Date(ngayKT);
 
+            const dayCodes = ["CHUNHAT", "THUHAI", "THUBA", "THUTU", "THUNAM", "THUSAU", "THUBAY"];
+            const dayNames = ["Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"];
+
+            rowNgay.style.display = ""; // luôn hiển thị row ngày
+            rowTuan.style.display = ""; // hiển thị trạng thái tuần
+
             if (d1.getTime() === d2.getTime()) {
-                // Mượn 1 ngày → ẩn ngày tuần + trạng thái tuần
-                rowNgay.style.display = "none";
-                rowTuan.style.display = "none";
-                maNgay.required = false;
-                maTTT.required = false;
+                // Chỉ 1 ngày -> tạo 1 checkbox, checked mặc định
+                const dayOfWeek = d1.getDay(); // 0=CN, 1=Thứ2...
+                checkboxContainer.innerHTML = `<label style="display:block;">
+            <input type="checkbox" name="maNgay[]" value="${dayCodes[dayOfWeek]}" checked> ${dayNames[dayOfWeek]}
+        </label>`;
+
+                // maTTT mặc định TUANXS
+                maTTT.value = "TUANXS";
             } else {
-                // Mượn nhiều ngày → hiện
-                rowNgay.style.display = "";
-                rowTuan.style.display = "";
-                maNgay.required = true;
-                maTTT.required = true;
+                // Nhiều ngày -> tạo checkbox nhiều ngày
+                const daysInRange = new Set();
+                for (let d = new Date(d1); d <= d2; d.setDate(d.getDate() + 1)) {
+                    daysInRange.add(d.getDay());
+                }
+
+                checkboxContainer.innerHTML = ""; // xóa cũ
+                daysInRange.forEach(day => {
+                    const checkbox = document.createElement("label");
+                    checkbox.style.display = "block";
+                    checkbox.innerHTML = `<input type="checkbox" name="maNgay[]" value="${dayCodes[day]}"> ${dayNames[day]}`;
+                    checkboxContainer.appendChild(checkbox);
+                });
+
+                // maTTT mặc định "Xuyên suốt"
+                maTTT.value = "3"; // ID thực tế trong DB
             }
         }
 
-        // Kiểm tra người dùng chọn thứ hợp lệ
+
+
         function validateForm(event) {
             const ngayBD = document.querySelector("input[name='ngayBD']").value;
             const ngayKT = document.querySelector("input[name='ngayKT']").value;
-            const maNgay = document.querySelector("select[name='maNgay']").value;
 
-            if (!maNgay) return; // không kiểm tra nếu không cần thứ
+            if (!ngayBD || !ngayKT) {
+                alert("Vui lòng chọn đầy đủ ngày bắt đầu và kết thúc!");
+                event.preventDefault();
+                return;
+            }
 
-            const start = new Date(ngayBD);
-            const end = new Date(ngayKT);
+            if (new Date(ngayBD) > new Date(ngayKT)) {
+                alert("Ngày bắt đầu không được lớn hơn ngày kết thúc!");
+                event.preventDefault();
+                return;
+            }
 
-            let found = false;
-
-            // Lặp từ ngàyBD đến ngàyKT
-            for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
-                const jsThu = d.getDay(); // 0=CN → 1=Thứ 2
-                const maNgayInt = parseInt(maNgay); // DB của bạn: 1=Thứ2, 7=CN
-
-                if (jsThu === (maNgayInt % 7)) {
-                    found = true;
-                    break;
+            // Kiểm tra checkboxes ngày trong tuần nếu hiện
+            const checkboxesNgay = document.querySelectorAll("input[name='maNgay[]']");
+            if (checkboxesNgay.length > 0) {
+                let checked = false;
+                checkboxesNgay.forEach(cb => {
+                    if (cb.checked) checked = true;
+                });
+                if (!checked) {
+                    alert("Vui lòng chọn ít nhất 1 ngày trong tuần!");
+                    event.preventDefault();
+                    return;
                 }
             }
 
-            if (!found) {
-                alert("Khoảng ngày không chứa ngày bạn đã chọn trong tuần!");
+            // Kiểm tra chọn ít nhất 1 tiết học
+            const checkboxesTiet = document.querySelectorAll("input[name='maTiet[]']");
+            let checkedTiet = false;
+            checkboxesTiet.forEach(cb => {
+                if (cb.checked) checkedTiet = true;
+            });
+            if (!checkedTiet) {
+                alert("Vui lòng chọn ít nhất 1 tiết học!");
                 event.preventDefault();
+                return;
             }
         }
 
-        // Gọi update khi đổi ngày
+        // Sự kiện
         document.querySelector("input[name='ngayBD']").addEventListener("change", updateForm);
         document.querySelector("input[name='ngayKT']").addEventListener("change", updateForm);
-
-        // Bắt submit form
         document.querySelector("form").addEventListener("submit", validateForm);
-
-        // Khởi tạo ban đầu
-        updateForm();
+        updateForm(); // Khởi tạo
     </script>
+
 
 </body>
 
