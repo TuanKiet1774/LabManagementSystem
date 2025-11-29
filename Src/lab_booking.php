@@ -201,7 +201,9 @@ if ($vaiTro !== 'QTV' && $vaiTro !== 'GV' && $vaiTro !== 'SV') {
 
                 <tr id="rowNgay">
                     <td>Ngày trong tuần:</td>
-                    <td id="checkboxContainer">
+                    <td>
+                        <select id="selectNgayTrongTuan" name="maNgay[]" class="form-control" required>
+                        </select>
                     </td>
                 </tr>
 
@@ -263,7 +265,7 @@ if ($vaiTro !== 'QTV' && $vaiTro !== 'GV' && $vaiTro !== 'SV') {
             const rowNgay = document.getElementById("rowNgay");
             const rowTuan = document.getElementById("rowTuan");
             const maTTT = document.querySelector("select[name='maTTT']");
-            const checkboxContainer = document.getElementById("checkboxContainer");
+            const selectBox = document.getElementById("selectNgayTrongTuan");
 
             if (!ngayBD || !ngayKT) return;
 
@@ -273,37 +275,36 @@ if ($vaiTro !== 'QTV' && $vaiTro !== 'GV' && $vaiTro !== 'SV') {
             const dayCodes = ["CHUNHAT", "THUHAI", "THUBA", "THUTU", "THUNAM", "THUSAU", "THUBAY"];
             const dayNames = ["Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"];
 
-            rowNgay.style.display = ""; // luôn hiển thị row ngày
-            rowTuan.style.display = ""; // hiển thị trạng thái tuần
+            rowNgay.style.display = "";
+            rowTuan.style.display = "";
+
+            selectBox.innerHTML = ""; // Xoá cũ
 
             if (d1.getTime() === d2.getTime()) {
-                // Chỉ 1 ngày -> tạo 1 checkbox, checked mặc định
-                const dayOfWeek = d1.getDay(); // 0=CN, 1=Thứ2...
-                checkboxContainer.innerHTML = `<label style="display:block;">
-            <input type="checkbox" name="maNgay[]" value="${dayCodes[dayOfWeek]}" checked> ${dayNames[dayOfWeek]}
-        </label>`;
-
-                // maTTT mặc định TUANXS
+                // Một ngày
+                const dayOfWeek = d1.getDay();
+                selectBox.innerHTML = `
+            <option value="${dayCodes[dayOfWeek]}" selected>${dayNames[dayOfWeek]}</option>
+        `;
                 maTTT.value = "TUANXS";
             } else {
-                // Nhiều ngày -> tạo checkbox nhiều ngày
+                // Nhiều ngày
                 const daysInRange = new Set();
                 for (let d = new Date(d1); d <= d2; d.setDate(d.getDate() + 1)) {
                     daysInRange.add(d.getDay());
                 }
 
-                checkboxContainer.innerHTML = ""; // xóa cũ
                 daysInRange.forEach(day => {
-                    const checkbox = document.createElement("label");
-                    checkbox.style.display = "block";
-                    checkbox.innerHTML = `<input type="checkbox" name="maNgay[]" value="${dayCodes[day]}"> ${dayNames[day]}`;
-                    checkboxContainer.appendChild(checkbox);
+                    const opt = document.createElement("option");
+                    opt.value = dayCodes[day];
+                    opt.textContent = dayNames[day];
+                    selectBox.appendChild(opt);
                 });
 
-                // maTTT mặc định "Xuyên suốt"
-                maTTT.value = "TUANXS"; // ID thực tế trong DB
+                maTTT.value = "TUANXS";
             }
         }
+
 
 
 
@@ -317,20 +318,36 @@ if ($vaiTro !== 'QTV' && $vaiTro !== 'GV' && $vaiTro !== 'SV') {
                 return;
             }
 
+            // --- KIỂM TRA NGÀY BẮT ĐẦU >= NGÀY HIỆN TẠI ---
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); // xoá giờ để so sánh đúng
+
+            const startDate = new Date(ngayBD);
+
+            if (startDate < today) {
+                alert("Ngày bắt đầu phải lớn hơn hoặc bằng ngày hiện tại!");
+                event.preventDefault();
+                return;
+            }
+            // ------------------------------------------------
+
             if (new Date(ngayBD) > new Date(ngayKT)) {
                 alert("Ngày bắt đầu không được lớn hơn ngày kết thúc!");
                 event.preventDefault();
                 return;
             }
 
-            // Kiểm tra checkboxes ngày trong tuần nếu hiện
-            const checkboxesNgay = document.querySelectorAll("input[name='maNgay[]']");
-            if (checkboxesNgay.length > 0) {
-                let checked = false;
-                checkboxesNgay.forEach(cb => {
-                    if (cb.checked) checked = true;
-                });
-                if (!checked) {
+            // Kiểm tra dropdown ngày trong tuần
+            const selectNgay = document.getElementById("selectNgayTrongTuan");
+            if (selectNgay.options.length > 0) {
+                let anySelected = false;
+                for (let opt of selectNgay.options) {
+                    if (opt.selected) {
+                        anySelected = true;
+                        break;
+                    }
+                }
+                if (!anySelected) {
                     alert("Vui lòng chọn ít nhất 1 ngày trong tuần!");
                     event.preventDefault();
                     return;
@@ -349,6 +366,7 @@ if ($vaiTro !== 'QTV' && $vaiTro !== 'GV' && $vaiTro !== 'SV') {
                 return;
             }
         }
+
 
         // Sự kiện
         document.querySelector("input[name='ngayBD']").addEventListener("change", updateForm);

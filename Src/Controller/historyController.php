@@ -34,7 +34,39 @@ function infoHistory($search, $user)
     return $sql;
 }
 
+function infoHistoryAdmin($search, $user)
+{
+    $sql = "SELECT pm.MaPhieu, pm.MucDich, pm.NgayBD, pm.NgayKT, pm.NgayTao,
+                    ttpm.MaTTPM, ttpm.TenTTPM,
+                    nd.Ho, nd.Ten,
+                    p.TenPhong
+            FROM phieumuon pm
+            INNER JOIN phong p ON pm.MaPhong = p.MaPhong
+            INNER JOIN chitietttpm ctpm ON pm.MaPhieu = ctpm.MaPhieu
+            INNER JOIN trangthaiphieumuon ttpm ON ctpm.MaTTPM = ttpm.MaTTPM
+            INNER JOIN nguoidung nd ON pm.MaND = nd.MaND";
 
+    $where = [];
+
+    if ($search !== "") {
+        $where[] = "(pm.MucDich LIKE '%$search%' 
+                    OR ttpm.TenTTPM LIKE '%$search%'
+                    OR CONCAT(nd.Ho, ' ', nd.Ten) LIKE '%$search%')";
+    }
+
+    if ($user['MaVT'] === 'QTV') {
+        $MaND = $user['MaND'];
+        $where[] = "pm.MaND = '$MaND'";
+    }
+
+    if (count($where) > 0) {
+        $sql .= " WHERE " . implode(" AND ", $where);
+    }
+
+    $sql .= " ORDER BY pm.MaPhieu DESC";
+
+    return $sql;
+}
 ### Detail
 $maphieu = isset($_GET['maphieu']) ? $_GET['maphieu'] : '';
 $sql1 = "SELECT pm.MaPhieu, pm.MucDich, pm.NgayBD, pm.NgayKT, pm.NgayTao, p.TenPhong, nd.Ho, nd.Ten, nd.Email, np.TenNhom

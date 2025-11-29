@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Lịch sử mượn phòng</title>
+    <title>Lịch sử phiểu mượn</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
@@ -139,7 +139,7 @@
 
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
     $search = isset($_GET['search']) ? mysqli_real_escape_string($con, $_GET['search']) : '';
-    $sql = infoHistory($search, $user);
+    $sql = infoHistoryAdmin($search, $user);
     $pagination = pagination($con, 10, $sql, $page);
     $db = $pagination['data'];
     $maxPage = $pagination['maxPage'];
@@ -150,7 +150,7 @@
         <div class="container-fluid">
             <form method="GET" class="search-box mb-3">
                 <h3 class="me-auto d-md-block d-none">
-                    <b>Lịch sử mượn phòng</b>
+                    <b>Lịch sử phiếu mượn</b>
                 </h3>
                 <div class="d-flex justify-content-between">
                     <input type="text" name="search" placeholder="Mục đích, trạng thái, tên..." value="<?= isset($_GET['search']) ? $_GET['search'] : '' ?>">

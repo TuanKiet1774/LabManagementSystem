@@ -157,14 +157,20 @@
                                 </span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <?php if (isset($_SESSION['MaVT']) && $_SESSION['MaVT'] !== 'QTV'): ?>
+                                <?php 
+                                if (isset($_SESSION['MaVT']) && $_SESSION['MaVT'] === 'QTV'){
+                                    $historyPath = "./history_admin.php";
+                                }
+                                else{
+                                    $historyPath = "./history.php";
+                                }
+                                ?>
                                     <li>
-                                        <a class="dropdown-item" href="./history.php">
+                                        <a class="dropdown-item" href="<?php echo $historyPath ?>">
                                             <i class="fa-solid fa-window-restore"></i>
                                             Phòng mượn
                                         </a>
                                     </li>
-                                <?php endif; ?>
                                 <li>
                                     <a class="dropdown-item" href="./profile.php">
                                         <i class="fa-solid fa-address-card"></i>
