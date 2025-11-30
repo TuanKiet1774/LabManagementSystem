@@ -4,4 +4,4 @@
 
 >Trực quan hoá: [drawDB](https://www.drawdb.app/)
 
-![LMS_DB](https://github.com/user-attachments/assets/c3c3aff5-4b15-4ee0-b857-d116515b93eb)
+![LMS_DB](https://github.com/user-attachments/assets/69898740-81e1-4b0e-adf1-3c03dff9e6a9)
