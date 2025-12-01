@@ -12,17 +12,17 @@
 
 <style>
     .btnBack {
-        background: #93c5fd !important;
+        background: #53a3ffff !important;
         color: white !important;
     }
 
     .btnBack:hover {
-        background: #60a5fa !important;
+        background: #29548aff !important;
     }
 
 
     .btnDelete {
-        background: #fda4af !important;
+        background: #ee3a4fff !important;
         color: white !important;
     }
 
@@ -57,9 +57,9 @@
 
     <div class="container mt-5 mb-5">
         <div class="col-lg-10 mx-auto">
-            <div class="card shadow-lg border-0" style="background: #fffbe6; border-radius: 15px;">
+            <div class="card shadow-lg border-0" style="background: #eef1e8ff; border-radius: 15px;">
 
-                <div class="card-header text-danger text-center fw-bold fs-4" style="background: #fff9cc; border-radius: 15px 15px 0 0;">
+                <div class="card-header text-danger text-center fw-bold fs-4" style="background: #c7d2ff; border-radius: 15px 15px 0 0;">
                     BẠN CÓ CHẮC MUỐN XOÁ THÔNG TIN NÀY ?
                 </div>
 
@@ -114,7 +114,7 @@
                     </div>
                 </div>
 
-                <div class="card-footer text-center" style="background: #fff9cc; border-radius: 0 0 15px 15px;">
+                <div class="card-footer text-center" style="background: #c7d2ff; border-radius: 0 0 15px 15px;">
                     <form method="GET" class="col-12 text-center">
                         <input type="hidden" name="maND" value="<?php echo $maND1; ?>">
 

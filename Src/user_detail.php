@@ -24,9 +24,9 @@
 
     <div class="container mt-5 mb-5">
         <div class="col-lg-10 mx-auto">
-            <div class="card shadow-lg border-0" style="background: #fffbe6; border-radius: 15px;">
+            <div class="card shadow-lg border-0" style="background: #eef1e8ff; border-radius: 15px;">
 
-                <div class="card-header text-center fw-bold fs-4" style="background: #fff9cc; border-radius: 15px 15px 0 0;">
+                <div class="card-header text-center fw-bold fs-4" style="background: #c7d2ff; border-radius: 15px 15px 0 0;">
                     THÔNG TIN CÁ NHÂN
                 </div>
 
@@ -81,7 +81,7 @@
                     </div>
                 </div>
 
-                <div class="card-footer text-center" style="background: #fff9cc; border-radius: 0 0 15px 15px;">
+                <div class="card-footer text-center" style="background: #c7d2ff; border-radius: 0 0 15px 15px;">
                     <a href="user.php" class="btn btn-secondary px-4 mx-2">Quay lại</a>
                 </div>
 

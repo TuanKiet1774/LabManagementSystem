@@ -23,11 +23,11 @@
         background: white;
         border-radius: 18px;
         box-shadow: 0 5px 18px rgba(0, 0, 0, 0.15);
-        border-top: 6px solid #b3a32fff;
+        border-top: 6px solid #664ca1ff;
     }
 
     .edit-header {
-        background: #fff9cc;
+        background: #c7d2ff;
         color: black;
         padding: 18px;
         font-size: 20px;
@@ -40,7 +40,7 @@
         height: 160px;
         border-radius: 50%;
         object-fit: cover;
-        border: 4px solid #e7da7fff;
+        border: 4px solid #7f84e7ff;
     }
 
     .btn-save {
