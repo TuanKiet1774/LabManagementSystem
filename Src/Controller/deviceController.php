@@ -101,7 +101,7 @@ function deviceAdd($con, $tenThietBi, $maLoai, $maTTTB)
                     VALUES('$maThietBi', '$maTTTB')";
 
     if (mysqli_query($con, $sql1) && mysqli_query($con, $sql2)) {
-        return ['success' => true, 'maPhong' => $maThietBi];
+        return ['success' => true, 'maThietBi' => $maThietBi];
     } else {
         return ['success' => false, 'error' => mysqli_error($con)];
     }
