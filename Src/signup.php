@@ -151,7 +151,7 @@
                         <label class="form-label"><i class="fa-solid fa-unlock-keyhole"></i> Mật khẩu</label>
                         <input type="password" id="password" name="pass" class="form-control" required>
                         <span id="togglePassword" style="position:absolute; right:20px; top:38px; cursor:pointer;">
-                            <i class="fa-solid fa-eye"></i>
+                            <i class="fa-solid fa-eye-slash"></i>
                         </span>
                     </div>
                 </div>
@@ -236,8 +236,8 @@
             password.setAttribute('type', type);
             // đổi icon
             togglePassword.innerHTML = type === 'password' ?
-                '<i class="fa-solid fa-eye"></i>' :
-                '<i class="fa-solid fa-eye-slash"></i>';
+                '<i class="fa-solid fa-eye-slash"></i>' :
+                '<i class="fa-solid fa-eye"></i>';
         });
     </script>
 
