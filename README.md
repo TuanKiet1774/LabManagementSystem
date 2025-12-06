@@ -101,3 +101,5 @@ https://www.drawdb.app/
 ---
 
 ## 🖼️ Demo Giao diện
+
+<img width="1919" height="1052" alt="image" src="https://github.com/user-attachments/assets/1d00bbee-6052-4c56-a1a1-f58395d7f810" />
