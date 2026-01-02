@@ -100,7 +100,7 @@ https://www.drawdb.app/
 
 --
 
-## 🗃️ Cấu trúc File
+## 🗃️ Cấu trúc Source Code
 
 ```
 LabManagementSystem-main
