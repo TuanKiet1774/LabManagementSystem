@@ -30,28 +30,6 @@ Hệ thống tập trung vào các nhóm chức năng chính:
 
 ---
 
-## 🛠 Công nghệ sử dụng
-
-| Thành phần | Công nghệ |
-|-----------|-----------|
-| Ngôn ngữ | **PHP 8.2.12** |
-| Cơ sở dữ liệu | **MySQL** |
-| Môi trường chạy | **XAMPP 3.3.0** |
-| Công cụ thiết kế CSDL | drawDB |
-| Môi trường triển khai | Mạng nội bộ trường |
-
----
-
-## 🗄️ Cơ sở dữ liệu
-
-### 📌 Sơ đồ cơ sở dữ liệu (Database Schema)
-> Trực quan hoá bằng drawDB:  
-https://www.drawdb.app/
-
-![LMS_DB](https://github.com/user-attachments/assets/69898740-81e1-4b0e-adf1-3c03dff9e6a9)
-
----
-
 ## 👥 Đối tượng sử dụng hệ thống
 
 ### Người dùng hệ thống
@@ -97,6 +75,95 @@ https://www.drawdb.app/
 - Tình trạng thiết bị  
 - Báo cáo sự cố  
 - Hiệu suất phòng theo tuần/tháng  
+
+---
+
+## 🛠 Công nghệ sử dụng
+
+| Thành phần | Công nghệ |
+|-----------|-----------|
+| Ngôn ngữ | **PHP 8.2.12** |
+| Cơ sở dữ liệu | **MySQL** |
+| Môi trường chạy | **XAMPP 3.3.0** |
+| Công cụ thiết kế CSDL | drawDB |
+| Môi trường triển khai | Mạng nội bộ trường |
+
+---
+
+## 🗄️ Cơ sở dữ liệu
+
+### 📌 Sơ đồ cơ sở dữ liệu (Database Schema)
+> Trực quan hoá bằng drawDB:  
+https://www.drawdb.app/
+
+![LMS_DB](https://github.com/user-attachments/assets/69898740-81e1-4b0e-adf1-3c03dff9e6a9)
+
+--
+
+## 🗃️ Cấu trúc File
+
+```
+LabManagementSystem-main
+├─ composer.lock
+├─ Database
+│  ├─ config.php
+│  └─ quanlylab.sql
+├─ GhiChu.txt
+├─ README.md
+├─ Src
+│  ├─ Controller
+│  │  ├─ controller.php
+│  │  ├─ deviceController.php
+│  │  ├─ historyController.php
+│  │  ├─ labBookingController.php
+│  │  ├─ labController.php
+│  │  ├─ labschedController.php
+│  │  ├─ loginController.php
+│  │  ├─ paginationController.php
+│  │  ├─ profileController.php
+│  │  ├─ signupController.php
+│  │  ├─ statisticController.php
+│  │  └─ userController.php
+│  ├─ device.php
+│  ├─ device_add.php
+│  ├─ device_delete.php
+│  ├─ device_detail.php
+│  ├─ device_edit.php
+│  ├─ edit_profile.php
+│  ├─ footer.php
+│  ├─ header.php
+│  ├─ history.php
+│  ├─ history_admin.php
+│  ├─ history_delete.php
+│  ├─ history_detail.php
+│  ├─ history_edit.php
+│  ├─ Image
+│  ├─ index.php
+│  ├─ lab.php
+│  ├─ lab_add.php
+│  ├─ lab_booking.php
+│  ├─ lab_delete.php
+│  ├─ lab_detail.php
+│  ├─ lab_edit.php
+│  ├─ lab_sched.php
+│  ├─ lab_week_sched.php
+│  ├─ login.php
+│  ├─ logout.php
+│  ├─ profile.php
+│  ├─ signup.php
+│  ├─ statictic_print.php
+│  ├─ statistic.php
+│  ├─ user.php
+│  ├─ user_add.php
+│  ├─ user_delete.php
+│  ├─ user_detail.php
+│  └─ user_edit.php
+└─ vendor
+   ├─ autoload.php
+   ├─ composer
+   └─ phpmailer
+    
+```
 
 ---
 
